@@ -9,12 +9,7 @@ import {UserService} from '../service/user.service';
   styleUrls: ['./register-form.component.css']
 })
 export class RegisterFormComponent implements OnInit {
-  user: User;
-  constructor(private route: ActivatedRoute,
-              private router: Router,
-              private userService: UserService) {
-    this.user = new User();
-  }
+  constructor() {  }
 
   ngOnInit(): void {
   }
