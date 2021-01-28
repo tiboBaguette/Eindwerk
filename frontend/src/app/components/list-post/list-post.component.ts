@@ -24,7 +24,7 @@ export class ListPostComponent implements OnInit {
     this.user.username = 'username';
     this.post.title = 'post title';
     this.post.content = 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.';
-    this.post.date = new Date();
+    this.post.postCreationDate = new Date();
     this.post.user = this.user;
     this.posts.push(this.post);
     this.posts.push(this.post);
