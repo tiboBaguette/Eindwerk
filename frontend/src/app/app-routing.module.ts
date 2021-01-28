@@ -8,9 +8,6 @@ const routes: Routes = [
   {path: 'login-form', component: LoginFormComponent},
   {path: 'register-form', component: RegisterFormComponent},
   {path: '', component: HomepageComponent},
-
-
-
 ];
 
 @NgModule({
