@@ -7,6 +7,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { LoginFormComponent } from './login-form/login-form.component';
 import { RegisterFormComponent } from './register-form/register-form.component';
+import { CreatePostComponent } from './create-post/create-post.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { RegisterFormComponent } from './register-form/register-form.component';
     NavbarComponent,
     HomepageComponent,
     LoginFormComponent,
-    RegisterFormComponent
+    RegisterFormComponent,
+    CreatePostComponent
   ],
   imports: [
     BrowserModule,

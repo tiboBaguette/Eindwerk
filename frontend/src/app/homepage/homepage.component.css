@@ -33,6 +33,8 @@
   display: block;
 }
 .animated-title > div.text-top {
+
+  border-bottom: 1vmin solid #000;
   top: 0;
 }
 .animated-title > div.text-top div {
