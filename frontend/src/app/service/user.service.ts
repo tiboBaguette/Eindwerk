@@ -14,9 +14,11 @@ export class UserService {
   constructor(private http: HttpClient) { }
 
   public userLogin(user: User): Observable<User> {
+    console.warn(user);
     return this.http.post<User>(this.userLoginUrl, user);
   }
   public userRegister(user: User): Observable<User> {
+    console.warn(user);
     return this.http.post<User>(this.userRegisterUrl, user);
   }
 }
