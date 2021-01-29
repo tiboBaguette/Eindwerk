@@ -9,16 +9,14 @@ import {Observable} from 'rxjs';
 
 export class UserService {
 
-  private readonly userLoginUrl = 'http://localhost:8080/user/login';
-  private readonly userRegisterUrl = 'http://localhost:8080/user/register';
   constructor(private http: HttpClient) { }
 
   public userLogin(user: User): Observable<User> {
     console.warn(user);
-    return this.http.post<User>(this.userLoginUrl, user);
+    return this.http.post<User>('http://localhost:8080/api/user/login', user);
   }
   public userRegister(user: User): Observable<User> {
     console.warn(user);
-    return this.http.post<User>(this.userRegisterUrl, user);
+    return this.http.post<User>('http://localhost:8080/api/user/register', user);
   }
 }
