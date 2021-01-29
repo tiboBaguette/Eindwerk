@@ -1,25 +1,29 @@
 <!--navbar section-->
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-  <div class="container-fluid">
       <a class="navbar-brand" href="#">Eindwerk Java Potentials</a>
       <ul class="nav navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="#">Home</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Placeholder 1</a>
+        <a [routerLink]="['/list-posts']" class="nav-link" href="#">Show Posts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Placeholder 2</a>
+        <a class="nav-link" routerLink="create-post">Create Post</a>
       </li>
     </ul>
     <ul class="nav navbar-nav navbar-right">
       <li class="nav-item">
-        <a class="nav-link" href="#"><span class="glyphicon glyphicon-user"></span> Sign Up</a>
+        <a routerLink="/register-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-user"></span> Register</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+        <a routerLink="/login-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> Login</a>
       </li>
     </ul>
-  </div>
+
 </nav>
+<!--Hacky spacers to render other components under the navbar-->
+<br>
+<br>
+<br>
+<br>

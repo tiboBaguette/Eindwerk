@@ -1,11 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {HomepageComponent} from './homepage/homepage.component';
+import { HomepageComponent } from './components/homepage/homepage.component';
+import { LoginFormComponent } from './components/login-form/login-form.component';
+import { RegisterFormComponent } from './components/register-form/register-form.component';
+import {ListPostComponent} from './components/list-post/list-post.component';
+import {CreatePostComponent} from './components/create-post/create-post.component';
 
 const routes: Routes = [
+  {path: 'login-form', component: LoginFormComponent},
+  {path: 'register-form', component: RegisterFormComponent},
+  {path: 'create-post', component: CreatePostComponent},
+  {path: 'list-posts', component: ListPostComponent},
   {path: '', component: HomepageComponent},
-  {path: '**', redirectTo: ''}
-
 ];
 
 @NgModule({

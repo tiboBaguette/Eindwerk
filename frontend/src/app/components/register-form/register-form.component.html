@@ -1,0 +1,16 @@
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+
+
+<!-- Modal HTML -->
+<title>Sign in</title>
+<div class="main">
+  <p class="sign" align="center">Register Here</p>
+  <form class="form2" [formGroup]="registerForm">
+    <input class="un " type="text" align="center" placeholder="Username" [formControlName]="'username'">
+    <input class="un " type="text" align="center" placeholder="E-mail" [formControlName]="'email'">
+    <input class="pass" type="password" align="center" placeholder="Password" [formControlName]="'password'">
+    <a class="submit" align="center" (click)="register()">Register</a>
+  </form>
+</div>
+

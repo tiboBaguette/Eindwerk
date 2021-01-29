@@ -3,18 +3,30 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NavbarComponent } from './navbar/navbar.component';
-import { HomepageComponent } from './homepage/homepage.component';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
+import { ListPostComponent } from './components/list-post/list-post.component';
+import {RegisterFormComponent} from './components/register-form/register-form.component';
+import {HomepageComponent} from './components/homepage/homepage.component';
+import {LoginFormComponent} from './components/login-form/login-form.component';
+import {CreatePostComponent} from './components/create-post/create-post.component';
+import {NavbarComponent} from './components/navbar/navbar.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
-    HomepageComponent
+    HomepageComponent,
+    LoginFormComponent,
+    RegisterFormComponent,
+    CreatePostComponent,
+    ListPostComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
