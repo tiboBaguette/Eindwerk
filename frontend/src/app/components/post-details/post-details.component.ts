@@ -17,7 +17,9 @@ export class PostDetailsComponent implements OnInit {
   ngOnInit(): void {
     this.post.title = 'Wall Street Bets Details Mock';
     this.post.content = 'This is the content of the details page post';
-    this.user.username = 'Details Page User';
+    this.post.postCreationDate = new Date();
+    this.user.username = 'Lektro';
+
     this.post.user = this.user;
     this.posts.push(this.post);
   }

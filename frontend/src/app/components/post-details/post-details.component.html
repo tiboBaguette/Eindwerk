@@ -12,6 +12,6 @@
     <p class="card-text darker"><small class="text">
       {{post.postCreationDate.toDateString()}} at {{post.postCreationDate.toLocaleTimeString()}} By {{user.username}}
     </small></p>
-    <a class="btn btn-dark" [routerLink]="['/post-comment']">COMMENT</a>
+    <a class="btn btn-dark" routerLink="/create-comment">Create New Comment</a>
   </div>
 </div>
