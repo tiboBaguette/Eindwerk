@@ -26,7 +26,13 @@ export class LoginFormComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  register() {
-    this.userService.userLogin(this.loginForm.value).subscribe();
+  login(): void {
+    this.userService.userLogin(this.loginForm.value).subscribe(
+      res => this.user = res,
+      err => console.log('HTTP Error', err),
+      () => console.log('HTTP request completed.')
+    );
+
+    console.warn(this.user);
   }
 }
