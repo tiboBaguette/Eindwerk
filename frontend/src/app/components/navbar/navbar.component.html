@@ -1,6 +1,6 @@
 
 <!--navbar section-->
-
+<div class="container-fluid">
 <nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">Eindwerk Java Potentials</a>
@@ -16,6 +16,9 @@
         </li>
         <li class="nav-item">
           <a [routerLink]="['/list-posts']" class="nav-link" href="#">Show Posts</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/list-categories']" class="nav-link" href="#">Show Categories</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" routerLink="create-post">Create Post</a>
@@ -36,7 +39,7 @@
       </div>
   </div>
 </nav>
-
+</div>
 <!--Hacky spacers to render other components under the navbar-->
 <br>
 <br>
