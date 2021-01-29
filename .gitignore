@@ -5,7 +5,7 @@ backend/src/main/resources/application-local.properties
 *.iml
 modules.xml
 .idea/*
-*/target
+/target
 
 ### Eclipse ###
 .classpath
@@ -61,5 +61,6 @@ testem.log
 .DS_Store
 Thumbs.db
 
+/backend/target/*
 /backend/src/main/resources/application-local.properties
-/backend/target
+
