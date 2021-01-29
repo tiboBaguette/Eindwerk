@@ -14,6 +14,7 @@ export class PostDetailsComponent implements OnInit {
   post: Post = new Post();
   user: User = new User();
   comment: Comment = new Comment();
+  comment1: Comment = new Comment();
   comments: Comment[] = [];
   constructor(postservice: PostService) { }
 
@@ -23,10 +24,12 @@ export class PostDetailsComponent implements OnInit {
     this.post.postCreationDate = new Date();
     this.user.username = 'Lektro';
     this.comment.content = 'Comment Content Block';
+    this.comment1.content = 'Comment Content Block 2';
     this.post.user = this.user;
     this.posts.push(this.post);
     this.comments.push(this.comment);
+    this.comments.push(this.comment1);
   }
   // this.postservice.getPosts().subscribe(postResponse => this.posts = postResponse);
-
+  // this.postservice.getComments().subscribe(commentResponse => this.comments = commentResponse);
 }

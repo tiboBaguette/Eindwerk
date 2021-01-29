@@ -13,9 +13,10 @@
       {{post.postCreationDate.toDateString()}} at {{post.postCreationDate.toLocaleTimeString()}} By {{user.username}}
     </small></p>
   </div>
+    <div class="card-body comment-section" *ngFor="let comment of comments">
+      <p class="card-text">{{comment.content}}</p>
+    </div>
+    <a class="btn btn-dark" routerLink="/create-comment">Create New Comment</a>
 
-  <div class="card-body comment-section">
-    <p class="card-text">{{comment.content}}</p>
-  </div>
-  <a class="btn btn-dark" routerLink="/create-comment">Create New Comment</a>
 </div>
+
