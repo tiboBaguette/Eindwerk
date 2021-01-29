@@ -17,6 +17,7 @@
   top: 50%;
   transform: translate(-50%, -50%);
   width: 90vmin;
+  margin-top: 33px;
 }
 .animated-title > div {
   height: 50%;
