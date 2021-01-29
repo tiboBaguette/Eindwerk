@@ -18,11 +18,16 @@ public class PostController {
     PostService postService;
 
     @PostMapping("create")
-    public ResponseEntity<Post> postPostCreate(@RequestBody Post post) {
+    public ResponseEntity<Post> postCreate(@RequestBody Post post) {
         boolean result = postService.createPost(post);
         if(result){
             return new ResponseEntity<>(post,HttpStatus.CREATED);
         }
         return new ResponseEntity<>(null,new HttpHeaders(), HttpStatus.CONFLICT);
+    }
+
+    @GetMapping("show-posts")
+    public ResponseEntity<Iterable<Post>> getShowPosts(){
+        return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
 }

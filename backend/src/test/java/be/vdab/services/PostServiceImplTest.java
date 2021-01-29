@@ -11,6 +11,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = BackendApplication.class)
@@ -32,8 +34,8 @@ class PostServiceImplTest {
 
     @AfterEach
     void breakDown(){
-//        postRepository.deleteAll();
-//        userRepository.deleteAll();
+        postRepository.deleteAll();
+        userRepository.deleteAll();
     }
     // endregion
 
@@ -146,6 +148,100 @@ class PostServiceImplTest {
 
         assertAll(
                 () -> assertFalse(postRepository.findPostsByTitle("title").isEmpty())
+        );
+    }
+
+
+    // endregion
+
+    // region test getAll
+
+    @Test
+    void testShowNoPostsAvailable(){
+        List<Post> posts = (List<Post>) postService.getPosts();
+        assertAll(
+                () -> assertNotNull(posts),
+                () -> assertTrue(posts.isEmpty())
+        );
+    }
+    @Test
+    void testShowOnePostAvailable(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        postRepository.save(post);
+        List<Post> posts = (List<Post>) postService.getPosts();
+        assertAll(
+                () -> assertNotNull(posts),
+                () -> assertEquals(1,posts.size())
+        );
+
+    }
+    @Test
+    void testShowMultiplePostsAvailableSameUser() {
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        postRepository.save(post1);
+        Post post2 = new Post.PostBuilder()
+                .withTitle("newTitle")
+                .withContent("newContent")
+                .withUser(createdUser)
+                .build();
+        postRepository.save(post2);
+        List<Post> posts = (List<Post>) postService.getPosts();
+        assertAll(
+                () -> assertNotNull(posts),
+                () -> assertEquals(2,posts.size())
+        );
+    }
+
+    @Test
+    void testShowMultiplePostsAvailableDifferentUser(){
+        User user1 = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser1 = userRepository.save(user1);
+        User user2 = new User.UserBuilder()
+                .withUsername("NewUsername")
+                .withPassword("NewPassword")
+                .withEmail("Newemail@gmail.com")
+                .build();
+        User createdUser2 = userRepository.save(user2);
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser1)
+                .build();
+        postRepository.save(post1);
+        Post post2 = new Post.PostBuilder()
+                .withTitle("newTitle")
+                .withContent("newContent")
+                .withUser(createdUser2)
+                .build();
+        postRepository.save(post2);
+        List<Post> posts = (List<Post>) postService.getPosts();
+        assertAll(
+                () -> assertNotNull(posts),
+                () -> assertEquals(2,posts.size())
         );
     }
 
