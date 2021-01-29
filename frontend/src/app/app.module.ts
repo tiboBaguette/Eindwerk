@@ -12,6 +12,7 @@ import {LoginFormComponent} from './components/login-form/login-form.component';
 import {CreatePostComponent} from './components/create-post/create-post.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
 import { ListCategoriesComponent } from './components/list-categories/list-categories.component';
+import { PostDetailsComponent } from './components/post-details/post-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ListCategoriesComponent } from './components/list-categories/list-categ
     RegisterFormComponent,
     CreatePostComponent,
     ListPostComponent,
-    ListCategoriesComponent
+    ListCategoriesComponent,
+    PostDetailsComponent
   ],
   imports: [
     BrowserModule,
