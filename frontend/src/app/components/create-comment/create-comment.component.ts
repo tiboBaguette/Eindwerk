@@ -6,7 +6,6 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./create-comment.component.css']
 })
 export class CreateCommentComponent implements OnInit {
-
   constructor() { }
 
   ngOnInit(): void {

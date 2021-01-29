@@ -14,6 +14,7 @@ import {NavbarComponent} from './components/navbar/navbar.component';
 import { ListCategoriesComponent } from './components/list-categories/list-categories.component';
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
+import {CreateCategoryComponent} from './components/create-category/create-category.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +24,7 @@ import { CreateCommentComponent } from './components/create-comment/create-comme
     LoginFormComponent,
     RegisterFormComponent,
     CreatePostComponent,
+    CreateCategoryComponent,
     ListPostComponent,
     ListCategoriesComponent,
     PostDetailsComponent,
