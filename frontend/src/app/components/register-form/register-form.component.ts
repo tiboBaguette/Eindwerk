@@ -3,6 +3,7 @@ import {User} from '../../model/User';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../service/user.service';
 import {FormBuilder} from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-register-form',
@@ -32,11 +33,21 @@ export class RegisterFormComponent implements OnInit {
 
   register(): void {
     this.userService.userRegister(this.registerForm.value).subscribe(
-        res => this.user = res,
-        err => console.log('HTTP Error', err),
-        () => console.log('HTTP request completed.')
+        response => this.user = response,
+        error => this.handleError(error),
+        () => this.logInUser()
     );
+  }
 
-    console.warn(this.user);
+  handleError(error: HttpErrorResponse): void {
+    if (error.status === 409) {
+      console.warn('409: Conflict');
+    }
+  }
+
+  logInUser(): void {
+    this.userService.setActiveUser(this.user);
+    this.registerForm.reset();
+    this.router.navigateByUrl('list-posts');
   }
 }

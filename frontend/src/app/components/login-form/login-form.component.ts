@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {User} from '../../model/User';
 import {UserService} from '../../service/user.service';
 import {FormBuilder} from '@angular/forms';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'app-login-form',
@@ -10,6 +12,7 @@ import {FormBuilder} from '@angular/forms';
 })
 export class LoginFormComponent implements OnInit {
   user: User;
+  httpErrorResponse: HttpErrorResponse | undefined;
 
   loginForm = this.formBuilder.group({
     username: '',
@@ -18,6 +21,8 @@ export class LoginFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
+    private route: ActivatedRoute,
+    private router: Router,
     private userService: UserService
   ) {
     this.user = new User();
@@ -28,9 +33,22 @@ export class LoginFormComponent implements OnInit {
 
   login(): void {
     this.userService.userLogin(this.loginForm.value).subscribe(
-      res => this.user = res,
-      err => console.log('HTTP Error', err),
-      () => console.log('HTTP request completed.')
+      response => this.user = response,
+      error => this.handleError(error),
+      () => this.logInUser()
     );
+  }
+
+  handleError(error: HttpErrorResponse): void {
+    if (error.status === 401) {
+      console.warn('401: Unauthorized');
+    }
+  }
+
+  logInUser(): void {
+    console.warn('test');
+    this.userService.setActiveUser(this.user);
+    this.loginForm.reset();
+    this.router.navigateByUrl('list-posts');
   }
 }
