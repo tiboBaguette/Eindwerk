@@ -19,8 +19,10 @@ public class PostController {
 
     @PostMapping("create")
     public ResponseEntity<Post> postPostCreate(@RequestBody Post post) {
-        //TODO: implement
-        return new ResponseEntity<>(null,new HttpHeaders(), HttpStatus.NOT_IMPLEMENTED);
+        boolean result = postService.createPost(post);
+        if(result){
+            return new ResponseEntity<>(post,HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(null,new HttpHeaders(), HttpStatus.CONFLICT);
     }
-
 }

@@ -1,1 +1,13 @@
+be\vdab\domain\User.class
+be\vdab\domain\User$UserBuilder.class
+be\vdab\repositories\PostRepository.class
+be\vdab\services\PostService.class
+be\vdab\restcontrollers\UserController.class
+be\vdab\domain\Post.class
+be\vdab\services\UserService.class
+be\vdab\services\PostServiceImpl.class
+be\vdab\domain\Post$PostBuilder.class
+be\vdab\services\UserServiceImpl.class
+be\vdab\repositories\UserRepository.class
 be\vdab\BackendApplication.class
+be\vdab\restcontrollers\PostController.class

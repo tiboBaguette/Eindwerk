@@ -15,7 +15,7 @@ public class Post {
     private String title;
     private LocalDateTime creationTime;
     @OneToOne
-    @JoinColumn("user_id")
+    @JoinColumn(name = "user_id")
     private User user;
 
     public Long getId() {
@@ -34,9 +34,15 @@ public class Post {
         return creationTime;
     }
 
+    public void setCreationTime(LocalDateTime creationTime){
+        this.creationTime = creationTime;
+    }
+
     public User getUser() {
         return user;
     }
+
+
 
     public static class PostBuilder{
         private String content;

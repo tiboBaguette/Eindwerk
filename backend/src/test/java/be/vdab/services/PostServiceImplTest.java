@@ -4,6 +4,7 @@ import be.vdab.BackendApplication;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
 import be.vdab.repositories.PostRepository;
+import be.vdab.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +20,9 @@ class PostServiceImplTest {
     PostRepository postRepository;
     @Autowired
     PostService postService;
+    @Autowired
+    UserRepository userRepository;
+
 
     // region setup
     @BeforeEach
@@ -28,7 +32,8 @@ class PostServiceImplTest {
 
     @AfterEach
     void breakDown(){
-
+//        postRepository.deleteAll();
+//        userRepository.deleteAll();
     }
     // endregion
 
@@ -61,7 +66,7 @@ class PostServiceImplTest {
                 .withPassword("Password")
                 .withEmail("email@gmail.com")
                 .build();
-
+        userRepository.save(user);
         Post post = new Post.PostBuilder()
                 .withUser(user)
                 .build();
@@ -70,22 +75,78 @@ class PostServiceImplTest {
 
     @Test
     void testCreatePostWithInvalidUser() {
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        // not saved -> does not exist on database -> invalid user
+        Post post = new Post.PostBuilder()
+                .withUser(user)
+                .build();
+        assertFalse(postService.createPost(post));
+
     }
 
     @Test
     void testCreatePostWithTitleAndContent() {
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .build();
+        assertFalse(postService.createPost(post));
     }
 
     @Test
     void testCreatePostWithTitleAndUser() {
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withUser(user)
+                .build();
+        assertFalse(postService.createPost(post));
+
     }
 
     @Test
     void testCreatePostWithContentAndUser() {
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withContent("content")
+                .withUser(user)
+                .build();
+        assertFalse(postService.createPost(post));
+
     }
 
     @Test
     void testCreatePostWithTitleContentAnUser() {
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        assertTrue(postService.createPost(post));
+
+        assertAll(
+                () -> assertFalse(postRepository.findPostsByTitle("title").isEmpty())
+        );
     }
 
 
