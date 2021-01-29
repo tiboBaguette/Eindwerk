@@ -32,7 +32,5 @@ export class LoginFormComponent implements OnInit {
       err => console.log('HTTP Error', err),
       () => console.log('HTTP request completed.')
     );
-
-    console.warn(this.user);
   }
 }

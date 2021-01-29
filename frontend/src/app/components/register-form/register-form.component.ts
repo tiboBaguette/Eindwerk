@@ -31,6 +31,12 @@ export class RegisterFormComponent implements OnInit {
   }
 
   register(): void {
-    this.userService.userRegister(this.registerForm.value).subscribe();
+    this.userService.userRegister(this.registerForm.value).subscribe(
+        res => this.user = res,
+        err => console.log('HTTP Error', err),
+        () => console.log('HTTP request completed.')
+    );
+
+    console.warn(this.user);
   }
 }
