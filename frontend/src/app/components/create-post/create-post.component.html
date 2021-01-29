@@ -4,17 +4,18 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Create Post</h5>
-    <form>
+    <p class="error" align="left" *ngIf="isError">you need to be logged in to create a post</p>
+    <form [formGroup]="createPostForm">
       <div class="form-group">
         <div class="form-row">
           <div class="col">
             <label align="center" >Title</label>
-            <input type="text" class="form-control" placeholder="Title">
+            <input type="text" class="form-control" placeholder="Title" [formControlName]="'title'">
             <br>
             <label align="center" >Post Content</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [formControlName]="'content'"></textarea>
             <label align="center" >Category</label>
-            <input type="text" class="form-control" placeholder="Category">
+            <input type="text" class="form-control" placeholder="Category" [formControlName]="'category'">
             <br>
         </div>
       </div>
@@ -22,7 +23,7 @@
     </form>
 
     <p class="card-text">Please enter your forum post here</p>
-    <button type="submit" class="btn btn-dark">Create New Post</button>
+    <button type="submit" class="btn btn-dark" (click)="createPost()">Create New Post</button>
   </div>
 </div>
 
