@@ -99,4 +99,8 @@ a {
   }
 }
 
+p.error {
+  color: red;
+}
+
 

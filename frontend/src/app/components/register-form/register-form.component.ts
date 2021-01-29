@@ -17,6 +17,7 @@ export class RegisterFormComponent implements OnInit {
     email: '',
     password: '',
   });
+  isError: any;
 
   constructor(
     private formBuilder: FormBuilder,
