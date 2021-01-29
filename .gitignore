@@ -5,7 +5,7 @@ backend/src/main/resources/application-local.properties
 *.iml
 modules.xml
 .idea/*
-/target
+*/target
 
 ### Eclipse ###
 .classpath
