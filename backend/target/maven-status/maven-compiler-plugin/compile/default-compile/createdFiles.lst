@@ -1,1 +1,7 @@
+be\vdab\domain\User.class
+be\vdab\services\UserService.class
+be\vdab\domain\User$UserBuilder.class
+be\vdab\services\UserServiceImpl.class
+be\vdab\repositories\UserRepository.class
 be\vdab\BackendApplication.class
+be\vdab\restcontrollers\UserController.class

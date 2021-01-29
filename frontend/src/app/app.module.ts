@@ -11,6 +11,7 @@ import {HomepageComponent} from './components/homepage/homepage.component';
 import {LoginFormComponent} from './components/login-form/login-form.component';
 import {CreatePostComponent} from './components/create-post/create-post.component';
 import {NavbarComponent} from './components/navbar/navbar.component';
+import { ListCategoriesComponent } from './components/list-categories/list-categories.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {NavbarComponent} from './components/navbar/navbar.component';
     LoginFormComponent,
     RegisterFormComponent,
     CreatePostComponent,
-    ListPostComponent
+    ListPostComponent,
+    ListCategoriesComponent
   ],
   imports: [
     BrowserModule,
