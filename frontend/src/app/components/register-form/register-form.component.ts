@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class RegisterFormComponent implements OnInit {
   user: User;
+  isError: boolean | undefined;
 
   registerForm = this.formBuilder.group({
     username: '',
@@ -42,6 +43,7 @@ export class RegisterFormComponent implements OnInit {
   handleError(error: HttpErrorResponse): void {
     if (error.status === 409) {
       console.warn('409: Conflict');
+      this.isError = true;
     }
   }
 

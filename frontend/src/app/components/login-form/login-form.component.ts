@@ -13,6 +13,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class LoginFormComponent implements OnInit {
   user: User;
   httpErrorResponse: HttpErrorResponse | undefined;
+  isError: boolean | undefined;
 
   loginForm = this.formBuilder.group({
     username: '',
@@ -42,11 +43,11 @@ export class LoginFormComponent implements OnInit {
   handleError(error: HttpErrorResponse): void {
     if (error.status === 401) {
       console.warn('401: Unauthorized');
+      this.isError = true;
     }
   }
 
   logInUser(): void {
-    console.warn('test');
     this.userService.setActiveUser(this.user);
     this.loginForm.reset();
     this.router.navigateByUrl('list-posts');

@@ -6,6 +6,7 @@
 <title>Sign in</title>
 <div class="main">
   <p class="sign" align="center">Log In</p>
+  <p class="error" align="center" *ngIf="isError">wrong username or password</p>
   <form class="form1" [formGroup]="loginForm">
     <input class="un " type="text" align="center" placeholder="Username" [formControlName]="'username'">
     <input class="pass" type="password" align="center" placeholder="Password" [formControlName]="'password'">

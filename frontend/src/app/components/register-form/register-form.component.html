@@ -6,6 +6,7 @@
 <title>Sign in</title>
 <div class="main">
   <p class="sign" align="center">Register Here</p>
+  <p class="error" align="center" *ngIf="isError">username or password already exists</p>
   <form class="form2" [formGroup]="registerForm">
     <input class="un " type="text" align="center" placeholder="Username" [formControlName]="'username'">
     <input class="un " type="text" align="center" placeholder="E-mail" [formControlName]="'email'">
