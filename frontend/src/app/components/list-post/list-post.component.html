@@ -4,7 +4,7 @@
     <h5 class="card-title">{{post.title}}</h5>
     <p class="card-text">{{post.content}}</p>
     <p class="card-text darker"><small class="text">
-      {{post.postCreationDate.toDateString()}} at {{post.postCreationDate.toLocaleTimeString()}} By {{user.username}}
+      {{post.postCreationDate?.toDateString()}} at {{post.postCreationDate?.toLocaleTimeString()}} By {{post.user?.username}}
     </small></p>
     <a class="btn btn-dark" [routerLink]="['/post-details']">Post Details</a>
   </div>

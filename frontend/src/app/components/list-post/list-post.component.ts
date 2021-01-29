@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {Post} from '../../model/Post';
 import {PostService} from '../../service/post.service';
-import {User} from '../../model/User';
 
 @Component({
   selector: 'app-list-post',
@@ -11,27 +10,19 @@ import {User} from '../../model/User';
 export class ListPostComponent implements OnInit {
   posts: Post[] = [];
 
-  // mock data voor te testen
-  user: User = new User();
-  post: Post = new Post();
-
   constructor(
-    private postservice: PostService,
+    private postService: PostService,
   ) {}
 
   ngOnInit(): void {
-    // mock data voor te testen
-    this.user.username = 'Lektro';
-    this.post.title = 'Post Title';
-    this.post.content = 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.';
-    this.post.postCreationDate = new Date();
-    this.post.user = this.user;
-    this.posts.push(this.post);
-    this.posts.push(this.post);
-    this.posts.push(this.post);
-    this.posts.push(this.post);
-    this.posts.push(this.post);
+    this.postService.getPosts().subscribe(postResponse => this.posts = postResponse);
+    console.warn(this.posts[0].user);
+    console.warn(this.posts[0].postCreationDate);
+    console.warn(this.posts[0].user);
+    console.warn(this.posts[0].user);
+    console.warn(this.posts[0].user);
+    console.warn(this.posts[0].user);
+    console.warn(this.posts[0].user);
 
-    // this.postservice.getPosts().subscribe(postResponse => this.posts = postResponse);
   }
 }

@@ -36,7 +36,7 @@ export class LoginFormComponent implements OnInit {
     this.userService.userLogin(this.loginForm.value).subscribe(
       response => this.user = response,
       error => this.handleError(error),
-      () => this.logInUser()
+      () => this.loginUser()
     );
   }
 
@@ -47,7 +47,7 @@ export class LoginFormComponent implements OnInit {
     }
   }
 
-  logInUser(): void {
+  loginUser(): void {
     this.userService.setActiveUser(this.user);
     this.loginForm.reset();
     this.router.navigateByUrl('list-posts');

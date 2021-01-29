@@ -26,7 +26,7 @@ public class PostController {
         return new ResponseEntity<>(null,new HttpHeaders(), HttpStatus.CONFLICT);
     }
 
-    @GetMapping("show-posts")
+    @GetMapping("show")
     public ResponseEntity<Iterable<Post>> getShowPosts(){
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
