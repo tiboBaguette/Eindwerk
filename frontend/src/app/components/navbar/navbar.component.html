@@ -1,30 +1,42 @@
-<!--navbar section-->
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-      <a class="navbar-brand" href="#">Eindwerk Java Potentials</a>
-      <ul class="nav navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Home</a>
-      </li>
-      <li class="nav-item">
-        <a [routerLink]="['/list-posts']" class="nav-link" href="#">Show Posts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="create-post">Create Post</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" routerLink="create-category">Create Category</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-      <li class="nav-item">
-        <a routerLink="/register-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-user"></span> Register</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="/login-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-      </li>
-    </ul>
 
+<!--navbar section-->
+
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Eindwerk Java Potentials</a>
+    <!--mobile menu dropdown -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#defaultNavbar1" aria-controls="defaultNavbar1" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="defaultNavbar1">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">Home</a>
+        </li>
+        <li class="nav-item">
+          <a [routerLink]="['/list-posts']" class="nav-link" href="#">Show Posts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="create-post">Create Post</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="create-category">Create Category</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="nav-item">
+          <a routerLink="/register-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-user"></span> Register</a>
+        </li>
+        <li class="nav-item">
+          <a routerLink="/login-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> Login</a>
+        </li>
+      </ul>
+
+      </div>
+  </div>
 </nav>
+
 <!--Hacky spacers to render other components under the navbar-->
 <br>
 <br>
