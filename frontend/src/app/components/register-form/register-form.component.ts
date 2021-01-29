@@ -3,7 +3,6 @@ import {User} from '../../model/User';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../../service/user.service';
 import {FormBuilder} from '@angular/forms';
-import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-register-form',
@@ -12,13 +11,13 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class RegisterFormComponent implements OnInit {
   user: User;
-  isError: boolean | undefined;
 
   registerForm = this.formBuilder.group({
     username: '',
     email: '',
     password: '',
   });
+  isError: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -34,22 +33,11 @@ export class RegisterFormComponent implements OnInit {
 
   register(): void {
     this.userService.userRegister(this.registerForm.value).subscribe(
-        response => this.user = response,
-        error => this.handleError(error),
-        () => this.logInUser()
+        res => this.user = res,
+        err => console.log('HTTP Error', err),
+        () => console.log('HTTP request completed.')
     );
-  }
 
-  handleError(error: HttpErrorResponse): void {
-    if (error.status === 409) {
-      console.warn('409: Conflict');
-      this.isError = true;
-    }
-  }
-
-  logInUser(): void {
-    this.userService.setActiveUser(this.user);
-    this.registerForm.reset();
-    this.router.navigateByUrl('list-posts');
+    console.warn(this.user);
   }
 }

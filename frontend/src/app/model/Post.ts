@@ -8,4 +8,5 @@ export class Post {
   postCreationDate: any | undefined;
   user: User | undefined;
   category: Category | undefined;
+
 }

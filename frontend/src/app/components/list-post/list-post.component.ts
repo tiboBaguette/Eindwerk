@@ -21,8 +21,8 @@ export class ListPostComponent implements OnInit {
 
   ngOnInit(): void {
     // mock data voor te testen
-    this.user.username = 'username';
-    this.post.title = 'post title';
+    this.user.username = 'Lektro';
+    this.post.title = 'Post Title';
     this.post.content = 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.';
     this.post.postCreationDate = new Date();
     this.post.user = this.user;
