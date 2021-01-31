@@ -21,17 +21,17 @@ export class ListPostComponent implements OnInit {
 
   ngOnInit(): void {
     // mock data voor te testen
-    this.user.username = 'Lektro';
-    this.post.title = 'Post Title';
-    this.post.content = 'This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.';
-    this.post.postCreationDate = new Date();
-    this.post.user = this.user;
-    this.posts.push(this.post);
-    this.posts.push(this.post);
-    this.posts.push(this.post);
-    this.posts.push(this.post);
-    this.posts.push(this.post);
+    // this.user.username = 'Lektro';
+    // this.post.title = 'Post Title';
+    // this.post.content = 'This is a wider card with supporting text below as a natural lead-in to additional content';
+    // this.post.postCreationDate = new Date();
+    // this.post.user = this.user;
+    // this.posts.push(this.post);
+    // this.posts.push(this.post);
+    // this.posts.push(this.post);
+    // this.posts.push(this.post);
+    // this.posts.push(this.post);
 
-    // this.postservice.getPosts().subscribe(postResponse => this.posts = postResponse);
+    this.postservice.getPosts().subscribe((postResponse: any) => this.posts = postResponse);
   }
 }
