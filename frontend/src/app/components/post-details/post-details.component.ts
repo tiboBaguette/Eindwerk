@@ -16,7 +16,7 @@ export class PostDetailsComponent implements OnInit {
   comment: Comment = new Comment();
   comment1: Comment = new Comment();
   comments: Comment[] = [];
-  constructor(postservice: PostService) { }
+  constructor(postService: PostService) { }
 
   ngOnInit(): void {
     this.post.title = 'Wall Street Bets Details Mock';
@@ -30,6 +30,6 @@ export class PostDetailsComponent implements OnInit {
     this.comments.push(this.comment);
     this.comments.push(this.comment1);
   }
-  // this.postservice.getPosts().subscribe(postResponse => this.posts = postResponse);
-  // this.postservice.getComments().subscribe(commentResponse => this.comments = commentResponse);
+  // this.postService.getPosts().subscribe(postResponse => this.posts = postResponse);
+  // this.postService.getComments().subscribe(commentResponse => this.comments = commentResponse);
 }

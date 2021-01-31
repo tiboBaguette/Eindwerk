@@ -39,5 +39,7 @@ export class RegisterFormComponent implements OnInit {
     );
 
     console.warn(this.user);
+    // redirect after loggin succes
+    this.router.navigateByUrl('list-posts');
   }
 }

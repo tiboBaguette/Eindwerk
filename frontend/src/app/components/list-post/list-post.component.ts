@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {Post} from '../../model/Post';
 import {PostService} from '../../service/post.service';
 import {User} from '../../model/User';
+import {UserService} from "../../service/user.service";
 
 @Component({
   selector: 'app-list-post',
@@ -12,11 +13,11 @@ export class ListPostComponent implements OnInit {
   posts: Post[] = [];
 
   // mock data voor te testen
-  user: User = new User();
-  post: Post = new Post();
+   user: User = new User();
+   post: Post = new Post();
 
   constructor(
-    private postservice: PostService,
+    private postService: PostService,
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +33,6 @@ export class ListPostComponent implements OnInit {
     // this.posts.push(this.post);
     // this.posts.push(this.post);
 
-    this.postservice.getPosts().subscribe((postResponse: any) => this.posts = postResponse);
+    this.postService.getPosts().subscribe(postResponse => this.posts = postResponse);
   }
 }
