@@ -13,8 +13,8 @@ export class ListPostComponent implements OnInit {
   posts: Post[] = [];
 
   // mock data voor te testen
-   user: User = new User();
-   post: Post = new Post();
+   // user: User = new User();
+   // post: Post = new Post();
 
   constructor(
     private postService: PostService,
