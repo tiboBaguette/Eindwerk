@@ -25,7 +25,9 @@ export class CreatePostComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-  ) { }
+  ) {
+    this.userService.setActiveUser(this.userService.user);
+  }
 
   ngOnInit(): void {
   }

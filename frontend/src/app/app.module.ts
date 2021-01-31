@@ -15,6 +15,7 @@ import { ListCategoriesComponent } from './components/list-categories/list-categ
 import { PostDetailsComponent } from './components/post-details/post-details.component';
 import { CreateCommentComponent } from './components/create-comment/create-comment.component';
 import {CreateCategoryComponent} from './components/create-category/create-category.component';
+import { EditPostComponent } from './components/edit-post/edit-post.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {CreateCategoryComponent} from './components/create-category/create-categ
     ListPostComponent,
     ListCategoriesComponent,
     PostDetailsComponent,
-    CreateCommentComponent
+    CreateCommentComponent,
+    EditPostComponent
   ],
   imports: [
     BrowserModule,

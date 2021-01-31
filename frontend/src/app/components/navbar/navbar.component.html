@@ -1,57 +1,61 @@
 <!--navbar section-->
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-    <a class="navbar-brand" href="#">Eindwerk Java Potentials</a>
-    <!--mobile menu dropdown -->
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#defaultNavbar1" aria-controls="defaultNavbar1" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <a class="navbar-brand" href="#">Eindwerk Java Potentials</a>
+  <!--mobile menu dropdown -->
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#defaultNavbar1"
+          aria-controls="defaultNavbar1" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-    <div class="collapse navbar-collapse" id="defaultNavbar1">
-      <ul class="navbar-nav mr-auto">
-<!--        <li class="nav-item active">-->
-<!--          <a class="nav-link" href="#">Home</a>-->
-<!--        </li>-->
+  <div class="collapse navbar-collapse" id="defaultNavbar1">
+    <ul class="navbar-nav mr-auto">
+      <!--        <li class="nav-item active">-->
+      <!--          <a class="nav-link" href="#">Home</a>-->
+      <!--        </li>-->
+
+      <li class="nav-item">
+        <a [routerLink]="['/list-posts']" class="nav-link" href="#">Show Posts</a>
+      </li>
+      <li class="nav-item">
+        <a [routerLink]="['/list-categories']" class="nav-link" href="#">Show Categories</a>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="create-post">Create Post</a>
+      </li>
+      <li *ngIf="isLoggedIn" class="nav-item">
+        <a class="nav-link" routerLink="create-category">Create Category</a>
+      </li>
+    </ul>
+
+    <!-- logged out -->
+    <div *ngIf="!isLoggedIn">
+      <ul class="nav navbar-nav justify-content-left navbar-right">
+
         <li class="nav-item">
-          <a [routerLink]="['/list-posts']" class="nav-link" href="#">Show Posts</a>
-        </li>
-        <li class="nav-item">
-          <a [routerLink]="['/list-categories']" class="nav-link" href="#">Show Categories</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="create-post">Create Post</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" routerLink="create-category">Create Category</a>
+          <a routerLink="/register-form" class="nav-link" data-toggle="modal"><span
+            class="glyphicon glyphicon-user"></span> Register</a>
         </li>
 
+        <li class="nav-item">
+          <a routerLink="/login-form" class="nav-link" data-toggle="modal"><span
+            class="glyphicon glyphicon-log-in"></span> Login</a>
+        </li>
       </ul>
+    </div>
 
-        <!-- logged out -->
-        <div *ngIf="!isLoggedIn">
-          <ul class="nav navbar-nav justify-content-center navbar-right">
-
-          <li class="nav-item">
-            <a routerLink="/login-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-log-in"></span> Login</a>
-          </li>
-            <li class="nav-item">
-              <a routerLink="/register-form" class="nav-link" data-toggle="modal"><span class="glyphicon glyphicon-user"></span> Register</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- logged in -->
-        <div *ngIf="isLoggedIn">
-          <ul class="nav navbar-nav justify-content-center navbar-right">
-            <li class="nav-item">
-              <a class="nav-link" data-toggle="modal" (click)="logout()"><span class="glyphicon glyphicon-log-in"></span> Log Out</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-item" data-toggle="modal"><span class="glyphicon glyphicon-user"></span>Welcome {{user?.username}}</a>
-            </li>
-          </ul>
-        </div>
-      </div>
+    <!-- logged in -->
+    <div *ngIf="isLoggedIn">
+      <ul class="nav navbar-nav justify-content-left navbar-right">
+        <li>
+            <a class="nav-item" data-toggle="modal">Welcome {{user?.username}}</a>
+        </li>
+        <li>
+            <a class="nav-item"data-toggle="modal" (click)="logout()">Log Out</a>
+        </li>
+      </ul>
+    </div>
+  </div>
 </nav>
 
 <!--Hacky spacers to render other components under the navbar-->
