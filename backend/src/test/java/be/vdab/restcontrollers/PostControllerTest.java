@@ -1,8 +1,10 @@
 package be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
+import be.vdab.domain.Category;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
+import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -26,6 +28,8 @@ class PostControllerTest {
     UserRepository userRepository;
     @Autowired
     PostRepository postRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
 
     // region setup
@@ -184,6 +188,86 @@ class PostControllerTest {
                 () -> assertNotNull(response.getBody())
         );
     }
+
+    @Test
+    void testCreatePostWithEverythingAndCategoryNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .withCategory(null)
+                .build();
+        ResponseEntity response = postController.postCreate(post);
+        Post createdPost = (Post)response.getBody();
+        assertAll(
+                () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> assertNull(createdPost.getCategory())
+        );
+    }
+
+    @Test
+    void testCreatePostWithEverythingAndCategoryEmpty(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Category category = new Category()
+                .setName("");
+        Category createdCategory = categoryRepository.save(category);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .withCategory(createdCategory)
+                .build();
+
+        ResponseEntity response = postController.postCreate(post);
+        Post createdPost = (Post)response.getBody();
+        assertAll(
+                () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> assertNotNull(createdPost.getCategory())
+        );
+    }
+    @Test
+    void testCreatePostWithEverythingAndCategoryValid(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Category category = new Category()
+                .setName("myCategory");
+        Category createdCategory = categoryRepository.save(category);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .withCategory(createdCategory)
+                .build();
+
+        ResponseEntity response = postController.postCreate(post);
+        Post createdPost = (Post)response.getBody();
+        assertAll(
+                () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> assertNotNull(createdPost.getCategory())
+        );
+    }
     // endregion
 
     // region test show-posts
@@ -195,7 +279,7 @@ class PostControllerTest {
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) response.getBody();
+                    List<Post> posts= (List<Post>) (response.getBody());
                     assertEquals(0,posts.size());
                 }
         );
@@ -219,7 +303,7 @@ class PostControllerTest {
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) response.getBody();
+                    List<Post> posts= (List<Post>) (response.getBody());
                     assertEquals(1,posts.size());
                 }
         );
@@ -249,7 +333,7 @@ class PostControllerTest {
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) response.getBody();
+                    List<Post> posts= (List<Post>) (response.getBody());
                     assertEquals(2,posts.size());
                 }
         );
@@ -285,7 +369,7 @@ class PostControllerTest {
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) response.getBody();
+                    List<Post> posts= (List<Post>) (response.getBody());
                     assertEquals(2,posts.size());
                 }
         );

@@ -1,8 +1,10 @@
 package be.vdab.services;
 
 import be.vdab.BackendApplication;
+import be.vdab.domain.Category;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
+import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -24,7 +26,8 @@ class PostServiceImplTest {
     PostService postService;
     @Autowired
     UserRepository userRepository;
-
+    @Autowired
+    CategoryRepository categoryRepository;
 
     // region setup
     @BeforeEach
@@ -148,6 +151,81 @@ class PostServiceImplTest {
 
         assertAll(
                 () -> assertFalse(postRepository.findPostsByTitle("title").isEmpty())
+        );
+    }
+
+    @Test
+    void testCreatePostWithEverythingAndCategoryNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .withCategory(null)
+                .build();
+        assertTrue(postService.createPost(post));
+
+        assertAll(
+                () -> assertFalse(postRepository.findPostsByTitle("title").isEmpty()),
+                () -> assertNull(postRepository.findPostsByTitle("title").get(0).getCategory())
+        );
+    }
+
+    @Test
+    void testCreatePostWithEverythingAndCategoryEmpty(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Category category = new Category()
+                .setName("");
+        Category createdCategory = categoryRepository.save(category);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .withCategory(createdCategory)
+                .build();
+        assertTrue(postService.createPost(post));
+
+        assertAll(
+                () -> assertFalse(postRepository.findPostsByTitle("title").isEmpty()),
+                () -> assertNotNull(postRepository.findPostsByTitle("title").get(0).getCategory())
+        );
+    }
+    @Test
+    void testCreatePostWithEverythingAndCategoryValid(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Category category = new Category()
+                .setName("myCategory");
+        Category createdCategory = categoryRepository.save(category);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .withCategory(createdCategory)
+                .build();
+        assertTrue(postService.createPost(post));
+
+        assertAll(
+                () -> assertFalse(postRepository.findPostsByTitle("title").isEmpty()),
+                () -> assertNotNull(postRepository.findPostsByTitle("title").get(0).getCategory())
         );
     }
 
