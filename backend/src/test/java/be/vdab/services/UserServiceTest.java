@@ -42,7 +42,7 @@ public class UserServiceTest {
     // region test saving
     @Test
     public void testSaveUser(){
-        //TODO: make testSaveUser with username, mail, password or combination
+        //TODO: extend tests of testSaveUser with username, mail, password or combination
         User user = new User.UserBuilder()
                 .withUsername("")
                 .withEmail("")
@@ -62,7 +62,6 @@ public class UserServiceTest {
 
     @Test
     public void testSaveUserWithUsername(){
-        //TODO: make testSaveUser with username, mail, password or combination
         User user = new User.UserBuilder()
                 .withUsername("bernard")
                 .withEmail("")
