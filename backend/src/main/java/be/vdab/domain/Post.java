@@ -15,7 +15,7 @@ public class Post {
     private String content;
     private String title;
     private LocalDateTime creationTime;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
     @ManyToOne

@@ -72,7 +72,7 @@ class CategoryControllerTest {
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    Category categoryFound = response.getBody();
+                    Category categoryFound =  response.getBody();
                     assertEquals("newCategory", categoryFound.getName());
                 }
         );
@@ -108,7 +108,7 @@ class CategoryControllerTest {
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    Category categoryFound =  response.getBody();
+                    Category categoryFound = response.getBody();
                     assertEquals("Dog2", categoryFound.getName());
                 }
         );
