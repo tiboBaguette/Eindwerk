@@ -11,13 +11,13 @@ export class ListCategoriesComponent implements OnInit {
   categories: Category[] = [];
 
   // mock data voor te testen
-  category: Category = new Category();
+  // category: Category = new Category();
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
-    this.category.name = 'Wall Street Bets';
-    this.categories.push(this.category);
+    this.categoryService.getCategories().toPromise().then((categoryResponse) => this.categories = categoryResponse);
+    // this.category.name = 'Wall Street Bets';
+    // this.categories.push(this.category);
   }
-  // this.categoryService.getCategories().subscribe(categoryResponse => this.categories = categoryResponse);
 
 }
