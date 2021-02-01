@@ -324,6 +324,41 @@ class PostControllerTest {
                 }
         );
     }
+
+    @Test
+    void testCreatePostTwoWithSameCategory(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        PostDTO post1 = new PostDTO();
+        post1.title = "title1";
+        post1.content = "content1";
+        post1.user = createdUser;
+        post1.category = "Cat1";
+        ResponseEntity<PostDTO> response1 = postController.postCreate(post1);
+
+        PostDTO post2 = new PostDTO();
+        post2.title = "title2";
+        post2.content = "content2";
+        post2.user = createdUser;
+        post2.category = "Cat1";
+        ResponseEntity<PostDTO> response2 = postController.postCreate(post2);
+
+        Category searchCategory = new Category();
+        searchCategory.setName("Cat1");
+
+        assertAll(
+                () -> assertEquals(HttpStatus.CREATED,response1.getStatusCode()),
+                () -> assertEquals(HttpStatus.CREATED,response2.getStatusCode())
+                //() -> assertEquals(2,postRepository.findPostsByCategoryLike(searchCategory).size())
+        );
+    }
+
+
     // endregion
 
     // region test show-posts
