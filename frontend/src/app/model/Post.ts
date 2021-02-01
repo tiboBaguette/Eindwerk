@@ -5,8 +5,8 @@ export class Post {
   id: number | undefined;
   title: string | undefined;
   content: string | undefined;
-  postCreationDate: Date | undefined;
+  creationTime: any | undefined;
   user: User | undefined;
   category: Category | undefined;
-
+  comment: Comment | undefined;
 }

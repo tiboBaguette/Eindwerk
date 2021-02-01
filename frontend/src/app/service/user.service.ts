@@ -19,8 +19,10 @@ export class UserService {
     return this.http.post<User>('http://localhost:8080/api/user/register', user);
   }
 
-
   public setActiveUser(user: User | undefined): void {
     this.user = user;
   }
+/*  public getUserById() {
+    return this.http.get<User>('http://localhost:8080/api/user/get');
+  }*/
 }

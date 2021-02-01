@@ -9,6 +9,7 @@ import {CreateCategoryComponent} from './components/create-category/create-categ
 import {ListCategoriesComponent} from './components/list-categories/list-categories.component';
 import {PostDetailsComponent} from './components/post-details/post-details.component';
 import {CreateCommentComponent} from './components/create-comment/create-comment.component';
+import {EditPostComponent} from './components/edit-post/edit-post.component';
 
 const routes: Routes = [
   {path: 'login-form', component: LoginFormComponent},
@@ -19,6 +20,7 @@ const routes: Routes = [
   {path: 'list-categories', component: ListCategoriesComponent},
   {path: 'post-details', component: PostDetailsComponent},
   {path: 'create-comment', component: CreateCommentComponent},
+  {path: 'edit-post', component: EditPostComponent},
   {path: '', component: HomepageComponent},
 ];
 

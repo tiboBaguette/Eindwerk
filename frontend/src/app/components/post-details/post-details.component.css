@@ -4,8 +4,10 @@
 
 .darker {
   color: #787878;
+  border: 2px black;
 }
 
 .comment-section {
   background-color: slategrey;
+  border-bottom: 1px solid black;
 }
