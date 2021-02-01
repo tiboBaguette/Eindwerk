@@ -24,6 +24,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public boolean createPost(Post post) {
+        //  TODO: refactor this code
         if(post == null){
             return false;   // no post given
         }
@@ -37,9 +38,19 @@ public class PostServiceImpl implements PostService {
             return false;   // user could not be found in database -> invalid user
         }
 
-        if(post.getCategory() != null){
-            if(categoryRepository.findCategoriesByName(post.getCategory().getName()).isEmpty()){
+        if(post.getCategory() != null){ // check if the category needs saving
+            if(categoryRepository.findCategoryByName(post.getCategory().getName()) == null){
                 categoryRepository.save(post.getCategory());
+            }
+            else{
+                // link the found category to this post
+                // TODO: find a better way to do this
+                post = new Post.PostBuilder()
+                        .withCategory(categoryRepository.findCategoryByName(post.getCategory().getName()))
+                        .withContent(post.getContent())
+                        .withTitle(post.getTitle())
+                        .withUser(post.getUser())
+                        .build();
             }
         }
 
