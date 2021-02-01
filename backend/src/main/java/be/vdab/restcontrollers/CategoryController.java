@@ -27,7 +27,8 @@ public class CategoryController {
     }
 
     @GetMapping("show")
-    public ResponseEntity<Iterable<Post>> getShowCategories(){
-        return new ResponseEntity<>(null,new HttpHeaders(), HttpStatus.CONFLICT);
+    public ResponseEntity<Iterable<Category>> getShowCategories(){
+        Iterable<Category> categories = categoryService.getCategories();
+        return new ResponseEntity<Iterable<Category>>(categories,new HttpHeaders(), HttpStatus.OK);
     }
 }
