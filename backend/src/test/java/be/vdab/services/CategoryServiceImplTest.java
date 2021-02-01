@@ -58,6 +58,19 @@ class CategoryServiceImplTest {
                 () -> assertEquals(1,categoryRepository.findAll().size())
         );
     }
+
+    @Test
+    void testAddCategorySecond(){
+        Category category1 = new Category();
+        category1.setName("testCategory");
+        categoryService.addCategory(category1);
+        Category category2 = new Category();
+        category2.setName("testCategory");
+        categoryService.addCategory(category2);
+        assertAll(
+                () ->
+        );
+    }
     // endregion
 
     // region test get categories

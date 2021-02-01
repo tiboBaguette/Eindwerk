@@ -1,6 +1,7 @@
 package be.vdab.services;
 
 import be.vdab.domain.Post;
+import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ public class PostServiceImpl implements PostService {
     PostRepository postRepository;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    CategoryRepository categoryRepository;
 
     @Override
     public boolean createPost(Post post) {
@@ -29,6 +32,12 @@ public class PostServiceImpl implements PostService {
         }
         if(userRepository.findUserByUsernameOrEmail(post.getUser().getUsername(),post.getUser().getEmail()).isEmpty()){
             return false;   // user could not be found in database -> invalid user
+        }
+
+        if(post.getCategory() != null){
+            if(categoryRepository.findCategoriesByName(post.getCategory().getName()).isEmpty()){
+                categoryRepository.save(post.getCategory());
+            }
         }
 
         post.setCreationTime(LocalDateTime.now());
