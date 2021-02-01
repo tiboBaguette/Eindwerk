@@ -8,6 +8,7 @@ be\vdab\restcontrollers\CategoryController.class
 be\vdab\repositories\CategoryRepository.class
 be\vdab\restcontrollers\UserController.class
 be\vdab\domain\Post.class
+be\vdab\dtos\PostDTO.class
 be\vdab\services\UserService.class
 be\vdab\services\PostServiceImpl.class
 be\vdab\services\CategoryService.class
