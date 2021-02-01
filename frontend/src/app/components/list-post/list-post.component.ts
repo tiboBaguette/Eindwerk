@@ -17,6 +17,7 @@ export class ListPostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.postService.getPosts().subscribe(postResponse => this.posts = postResponse);
+    this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
   }
+
 }
