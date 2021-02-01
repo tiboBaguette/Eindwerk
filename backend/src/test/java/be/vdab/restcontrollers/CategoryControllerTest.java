@@ -112,5 +112,9 @@ class CategoryControllerTest {
     }
     // endregion
 
+    // region Get Categories
+    // TODO: test get categories
+    // endregion
+
 
 }
