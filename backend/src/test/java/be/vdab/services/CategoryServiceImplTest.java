@@ -68,7 +68,7 @@ class CategoryServiceImplTest {
         category2.setName("testCategory");
         categoryService.addCategory(category2);
         assertAll(
-                () ->
+                () -> assertEquals(1,categoryRepository.findAll().size())
         );
     }
     // endregion

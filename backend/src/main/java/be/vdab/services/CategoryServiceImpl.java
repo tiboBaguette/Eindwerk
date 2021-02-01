@@ -19,7 +19,10 @@ public class CategoryServiceImpl implements CategoryService {
         if(category.getName().equals("")){
             return false;
         }
-        categoryRepository.save(category);
+        if(!categoryRepository.findCategoriesByName(category.getName()).isEmpty()){
+            return false;
+        }
+            categoryRepository.save(category);
         return true;
     }
 
