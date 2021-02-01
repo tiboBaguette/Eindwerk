@@ -36,9 +36,9 @@ export class CreatePostComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.postService.createPost(this.createPostForm.value).subscribe();
-      this.createPostForm.reset();
-      this.router.navigateByUrl('list-posts');
+      this.postService.createPost(this.createPostForm.value).subscribe(() => {
+        this.router.navigateByUrl('list-posts');
+      });
     }
   }
 }
