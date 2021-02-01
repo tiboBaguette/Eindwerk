@@ -18,11 +18,11 @@ export class ListPostComponent implements OnInit {
   ngOnInit(): void {
     this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
 
-    setTimeout(() =>
+/*    setTimeout(() =>
       {
         this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
       },
-      61);
+      61);*/
   }
 
 }

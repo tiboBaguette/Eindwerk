@@ -399,7 +399,7 @@ class PostControllerTest {
                 }
         );
     }
-    @Test
+/*    @Test
     void testShowPostTwoPostsAvailableSameUser(){
         User user = new User.UserBuilder()
                 .withUsername("Username")
@@ -428,7 +428,7 @@ class PostControllerTest {
                     assertEquals(2,posts.size());
                 }
         );
-    }
+    }*/
     @Test
     void testShowPostTwoPostsAvailableDifferentUser(){
         User user1 = new User.UserBuilder()

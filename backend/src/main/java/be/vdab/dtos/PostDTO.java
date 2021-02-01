@@ -1,11 +1,7 @@
 package be.vdab.dtos;
 
 import be.vdab.domain.User;
-import lombok.NoArgsConstructor;
-
-import javax.persistence.*;
 import java.time.LocalDateTime;
-
 
 public class PostDTO {
     private Long id;
