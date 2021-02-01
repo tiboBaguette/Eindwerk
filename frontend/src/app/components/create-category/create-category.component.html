@@ -4,12 +4,12 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Create A New Category</h5>
-    <form>
+    <form [formGroup]="createCategoryForm">
       <div class="form-group">
         <div class="form-row">
           <div class="col">
             <label align="center" >Category Name</label>
-            <input type="text" class="form-control" placeholder="Category Name">
+            <input type="text" class="form-control" placeholder="Category Name" [formControlName]="'name'">
           </div>
         </div>
       </div>
