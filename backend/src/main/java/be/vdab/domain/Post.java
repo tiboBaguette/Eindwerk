@@ -1,5 +1,6 @@
 package be.vdab.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -20,7 +21,6 @@ public class Post {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-
 
     public Long getId() {
         return id;
