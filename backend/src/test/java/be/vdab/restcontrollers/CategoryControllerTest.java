@@ -74,6 +74,42 @@ class CategoryControllerTest {
                 }
         );
     }
+
+    @Test
+    void testAddCategorySecondDuplicate(){
+        Category category1 = new Category();
+        category1.setName("Cat1");
+        categoryRepository.save(category1);
+        Category category2 = new Category();
+        category2.setName("Cat1");
+
+        ResponseEntity response = categoryController.postAddCategory(category2);
+        assertAll(
+                () -> assertNotNull(response),
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertNull(response.getBody())
+        );
+    }
+
+    @Test
+    void testAddCategorySecondUnique(){
+        Category category1 = new Category();
+        category1.setName("Cat1");
+        categoryRepository.save(category1);
+        Category category2 = new Category();
+        category2.setName("Dog2");
+
+        ResponseEntity response = categoryController.postAddCategory(category2);
+        assertAll(
+                () -> assertNotNull(response),
+                () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNull(response.getBody()),
+                () -> {
+                    Category categoryFound = (Category) response.getBody();
+                    assertEquals("Dog2", categoryFound.getName());
+                }
+        );
+    }
     // endregion
 
 

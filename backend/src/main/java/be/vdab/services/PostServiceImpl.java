@@ -13,11 +13,12 @@ import java.time.LocalDateTime;
 public class PostServiceImpl implements PostService {
 
     @Autowired
-    PostRepository postRepository;
+    private PostRepository postRepository;
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
     @Autowired
-    CategoryRepository categoryRepository;
+    private CategoryRepository categoryRepository;
+
 
     @Override
     public boolean createPost(Post post) {
