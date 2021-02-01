@@ -103,7 +103,7 @@ class CategoryControllerTest {
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
-                () -> assertNull(response.getBody()),
+                () -> assertNotNull(response.getBody()),
                 () -> {
                     Category categoryFound = (Category) response.getBody();
                     assertEquals("Dog2", categoryFound.getName());
