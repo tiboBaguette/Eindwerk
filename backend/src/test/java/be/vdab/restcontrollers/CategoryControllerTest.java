@@ -12,6 +12,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = BackendApplication.class)
@@ -38,7 +41,7 @@ class CategoryControllerTest {
 
     @Test
     void testAddCategoryNull(){
-        ResponseEntity response = categoryController.postAddCategory(null);
+        ResponseEntity<Category> response = categoryController.postAddCategory(null);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
@@ -50,7 +53,7 @@ class CategoryControllerTest {
         Category category = new Category();
         category.setName("");
 
-        ResponseEntity response = categoryController.postAddCategory(category);
+        ResponseEntity<Category> response = categoryController.postAddCategory(category);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
@@ -63,13 +66,13 @@ class CategoryControllerTest {
         Category category = new Category();
         category.setName("newCategory");
 
-        ResponseEntity response = categoryController.postAddCategory(category);
+        ResponseEntity<Category> response = categoryController.postAddCategory(category);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    Category categoryFound = (Category) response.getBody();
+                    Category categoryFound = response.getBody();
                     assertEquals("newCategory", categoryFound.getName());
                 }
         );
@@ -83,7 +86,7 @@ class CategoryControllerTest {
         Category category2 = new Category();
         category2.setName("Cat1");
 
-        ResponseEntity response = categoryController.postAddCategory(category2);
+        ResponseEntity<Category> response = categoryController.postAddCategory(category2);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
@@ -99,13 +102,13 @@ class CategoryControllerTest {
         Category category2 = new Category();
         category2.setName("Dog2");
 
-        ResponseEntity response = categoryController.postAddCategory(category2);
+        ResponseEntity<Category> response = categoryController.postAddCategory(category2);
         assertAll(
                 () -> assertNotNull(response),
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    Category categoryFound = (Category) response.getBody();
+                    Category categoryFound =  response.getBody();
                     assertEquals("Dog2", categoryFound.getName());
                 }
         );
@@ -114,6 +117,58 @@ class CategoryControllerTest {
 
     // region Get Categories
     // TODO: test get categories
+    @Test
+    void testShowCategoriesNone(){
+    ResponseEntity<Iterable<Category>> response = categoryController.getShowCategories();
+
+    assertAll(
+            () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+            () -> assertNotNull(response.getBody()),
+            () -> {
+                List<Category> categories = (ArrayList<Category>) response.getBody();
+                assertTrue(categories.isEmpty());
+            }
+    );
+    }
+    @Test
+    void testShowCategoriesOne(){
+        Category category = new Category();
+        category.setName("Cat1");
+        categoryRepository.save(category);
+        ResponseEntity<Iterable<Category>> response = categoryController.getShowCategories();
+
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Category> categories = (ArrayList<Category>) response.getBody();
+                    assertEquals(1,categories.size());
+                    assertEquals( "Cat1",categories.get(0).getName());
+                }
+        );
+    }
+    @Test
+    void testShowCategoriesTwo(){
+        Category category1 = new Category();
+        category1.setName("Cat1");
+        categoryRepository.save(category1);
+        Category category2 = new Category();
+        category2.setName("Dog2");
+        categoryRepository.save(category2);
+
+
+        ResponseEntity<Iterable<Category>> response = categoryController.getShowCategories();
+
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Category> categories = (ArrayList<Category>) response.getBody();
+                    assertEquals(2,categories.size());
+                }
+        );
+    }
+
     // endregion
 
 
