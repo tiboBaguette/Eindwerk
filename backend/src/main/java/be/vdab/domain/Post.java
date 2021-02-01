@@ -17,6 +17,10 @@ public class Post {
     @OneToOne
     @JoinColumn(name = "user_id")
     private User user;
+    @OneToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
 
     public Long getId() {
         return id;
@@ -42,13 +46,16 @@ public class Post {
         return user;
     }
 
-
+    public Category getCategory() {
+        return category;
+    }
 
     public static class PostBuilder{
         private String content;
         private String title;
         private LocalDateTime creationTime;
         private User user;
+        private Category category;
 
         public PostBuilder(){
         }
@@ -73,12 +80,18 @@ public class Post {
             return this;
         }
 
+        public PostBuilder withCategory(Category category){
+            this.category = category;
+            return this;
+        }
+
         public Post build(){
             Post post = new Post();
             post.content = content;
             post.title = title;
             post.creationTime = creationTime;
             post.user = user;
+            post.category = category;
             return post;
         }
     }
