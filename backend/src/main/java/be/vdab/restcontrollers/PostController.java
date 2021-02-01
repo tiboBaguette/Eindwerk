@@ -1,6 +1,8 @@
 package be.vdab.restcontrollers;
 
+import be.vdab.domain.Category;
 import be.vdab.domain.Post;
+import be.vdab.dtos.PostDTO;
 import be.vdab.domain.User;
 import be.vdab.services.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +20,12 @@ public class PostController {
     PostService postService;
 
     @PostMapping("create")
-    public ResponseEntity<Post> postCreate(@RequestBody Post post) {
-        boolean result = postService.createPost(post);
+    public ResponseEntity<PostDTO> postCreate(@RequestBody PostDTO postdto) {
+
+        boolean result = postService.createPost(postdto);
+
         if(result){
-            return new ResponseEntity<>(post,HttpStatus.CREATED);
+            return new ResponseEntity<>(postdto,HttpStatus.CREATED);
         }
         return new ResponseEntity<>(null,new HttpHeaders(), HttpStatus.CONFLICT);
     }

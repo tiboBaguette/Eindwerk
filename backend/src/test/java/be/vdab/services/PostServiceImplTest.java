@@ -3,6 +3,7 @@ package be.vdab.services;
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
 import be.vdab.domain.Post;
+import be.vdab.dtos.PostDTO;
 import be.vdab.domain.User;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
@@ -47,7 +48,7 @@ class PostServiceImplTest {
     // region test create
     @Test
     void testCreatePostWithNull() {
-        assertFalse(postService.createPost(null));
+        assertFalse(postService.createPost((PostDTO) null));
     }
 
     @Test

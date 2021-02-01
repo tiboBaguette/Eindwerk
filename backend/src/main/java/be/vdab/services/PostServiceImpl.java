@@ -1,6 +1,8 @@
 package be.vdab.services;
 
+import be.vdab.domain.Category;
 import be.vdab.domain.Post;
+import be.vdab.dtos.PostDTO;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
@@ -44,6 +46,23 @@ public class PostServiceImpl implements PostService {
         post.setCreationTime(LocalDateTime.now());
         postRepository.save(post);
         return true;
+    }
+
+    @Override
+    public boolean createPost(PostDTO postDTO) {
+        if(postDTO == null){
+            return false;
+        }
+        Category category = new Category().setName(postDTO.category);
+
+        Post post = new Post.PostBuilder()
+                .withUser(postDTO.user)
+                .withTitle(postDTO.title)
+                .withContent(postDTO.content)
+                .withCategory(category)
+                .build();
+
+        return createPost(post);
     }
 
     @Override
