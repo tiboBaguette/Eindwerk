@@ -3,6 +3,7 @@ package be.vdab.restcontrollers;
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
 import be.vdab.domain.Post;
+import be.vdab.dtos.PostDTO;
 import be.vdab.domain.User;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
@@ -49,7 +50,12 @@ class PostControllerTest {
     // region test create
     @Test
     void testCreatePostWithNull() {
-        ResponseEntity<Post> response = postController.postCreate(null);
+        // make & delete post to ensure eindwerk.post table exists
+        Post post = new Post();
+        postRepository.save(post);
+        //postRepository.deleteAll();
+        // test begins here
+        ResponseEntity<PostDTO> response = postController.postCreate(null);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -58,10 +64,9 @@ class PostControllerTest {
 
     @Test
     void testCreatePostWithTitle() {
-        Post post = new Post.PostBuilder()
-                .withTitle("Title")
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+        PostDTO post = new PostDTO();
+        post.title = "Title";
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -70,10 +75,10 @@ class PostControllerTest {
 
     @Test
     void testCreatePostWithContent() {
-        Post post = new Post.PostBuilder()
-                .withContent("Content")
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+        PostDTO post = new PostDTO();
+        post.content = "Content";
+
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -88,10 +93,15 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         userRepository.save(user);
-        Post post = new Post.PostBuilder()
-                .withUser(user)
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+//        Post post = new Post.PostBuilder()
+//                .withUser(user)
+//                .build();
+//
+        PostDTO post = new PostDTO();
+        post.user = user;
+
+
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -106,10 +116,13 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         // not saved -> does not exist on database -> invalid user
-        Post post = new Post.PostBuilder()
-                .withUser(user)
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+//        Post post = new Post.PostBuilder()
+//                .withUser(user)
+//                .build();
+        PostDTO post = new PostDTO();
+        post.user = user;
+
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -119,11 +132,15 @@ class PostControllerTest {
 
     @Test
     void testCreatePostWithTitleAndContent() {
-        Post post = new Post.PostBuilder()
-                .withTitle("title")
-                .withContent("content")
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+//        Post post = new Post.PostBuilder()
+//                .withTitle("title")
+//                .withContent("content")
+//                .build();
+        PostDTO post = new PostDTO();
+        post.title = "title";
+        post.content = "content";
+
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -138,11 +155,15 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         userRepository.save(user);
-        Post post = new Post.PostBuilder()
-                .withTitle("title")
-                .withUser(user)
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+//        Post post = new Post.PostBuilder()
+//                .withTitle("title")
+//                .withUser(user)
+//                .build();
+        PostDTO post = new PostDTO();
+        post.title = "title";
+        post.user = user;
+
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -158,11 +179,14 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         userRepository.save(user);
-        Post post = new Post.PostBuilder()
-                .withContent("content")
-                .withUser(user)
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+//        Post post = new Post.PostBuilder()
+//                .withContent("content")
+//                .withUser(user)
+//                .build();
+        PostDTO post = new PostDTO();
+        post.content = "content";
+        post.user = user;
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -178,12 +202,16 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         userRepository.save(user);
-        Post post = new Post.PostBuilder()
-                .withTitle("title")
-                .withContent("content")
-                .withUser(user)
-                .build();
-        ResponseEntity<Post> response = postController.postCreate(post);
+//        Post post = new Post.PostBuilder()
+//                .withTitle("title")
+//                .withContent("content")
+//                .withUser(user)
+//                .build();
+        PostDTO post = new PostDTO();
+        post.title = "title";
+        post.content = "content";
+        post.user = user;
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())
@@ -198,18 +226,27 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         User createdUser = userRepository.save(user);
-        Post post = new Post.PostBuilder()
-                .withTitle("title")
-                .withContent("content")
-                .withUser(createdUser)
-                .withCategory(null)
-                .build();
-        ResponseEntity response = postController.postCreate(post);
-        Post createdPost = (Post)response.getBody();
+//        Post post = new Post.PostBuilder()
+//                .withTitle("title")
+//                .withContent("content")
+//                .withUser(createdUser)
+//                .withCategory(null)
+//                .build();
+        PostDTO post = new PostDTO();
+        post.title = "title";
+        post.content = "content";
+        post.user = createdUser;
+        post.category = null;
+
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
+        PostDTO createdPost = response.getBody();
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
-                () -> assertNull(createdPost.getCategory())
+                () -> {
+                    assert createdPost != null;
+                    assertNull(createdPost.category);
+                }
         );
     }
 
@@ -221,24 +258,33 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         User createdUser = userRepository.save(user);
+//
+//        Category category = new Category()
+//                .setName("");
+//        Category createdCategory = categoryRepository.save(category);
+//
+//        Post post = new Post.PostBuilder()
+//                .withTitle("title")
+//                .withContent("content")
+//                .withUser(createdUser)
+//                .withCategory(createdCategory)
+//                .build();
+//
+        PostDTO post = new PostDTO();
+        post.title = "title";
+        post.content = "content";
+        post.user = createdUser;
+        post.category = "";
 
-        Category category = new Category()
-                .setName("");
-        Category createdCategory = categoryRepository.save(category);
-
-        Post post = new Post.PostBuilder()
-                .withTitle("title")
-                .withContent("content")
-                .withUser(createdUser)
-                .withCategory(createdCategory)
-                .build();
-
-        ResponseEntity response = postController.postCreate(post);
-        Post createdPost = (Post)response.getBody();
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
+        PostDTO createdPost = response.getBody();
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
-                () -> assertNotNull(createdPost.getCategory())
+                () -> {
+                    assert createdPost != null;
+                    assertNotNull(createdPost.category);
+                }
         );
     }
     @Test
@@ -250,23 +296,32 @@ class PostControllerTest {
                 .build();
         User createdUser = userRepository.save(user);
 
-        Category category = new Category()
-                .setName("myCategory");
-        Category createdCategory = categoryRepository.save(category);
+//        Category category = new Category()
+//                .setName("myCategory");
+//        Category createdCategory = categoryRepository.save(category);
+//
+//        Post post = new Post.PostBuilder()
+//                .withTitle("title")
+//                .withContent("content")
+//                .withUser(createdUser)
+//                .withCategory(createdCategory)
+//                .build();
+        PostDTO post = new PostDTO();
+        post.title = "title";
+        post.content = "content";
+        post.user = createdUser;
+        post.category = "myCategory";
 
-        Post post = new Post.PostBuilder()
-                .withTitle("title")
-                .withContent("content")
-                .withUser(createdUser)
-                .withCategory(createdCategory)
-                .build();
 
-        ResponseEntity response = postController.postCreate(post);
-        Post createdPost = (Post)response.getBody();
+        ResponseEntity<PostDTO> response = postController.postCreate(post);
+        PostDTO createdPost = response.getBody();
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
-                () -> assertNotNull(createdPost.getCategory())
+                () -> {
+                    assert createdPost != null;
+                    assertNotNull(createdPost.category);
+                }
         );
     }
     // endregion
@@ -275,12 +330,12 @@ class PostControllerTest {
 
     @Test
     void testShowPostNoPostsAvailable(){
-        ResponseEntity response = postController.getShowPosts();
+        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) (response.getBody());
+                    List<Post> posts = (List<Post>) (response.getBody());
                     assertEquals(0,posts.size());
                 }
         );
@@ -299,7 +354,7 @@ class PostControllerTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post);
-        ResponseEntity response = postController.getShowPosts();
+        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
@@ -329,7 +384,7 @@ class PostControllerTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post2);
-        ResponseEntity response = postController.getShowPosts();
+        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
@@ -365,7 +420,7 @@ class PostControllerTest {
                 .withUser(createdUser2)
                 .build();
         postRepository.save(post2);
-        ResponseEntity response = postController.getShowPosts();
+        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
