@@ -64,12 +64,12 @@ public class PostServiceImpl implements PostService {
         if(postDTO == null){
             return false;
         }
-        Category category = new Category().setName(postDTO.category);
+        Category category = new Category().setName(postDTO.getCategory());
 
         Post post = new Post.PostBuilder()
-                .withUser(postDTO.user)
-                .withTitle(postDTO.title)
-                .withContent(postDTO.content)
+                .withUser(postDTO.getUser())
+                .withTitle(postDTO.getTitle())
+                .withContent(postDTO.getContent())
                 .withCategory(category)
                 .build();
 

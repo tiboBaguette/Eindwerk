@@ -65,7 +65,7 @@ class PostControllerTest {
     @Test
     void testCreatePostWithTitle() {
         PostDTO post = new PostDTO();
-        post.title = "Title";
+        post.setTitle("Title");
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
@@ -76,7 +76,7 @@ class PostControllerTest {
     @Test
     void testCreatePostWithContent() {
         PostDTO post = new PostDTO();
-        post.content = "Content";
+        post.setContent("Content");
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
@@ -98,7 +98,7 @@ class PostControllerTest {
 //                .build();
 //
         PostDTO post = new PostDTO();
-        post.user = user;
+        post.setUser(user);
 
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
@@ -120,7 +120,7 @@ class PostControllerTest {
 //                .withUser(user)
 //                .build();
         PostDTO post = new PostDTO();
-        post.user = user;
+        post.setUser(user);
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
@@ -137,8 +137,8 @@ class PostControllerTest {
 //                .withContent("content")
 //                .build();
         PostDTO post = new PostDTO();
-        post.title = "title";
-        post.content = "content";
+        post.setTitle("title");
+        post.setContent("content");
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
@@ -160,8 +160,8 @@ class PostControllerTest {
 //                .withUser(user)
 //                .build();
         PostDTO post = new PostDTO();
-        post.title = "title";
-        post.user = user;
+        post.setTitle("title");
+        post.setUser(user);
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
@@ -184,8 +184,8 @@ class PostControllerTest {
 //                .withUser(user)
 //                .build();
         PostDTO post = new PostDTO();
-        post.content = "content";
-        post.user = user;
+        post.setContent("content");
+        post.setUser(user);
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
@@ -208,9 +208,9 @@ class PostControllerTest {
 //                .withUser(user)
 //                .build();
         PostDTO post = new PostDTO();
-        post.title = "title";
-        post.content = "content";
-        post.user = user;
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(user);
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
@@ -233,10 +233,10 @@ class PostControllerTest {
 //                .withCategory(null)
 //                .build();
         PostDTO post = new PostDTO();
-        post.title = "title";
-        post.content = "content";
-        post.user = createdUser;
-        post.category = null;
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(createdUser);
+        post.setCategory(null);
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         PostDTO createdPost = response.getBody();
@@ -245,7 +245,7 @@ class PostControllerTest {
                 () -> assertNotNull(response.getBody()),
                 () -> {
                     assert createdPost != null;
-                    assertNull(createdPost.category);
+                    assertNull(createdPost.getCategory());
                 }
         );
     }
@@ -271,10 +271,10 @@ class PostControllerTest {
 //                .build();
 //
         PostDTO post = new PostDTO();
-        post.title = "title";
-        post.content = "content";
-        post.user = createdUser;
-        post.category = "";
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(createdUser);
+        post.setCategory("");
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         PostDTO createdPost = response.getBody();
@@ -283,7 +283,7 @@ class PostControllerTest {
                 () -> assertNotNull(response.getBody()),
                 () -> {
                     assert createdPost != null;
-                    assertNotNull(createdPost.category);
+                    assertNotNull(createdPost.getCategory());
                 }
         );
     }
@@ -307,10 +307,10 @@ class PostControllerTest {
 //                .withCategory(createdCategory)
 //                .build();
         PostDTO post = new PostDTO();
-        post.title = "title";
-        post.content = "content";
-        post.user = createdUser;
-        post.category = "myCategory";
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(createdUser);
+        post.setCategory("myCategory");
 
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
@@ -320,7 +320,7 @@ class PostControllerTest {
                 () -> assertNotNull(response.getBody()),
                 () -> {
                     assert createdPost != null;
-                    assertNotNull(createdPost.category);
+                    assertNotNull(createdPost.getCategory());
                 }
         );
     }
@@ -335,17 +335,17 @@ class PostControllerTest {
         User createdUser = userRepository.save(user);
 
         PostDTO post1 = new PostDTO();
-        post1.title = "title1";
-        post1.content = "content1";
-        post1.user = createdUser;
-        post1.category = "Cat1";
+        post1.setTitle("title1");
+        post1.setContent("content1");
+        post1.setUser(createdUser);
+        post1.setCategory("Cat1");
         ResponseEntity<PostDTO> response1 = postController.postCreate(post1);
 
         PostDTO post2 = new PostDTO();
-        post2.title = "title2";
-        post2.content = "content2";
-        post2.user = createdUser;
-        post2.category = "Cat1";
+        post2.setTitle("title2");
+        post2.setContent("content2");
+        post2.setUser(createdUser);
+        post2.setCategory("Cat1");
         ResponseEntity<PostDTO> response2 = postController.postCreate(post2);
 
         Category searchCategory = new Category();
