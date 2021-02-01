@@ -39,6 +39,8 @@ class PostServiceImplTest {
     void breakDown(){
         postRepository.deleteAll();
         userRepository.deleteAll();
+        categoryRepository.deleteAll();
+
     }
     // endregion
 

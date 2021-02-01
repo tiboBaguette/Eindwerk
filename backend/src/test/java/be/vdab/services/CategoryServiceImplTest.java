@@ -60,15 +60,27 @@ class CategoryServiceImplTest {
     }
 
     @Test
-    void testAddCategorySecond(){
+    void testAddCategorySecondIdentical(){
         Category category1 = new Category();
         category1.setName("testCategory");
-        categoryService.addCategory(category1);
+        assertTrue(categoryService.addCategory(category1));
         Category category2 = new Category();
         category2.setName("testCategory");
-        categoryService.addCategory(category2);
+        assertFalse(categoryService.addCategory(category2));
         assertAll(
                 () -> assertEquals(1,categoryRepository.findAll().size())
+        );
+    }
+    @Test
+    void testAddCategorySecondUnique(){
+        Category category1 = new Category();
+        category1.setName("Cat1");
+        assertTrue(categoryService.addCategory(category1));
+        Category category2 = new Category();
+        category2.setName("Dog2");
+        assertTrue(categoryService.addCategory(category2));
+        assertAll(
+                () -> assertEquals(2,categoryRepository.findAll().size())
         );
     }
     // endregion

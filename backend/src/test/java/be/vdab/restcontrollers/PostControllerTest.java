@@ -42,6 +42,7 @@ class PostControllerTest {
     void breakDown(){
         postRepository.deleteAll();
         userRepository.deleteAll();
+        categoryRepository.deleteAll();
     }
     // endregion
 
