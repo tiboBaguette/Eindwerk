@@ -10,14 +10,16 @@ import {CategoryService} from '../../service/category.service';
 export class ListCategoriesComponent implements OnInit {
   categories: Category[] = [];
 
-  // mock data voor te testen
-  // category: Category = new Category();
   constructor(private categoryService: CategoryService) { }
 
   ngOnInit(): void {
     this.categoryService.getCategories().toPromise().then((categoryResponse) => this.categories = categoryResponse);
-    // this.category.name = 'Wall Street Bets';
-    // this.categories.push(this.category);
+
+    setTimeout(() =>
+      {
+        this.categoryService.getCategories().toPromise().then((categoryResponse) => this.categories = categoryResponse);
+      },
+      61);
   }
 
 }

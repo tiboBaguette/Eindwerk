@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Post} from '../../model/Post';
 import {PostService} from '../../service/post.service';
-import {User} from '../../model/User';
-import {UserService} from '../../service/user.service';
+import {delay, timeout} from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-post',
@@ -18,6 +17,12 @@ export class ListPostComponent implements OnInit {
 
   ngOnInit(): void {
     this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
+
+    setTimeout(() =>
+      {
+        this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
+      },
+      61);
   }
 
 }
