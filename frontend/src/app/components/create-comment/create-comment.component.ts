@@ -41,7 +41,7 @@ export class CreateCommentComponent implements OnInit {
       this.isError = true;
     } else {
       this.route.params.subscribe(params => {
-        this.comment.content = this.createCommentForm.value;
+        this.comment.content = this.createCommentForm.controls.content.value;
         this.comment.post = this.post;
 
         this.commentService.createComment(this.comment).subscribe(() => {
