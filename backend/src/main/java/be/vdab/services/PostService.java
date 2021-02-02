@@ -7,4 +7,5 @@ public interface PostService {
     boolean createPost(Post post);
     boolean createPost(PostDTO postDTO);
     Iterable<Post> getPosts();
+    Post getPostByID(Long postID);
 }

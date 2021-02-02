@@ -202,11 +202,7 @@ class PostControllerTest {
                 .withEmail("email@gmail.com")
                 .build();
         userRepository.save(user);
-//        Post post = new Post.PostBuilder()
-//                .withTitle("title")
-//                .withContent("content")
-//                .withUser(user)
-//                .build();
+
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
@@ -465,6 +461,75 @@ class PostControllerTest {
                 }
         );
     }
+
+    // endregion
+
+    // region test get-details
+    @Test
+    void testGetDetailsNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        userRepository.save(user);
+
+        PostDTO post = new PostDTO();
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(user);
+        assertNotNull(postController.postCreate(post)); // make sure there is a post
+        ResponseEntity<Post> response = postController.getPostDetail(null);
+        assertAll(
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertNull(response.getBody())
+        );
+    }
+    @Test
+    void testGetDetailsInvalidID(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        userRepository.save(user);
+
+        PostDTO post = new PostDTO();
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(user);
+        assertNotNull(postController.postCreate(post)); // make sure there is a post
+        ResponseEntity<Post> response = postController.getPostDetail(-10L);
+        assertAll(
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertNull(response.getBody())
+        );
+    }
+    @Test
+    void testGetDetailsValidID(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        userRepository.save(user);
+
+        PostDTO post = new PostDTO();
+        post.setTitle("title");
+        post.setContent("content");
+        post.setUser(user);
+        assertNotNull(postController.postCreate(post)); // make sure there is a post
+
+        Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
+
+        ResponseEntity<Post> response = postController.getPostDetail(idFound);
+        assertAll(
+                () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNotNull(response.getBody())
+        );
+    }
+
+
 
     // endregion
 }
