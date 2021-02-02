@@ -386,4 +386,72 @@ class PostServiceImplTest {
         );
     }
     // endregion
+
+    // region test deletePost
+    @Test
+    void testDeleteNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+       Post createdPost = postRepository.save(post);
+        // delete post
+       assertFalse(postService.deletePostByID(null));
+       assertTrue(postRepository.findById(createdPost.getId()).isPresent());
+    }
+    @Test
+    void testDeleteInvalidID(){
+// make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+        // delete post
+        assertFalse(postService.deletePostByID(-10L));
+        assertTrue(postRepository.findById(createdPost.getId()).isPresent());
+    }
+    @Test
+    void testDeleteValidID(){
+// make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post dummyPost = postRepository.save(post2);
+        // delete post
+        assertTrue(postService.deletePostByID(createdPost.getId()));
+        assertTrue(postRepository.findById(createdPost.getId()).isEmpty());
+        assertEquals(1, postRepository.findAll().size());
+    }
+    // endregion
 }

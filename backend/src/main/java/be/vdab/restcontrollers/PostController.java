@@ -35,13 +35,25 @@ public class PostController {
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
 
-    @GetMapping("detail/:{postid}")
-    public ResponseEntity<Post> getPostDetail(@PathVariable Long postid){
+    @GetMapping("detail/{postid}")
+    public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
         Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
             return  new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(foundPost,HttpStatus.CREATED);
+    }
+
+    @PostMapping("delete")
+    public ResponseEntity<String> deletePost(@RequestBody Post post){
+        if(post == null){
+            return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
+        }
+        boolean result = postService.deletePostByID(post.getId());
+        if(result){
+            return new ResponseEntity<>("Delete success", new HttpHeaders(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
     }
 
 }
