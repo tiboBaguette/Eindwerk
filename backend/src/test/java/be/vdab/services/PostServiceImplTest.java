@@ -364,7 +364,6 @@ class PostServiceImplTest {
     }
     @Test
     void testGetByIDValid(){
-        // TODO: rewrite test so that index is always valid
         User user = new User.UserBuilder()
                 .withUsername("Username")
                 .withPassword("Password")
@@ -378,7 +377,9 @@ class PostServiceImplTest {
                 .build();
         assertTrue(postService.createPost(post));
 
-        Post foundPost = postService.getPostByID(1L); // when running other tests, this post might not be index 1!
+        Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
+
+        Post foundPost = postService.getPostByID(idFound);
         assertAll(
                 () -> assertNotNull(foundPost),
                 () -> assertEquals("title",foundPost.getTitle())
