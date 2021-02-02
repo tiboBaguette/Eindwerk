@@ -18,8 +18,8 @@ const routes: Routes = [
   {path: 'create-category', component: CreateCategoryComponent},
   {path: 'list-posts', component: ListPostComponent},
   {path: 'list-categories', component: ListCategoriesComponent},
-  {path: 'post-details', component: PostDetailsComponent},
-  {path: 'create-comment', component: CreateCommentComponent},
+  {path: 'post-details/:id', component: PostDetailsComponent},
+  {path: 'create-comment/:id', component: CreateCommentComponent},
   {path: 'edit-post', component: EditPostComponent},
   {path: '', component: HomepageComponent},
 ];

@@ -1,5 +1,6 @@
 package be.vdab.services;
 
+
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
 import be.vdab.domain.Post;

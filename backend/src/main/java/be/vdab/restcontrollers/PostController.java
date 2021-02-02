@@ -35,10 +35,9 @@ public class PostController {
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
 
-    @GetMapping("detail/{postid}")
-    public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") String postid){
-        Long postID = Long.parseLong(postid);
-        Post foundPost = postService.getPostByID(postID);
+    @GetMapping("detail/:{postid}")
+    public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
+        Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
             return  new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.CONFLICT);
         }

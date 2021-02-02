@@ -5,4 +5,5 @@ import be.vdab.domain.Comment;
 
 public interface CommentService {
     boolean createComment(Comment comment);
+    Iterable<Comment> getCommentsByPostID(Long postID);
 }

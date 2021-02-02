@@ -1,3 +1,4 @@
+/*
 package be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
@@ -173,3 +174,4 @@ class CategoryControllerTest {
 
 
 }
+*/

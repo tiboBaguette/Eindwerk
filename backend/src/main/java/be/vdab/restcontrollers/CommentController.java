@@ -18,11 +18,17 @@ public class CommentController {
 
     @PostMapping("add")
     public ResponseEntity<Comment> postAddComment(@RequestBody Comment comment){
+        System.out.println(comment.toString());
         boolean result = commentService.createComment(comment);
         if(result){
             return new ResponseEntity<>(comment, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(null,new HttpHeaders(),HttpStatus.CONFLICT);
+    }
+
+    @GetMapping("show/:{postid}")
+    public ResponseEntity<Iterable<Comment>> getComments(@PathVariable Long postid){
+        return new ResponseEntity<>(commentService.getCommentsByPostID(postid),HttpStatus.OK);
     }
 
 }
