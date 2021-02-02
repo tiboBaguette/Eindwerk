@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {CommentService} from '../../service/comment.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../../service/post.service';
 import {Post} from '../../model/Post';
 
@@ -13,7 +13,8 @@ import {Post} from '../../model/Post';
 })
 export class CreateCommentComponent implements OnInit {
   isError: boolean | undefined;
-  posts: Post[] = [];
+  post: Post = new Post();
+
   createCommentForm = this.formBuilder.group({
     content: '',
     user: this.userService.user,
@@ -25,19 +26,24 @@ export class CreateCommentComponent implements OnInit {
     private postService: PostService,
     private commentService: CommentService,
     private router: Router,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit(): void {
-    this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
+    this.route.params.subscribe(params => {
+      this.postService.getPostById(params.id).subscribe(postResponse => this.post = postResponse);
+    });
   }
 
   createComment(): void {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.commentService.createComment(this.createCommentForm.value).subscribe(() => {
+      this.route.params.subscribe(params => {
+        this.commentService.createComment(this.createCommentForm.value).subscribe(() => {
 
-        this.router.navigateByUrl('post-details');
+          this.router.navigateByUrl('post-details/:' + params.id);
+        });
       });
     }
   }

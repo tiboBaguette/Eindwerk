@@ -19,7 +19,7 @@ const routes: Routes = [
   {path: 'list-posts', component: ListPostComponent},
   {path: 'list-categories', component: ListCategoriesComponent},
   {path: 'post-details/:id', component: PostDetailsComponent},
-  {path: 'create-comment', component: CreateCommentComponent},
+  {path: 'create-comment/:id', component: CreateCommentComponent},
   {path: 'edit-post', component: EditPostComponent},
   {path: '', component: HomepageComponent},
 ];
