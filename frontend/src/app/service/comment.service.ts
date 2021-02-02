@@ -6,11 +6,14 @@ import {Observable} from 'rxjs';
   providedIn: 'root'
 })
 export class CommentService {
-  public comment: Comment | undefined;
+  // public comment: Comment | undefined;
 
   constructor(private http: HttpClient) { }
 
   public createComment(comment: Comment): Observable<Comment> {
     return this.http.post<Comment>('http://localhost:8080/api/comments/add', comment);
   }
+/*  public getComments(comment: Comment): Observable<Comment> {
+    return this.http.get<Comment>(('http://localhost:8080/api/comments/show/{postid}'));
+  }*/
 }
