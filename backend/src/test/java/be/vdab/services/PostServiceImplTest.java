@@ -328,4 +328,61 @@ class PostServiceImplTest {
 
 
     // endregion
+
+    // region test getByID
+    @Test
+    void testGetByIDNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        assertTrue(postService.createPost(post));
+        assertNull(postService.getPostByID(null));
+    }
+    @Test
+    void testGetByIDInvalid(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        assertTrue(postService.createPost(post));
+        assertNull(postService.getPostByID(-10L));  // -10L should NEVER be a valid index
+    }
+    @Test
+    void testGetByIDValid(){
+        // TODO: rewrite test so that index is always valid
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        assertTrue(postService.createPost(post));
+
+        Post foundPost = postService.getPostByID(1L); // when running other tests, this post might not be index 1!
+        assertAll(
+                () -> assertNotNull(foundPost),
+                () -> assertEquals("title",foundPost.getTitle())
+        );
+    }
+    // endregion
 }

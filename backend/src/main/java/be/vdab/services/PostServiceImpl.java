@@ -80,4 +80,12 @@ public class PostServiceImpl implements PostService {
     public Iterable<Post> getPosts() {
         return postRepository.findAll();
     }
+
+    @Override
+    public Post getPostByID(Long postID) {
+        if(postID == null){
+            return null;
+        }
+        return postRepository.findById(postID).orElse(null); // return post if found, or else null
+    }
 }

@@ -34,4 +34,14 @@ public class PostController {
     public ResponseEntity<Iterable<Post>> getShowPosts(){
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
+
+    @GetMapping("detail/{postid}")
+    public ResponseEntity<Post> getPostDetail(@PathVariable Long postid){
+        Post foundPost = postService.getPostByID(postid);
+        if(foundPost == null){
+            return  new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(foundPost,HttpStatus.CREATED);
+    }
+
 }
