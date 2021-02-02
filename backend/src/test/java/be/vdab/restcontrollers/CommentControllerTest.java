@@ -15,6 +15,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -156,5 +158,150 @@ class CommentControllerTest {
 
     // endregion
 
+    // region test getCommentsByPostID
+    @Test
+    void testGetByPostIDNull(){
+        // make a comment
+        User user = new User.UserBuilder()
+                .withUsername("name")
+                .withPassword("pass")
+                .withEmail("mail@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
 
+        Post post = new Post.PostBuilder()
+                .withUser(createdUser)
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Comment comment = new Comment.CommentBuilder()
+                .withPost(createdPost)
+                .withContent("commentContent")
+                .build();
+        commentRepository.save(comment);
+        // try to find comment
+
+        ResponseEntity<Iterable<Comment>> response = commentController.getComments(null);
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Comment> comments = (List<Comment>) response.getBody();
+                    assertTrue(comments.isEmpty());
+                }
+        );
+    }
+    @Test
+    void testGetByPostIDInvalid(){
+        // make a comment
+        User user = new User.UserBuilder()
+                .withUsername("name")
+                .withPassword("pass")
+                .withEmail("mail@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Post post = new Post.PostBuilder()
+                .withUser(createdUser)
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Comment comment = new Comment.CommentBuilder()
+                .withPost(createdPost)
+                .withContent("commentContent")
+                .build();
+        commentRepository.save(comment);
+        // try to find comment
+        ResponseEntity<Iterable<Comment>> response = commentController.getComments(-10L); // -10L should never be a valid index
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Comment> comments = (List<Comment>) response.getBody();
+                    assertTrue(comments.isEmpty());
+                }
+        );
+    }
+    @Test
+    void testGetByPostIDValidOne(){
+        // make a comment
+        User user = new User.UserBuilder()
+                .withUsername("name")
+                .withPassword("pass")
+                .withEmail("mail@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Post post = new Post.PostBuilder()
+                .withUser(createdUser)
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Comment comment = new Comment.CommentBuilder()
+                .withPost(createdPost)
+                .withContent("commentContent")
+                .build();
+        commentRepository.save(comment);
+        // try to find comment
+        long foundPostID = postRepository.findAll().get(0).getId(); // find a valid postID
+
+        ResponseEntity<Iterable<Comment>> response = commentController.getComments(foundPostID);
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Comment> comments = (List<Comment>) response.getBody();
+                    assertEquals(1,comments.size());
+                }
+        );
+    }
+    @Test
+    void testGetByPostIDValidTwo(){
+        // make 2 comments on the same post
+        User user = new User.UserBuilder()
+                .withUsername("name")
+                .withPassword("pass")
+                .withEmail("mail@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Post post = new Post.PostBuilder()
+                .withUser(createdUser)
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Comment comment1 = new Comment.CommentBuilder()
+                .withPost(createdPost)
+                .withContent("commentContent")
+                .build();
+        commentRepository.save(comment1);
+
+        Comment comment2 = new Comment.CommentBuilder()
+                .withPost(createdPost)
+                .withContent("anotherCommentContent")
+                .build();
+        commentRepository.save(comment2);
+
+        // try to find comment
+        long foundPostID = postRepository.findAll().get(0).getId(); // find a valid postID
+
+        ResponseEntity<Iterable<Comment>> response = commentController.getComments(foundPostID);
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Comment> comments = (List<Comment>) response.getBody();
+                    assertEquals(2,comments.size());
+                }
+        );
+    }
+    // endregion
 }

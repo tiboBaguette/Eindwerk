@@ -151,7 +151,7 @@ class CommentServiceImplTest {
                 .withPost(createdPost)
                 .withContent("commentContent")
                 .build();
-        commentService.createComment(comment);
+        commentRepository.save(comment);
         // try to find comment
         List<Comment> commentList = (List<Comment>) commentService.getCommentsByPostID(null);
         assertTrue(commentList.isEmpty());
@@ -177,7 +177,7 @@ class CommentServiceImplTest {
                 .withPost(createdPost)
                 .withContent("commentContent")
                 .build();
-        commentService.createComment(comment);
+        commentRepository.save(comment);
         // try to find comment
         List<Comment> commentList = (List<Comment>) commentService.getCommentsByPostID(-10L); // -10L should never be valid
         assertTrue(commentList.isEmpty());
@@ -203,7 +203,7 @@ class CommentServiceImplTest {
                 .withPost(createdPost)
                 .withContent("commentContent")
                 .build();
-        commentService.createComment(comment);
+        commentRepository.save(comment);
         // try to find comment
         long foundPostID = postRepository.findAll().get(0).getId(); // find a valid postID
 
@@ -232,14 +232,13 @@ class CommentServiceImplTest {
                 .withPost(createdPost)
                 .withContent("commentContent")
                 .build();
-        commentService.createComment(comment1);
+        commentRepository.save(comment1);
 
         Comment comment2 = new Comment.CommentBuilder()
                 .withPost(createdPost)
                 .withContent("anotherCommentContent")
                 .build();
-        commentService.createComment(comment2);
-
+        commentRepository.save(comment2);
         // try to find comment
         long foundPostID = postRepository.findAll().get(0).getId(); // find a valid postID
 
