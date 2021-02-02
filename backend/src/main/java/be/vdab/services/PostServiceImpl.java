@@ -4,6 +4,7 @@ import be.vdab.domain.Category;
 import be.vdab.domain.Post;
 import be.vdab.dtos.PostDTO;
 import be.vdab.repositories.CategoryRepository;
+import be.vdab.repositories.CommentRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +21,8 @@ public class PostServiceImpl implements PostService {
     private UserRepository userRepository;
     @Autowired
     private CategoryRepository categoryRepository;
-
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Override
     public boolean createPost(Post post) {
@@ -97,6 +99,7 @@ public class PostServiceImpl implements PostService {
         if(postRepository.findById(postID).isEmpty()){ // make sure postID is valid
             return false;
         }
+        commentRepository.deleteAllByPost_Id(postID);
         postRepository.deleteById(postID);
         return true;
     }
