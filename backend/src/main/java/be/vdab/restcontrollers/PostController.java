@@ -44,4 +44,14 @@ public class PostController {
         return new ResponseEntity<>(foundPost,HttpStatus.CREATED);
     }
 
+    @PostMapping("delete")
+    public ResponseEntity<String> deletePost(@RequestBody Post post){
+        boolean result = postService.deletePostByID(post.getId());
+        if(result){
+            return new ResponseEntity<>("Delete success", new HttpHeaders(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
+
+    }
+
 }

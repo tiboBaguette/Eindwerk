@@ -88,4 +88,16 @@ public class PostServiceImpl implements PostService {
         }
         return postRepository.findById(postID).orElse(null); // return post if found, or else null
     }
+
+    @Override
+    public boolean deletePostByID(Long postID) {
+        if(postID == null){
+            return false;
+        }
+        if(postRepository.findById(postID).isEmpty()){ // make sure postID is valid
+            return false;
+        }
+        postRepository.deleteById(postID);
+        return true;
+    }
 }

@@ -528,8 +528,9 @@ class PostControllerTest {
                 () -> assertNotNull(response.getBody())
         );
     }
+    // endregion
 
-
+    // region test deletePost
 
     // endregion
 }

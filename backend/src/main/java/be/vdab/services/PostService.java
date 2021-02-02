@@ -8,4 +8,6 @@ public interface PostService {
     boolean createPost(PostDTO postDTO);
     Iterable<Post> getPosts();
     Post getPostByID(Long postID);
+
+    boolean deletePostByID(Long postID);
 }
