@@ -597,11 +597,19 @@ class PostControllerTest {
                 .withUser(createdUser)
                 .build();
         Post createdPost = postRepository.save(post); // createdPost is valid
+        Post post2 = new Post.PostBuilder()
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .withUser(createdUser)
+                .build();
+        Post dummyPost = postRepository.save(post2); // dummyPost is valid and should exist after delete
+
 
         ResponseEntity<String> response = postController.deletePost(createdPost);
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
-                () -> assertEquals("Delete success",response.getBody())
+                () -> assertEquals("Delete success",response.getBody()),
+                () -> assertEquals(1,postRepository.findAll().size())
         );
     }
 

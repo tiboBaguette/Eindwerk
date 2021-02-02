@@ -54,7 +54,6 @@ public class PostController {
             return new ResponseEntity<>("Delete success", new HttpHeaders(), HttpStatus.OK);
         }
         return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
-
     }
 
 }
