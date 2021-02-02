@@ -5,6 +5,7 @@ import {CommentService} from '../../service/comment.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../../service/post.service';
 import {Post} from '../../model/Post';
+import {Comment} from '../../model/Comment';
 
 @Component({
   selector: 'app-create-comment',
@@ -14,10 +15,10 @@ import {Post} from '../../model/Post';
 export class CreateCommentComponent implements OnInit {
   isError: boolean | undefined;
   post: Post = new Post();
+  comment: Comment = new Comment();
 
   createCommentForm = this.formBuilder.group({
     content: '',
-    user: this.userService.user,
   });
 
   constructor(
@@ -40,9 +41,12 @@ export class CreateCommentComponent implements OnInit {
       this.isError = true;
     } else {
       this.route.params.subscribe(params => {
-        this.commentService.createComment(this.createCommentForm.value).subscribe(() => {
+        this.comment.content = this.createCommentForm.value;
+        this.comment.post = this.post;
 
-          this.router.navigateByUrl('post-details/:' + params.id);
+        this.commentService.createComment(this.comment).subscribe(() => {
+
+          this.router.navigateByUrl('post-details/' + params.id);
         });
       });
     }

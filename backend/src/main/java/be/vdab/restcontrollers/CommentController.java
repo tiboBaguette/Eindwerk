@@ -18,6 +18,7 @@ public class CommentController {
 
     @PostMapping("add")
     public ResponseEntity<Comment> postAddComment(@RequestBody Comment comment){
+        System.out.println(comment.toString());
         boolean result = commentService.createComment(comment);
         if(result){
             return new ResponseEntity<>(comment, HttpStatus.CREATED);

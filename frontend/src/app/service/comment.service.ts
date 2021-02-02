@@ -11,6 +11,7 @@ export class CommentService {
   constructor(private http: HttpClient) { }
 
   public createComment(comment: Comment): Observable<Comment> {
+    console.warn(comment);
     return this.http.post<Comment>('http://localhost:8080/api/comments/add', comment);
   }
 
