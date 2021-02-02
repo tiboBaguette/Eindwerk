@@ -531,6 +531,79 @@ class PostControllerTest {
     // endregion
 
     // region test deletePost
+    @Test
+    void testDeleteNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        ResponseEntity<String> response = postController.deletePost(null);
+        assertAll(
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertEquals("Delete failed",response.getBody())
+        );
+    }
+    @Test
+    void testDeleteInvalid(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post); // createdPost is valid
+
+        Post invalidPost = new Post.PostBuilder() // invalidPost is invalid
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .withUser(createdUser)
+                .build();
+
+
+        ResponseEntity<String> response = postController.deletePost(invalidPost);
+        assertAll(
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertEquals("Delete failed",response.getBody())
+        );
+    }
+    @Test
+    void testDeleteValid(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+
+        Post post = new Post.PostBuilder()
+                .withTitle("postTitle")
+                .withContent("postContent")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post); // createdPost is valid
+
+        ResponseEntity<String> response = postController.deletePost(createdPost);
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertEquals("Delete success",response.getBody())
+        );
+    }
 
     // endregion
 }
