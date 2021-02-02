@@ -21,7 +21,7 @@ export class PostService {
   getPostById(id: number): Observable<Post> {
     return this.http.get<Post>('http://localhost:8080/api/posts/detail/:' + id);
   }
-  public getComments(comment: Comment): Observable<Comment> {
-    return this.http.get<Comment>(('http://localhost:8080/api/comments/show/{postid}'));
+  public getComments(id: number): Observable<Comment> {
+    return this.http.get<Comment>(('http://localhost:8080/api/comments/show/:' + id));
   }
 }

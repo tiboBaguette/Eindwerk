@@ -14,8 +14,8 @@ export class PostDetailsComponent implements OnInit {
   comments: Comment[] = [];
 
   // mock
-  // comment: Comment = new Comment();
-  // comment1: Comment = new Comment();
+  comment: Comment = new Comment();
+  comment1: Comment = new Comment();
 
   constructor(
     private postService: PostService,
@@ -28,9 +28,9 @@ export class PostDetailsComponent implements OnInit {
       this.postService.getComments(params.id).subscribe(commentResponse => this.post.comment = commentResponse);
     });
 
-/*    this.comment.content = 'Comment Content Block';
+    this.comment.content = 'Comment Content Block';
     this.comment1.content = 'Comment Content Block 2';
     this.comments.push(this.comment);
-    this.comments.push(this.comment1);*/
+    this.comments.push(this.comment1);
   }
 }
