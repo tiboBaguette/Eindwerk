@@ -95,5 +95,4 @@ public class Post {
             return post;
         }
     }
-
 }

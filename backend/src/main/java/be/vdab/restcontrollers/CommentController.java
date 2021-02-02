@@ -27,7 +27,7 @@ public class CommentController {
     }
 
     @GetMapping("show/:{postid}")
-    public ResponseEntity<Iterable<Comment>> getComments(@PathVariable Long postid){
+    public ResponseEntity<Iterable<Comment>> getComments(@PathVariable(value = "postid") Long postid){
         return new ResponseEntity<>(commentService.getCommentsByPostID(postid),HttpStatus.OK);
     }
 
