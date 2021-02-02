@@ -499,7 +499,7 @@ class PostControllerTest {
         post.setContent("content");
         post.setUser(user);
         assertNotNull(postController.postCreate(post)); // make sure there is a post
-        ResponseEntity<Post> response = postController.getPostDetail(-10L);
+        ResponseEntity<Post> response = postController.getPostDetail("-10L");
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -522,7 +522,7 @@ class PostControllerTest {
 
         Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
 
-        ResponseEntity<Post> response = postController.getPostDetail(idFound);
+        ResponseEntity<Post> response = postController.getPostDetail(idFound.toString());
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())
