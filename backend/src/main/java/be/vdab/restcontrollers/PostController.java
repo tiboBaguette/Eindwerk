@@ -39,7 +39,7 @@ public class PostController {
     public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
         Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
-            return  new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.CONFLICT);
+            return  new ResponseEntity<>(new HttpHeaders(), HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(foundPost,HttpStatus.CREATED);
     }
