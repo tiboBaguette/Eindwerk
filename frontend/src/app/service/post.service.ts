@@ -17,4 +17,8 @@ export class PostService {
   getPosts(): Observable<Post[]> {
     return this.http.get<Post[]>('http://localhost:8080/api/posts/show');
   }
+
+  getPostById(id: number): Observable<Post> {
+    return this.http.get<Post>('http://localhost:8080/api/posts/detail/:' + id);
+  }
 }

@@ -7,7 +7,9 @@ import {Observable} from 'rxjs';
 })
 export class CommentService {
   public comment: Comment | undefined;
+
   constructor(private http: HttpClient) { }
+
   public createComment(comment: Comment): Observable<Comment> {
     return this.http.post<Comment>('http://localhost:8080/api/comments/add', comment);
   }
