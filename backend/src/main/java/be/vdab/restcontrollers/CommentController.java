@@ -25,4 +25,9 @@ public class CommentController {
         return new ResponseEntity<>(null,new HttpHeaders(),HttpStatus.CONFLICT);
     }
 
+    @GetMapping("show/{postid}")
+    public ResponseEntity<Iterable<Comment>> getComments(@PathVariable long postid){
+        return new ResponseEntity<>(null,new HttpHeaders(),HttpStatus.NOT_IMPLEMENTED);
+    }
+
 }
