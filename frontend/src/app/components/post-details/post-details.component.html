@@ -7,7 +7,7 @@
 
 <div class="card text-white bg-dark mb-3">
   <div class="card-body">
-    <h5 class="card-title" placeholder="post.title">Title: {{ post.title}}</h5>
+    <h5 class="card-title">Title: {{ post.title}}</h5>
     <p class="card-text post-content-text-color"> {{ post.content}}</p>
     <p class="card-text category-text-color">Category: {{post.category?.name}}</p>
     <p class="card-text darker"><small class="text">
@@ -15,12 +15,28 @@
     </small></p>
     <div *ngIf="activeUser?.username === post.user?.username">
       <a class="btn btn-dark m-1 p-1" (click)="deletePost()">Delete Post with ID: {{ post.id }} </a>
-      <a class="btn btn-dark m-1 p-1 " routerLink="/edit-post">Edit Your Post with ID: {{ post.id }}</a>
+      <a class="btn btn-dark m-1 p-1" [routerLink]="['/edit-post', post.id]">Edit Your Post with ID: {{ post.id }}</a>
     </div>
 
   </div>
-  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>
-
+<!--  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>-->
+  <div class="card">
+    <div class="card-body">
+<!--      <h5 class="card-title">Create A New Comment on Post ID: {{ post.id }}</h5>-->
+      <p class="error" *ngIf="isError">You need to be logged in to comment</p>
+      <form [formGroup]="createCommentForm">
+        <div class="form-group">
+          <div class="form-row">
+            <div class="col">
+<!--              <label align="center" >Comment</label>-->
+              <input type="text" class="form-control" placeholder="Type your Comment here" [formControlName]="'content'">
+            </div>
+          </div>
+        </div>
+      </form>
+      <button type="submit" class="btn btn-dark" (click)="createComment()">Post New Comment</button>
+    </div>
+  </div>
     <div class="card-body comment-section" *ngFor="let comment of comments">
       <p class="card-text">{{comment.content}}</p>
       <p class="card-text text-dark"><small class="text">
