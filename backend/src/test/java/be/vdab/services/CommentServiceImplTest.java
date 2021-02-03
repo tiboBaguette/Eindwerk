@@ -1,22 +1,27 @@
-package be.vdab.services;
+package src.test.java.be.vdab.services;
 
+import be.vdab.BackendApplication;
 import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
 import be.vdab.repositories.CommentRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
+import be.vdab.services.CommentService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = BackendApplication.class)
+
+@ActiveProfiles(value = "local")
 class CommentServiceImplTest {
 
     @Autowired

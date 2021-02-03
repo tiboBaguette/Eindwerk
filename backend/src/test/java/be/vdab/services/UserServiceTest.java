@@ -1,16 +1,20 @@
-package be.vdab.services;
+package src.test.java.be.vdab.services;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.User;
 import be.vdab.repositories.UserRepository;
+import be.vdab.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
+
 
 @SpringBootTest(classes = BackendApplication.class)
+@ActiveProfiles(value = "local")
 public class UserServiceTest {
 
     @Autowired
@@ -40,6 +44,7 @@ public class UserServiceTest {
     // endregion
 
     // region test saving
+
     @Test
     public void testSaveUser(){
         //TODO: extend tests of testSaveUser with username, mail, password or combination

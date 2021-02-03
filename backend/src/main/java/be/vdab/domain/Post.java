@@ -51,6 +51,7 @@ public class Post {
     }
 
     public static class PostBuilder{
+        private Long id;
         private String content;
         private String title;
         private LocalDateTime creationTime;
@@ -85,6 +86,11 @@ public class Post {
             return this;
         }
 
+        public PostBuilder withId(Long id){
+            this.id = id;
+            return this;
+        }
+
         public Post build(){
             Post post = new Post();
             post.content = content;
@@ -92,6 +98,7 @@ public class Post {
             post.creationTime = creationTime;
             post.user = user;
             post.category = category;
+            post.id = id;
             return post;
         }
     }

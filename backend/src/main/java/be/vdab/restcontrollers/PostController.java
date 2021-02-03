@@ -35,7 +35,7 @@ public class PostController {
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
 
-    @GetMapping("detail/:{postid}")
+    @GetMapping("detail/{postid}")
     public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
         Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
@@ -54,6 +54,31 @@ public class PostController {
             return new ResponseEntity<>("Delete success", new HttpHeaders(), HttpStatus.OK);
         }
         return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
+    }
+
+    @PutMapping("edit/{postid}")
+    public ResponseEntity<String> putEditPost(@RequestBody Post post, @PathVariable(value = "postid") Long postid){
+        if(post == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        if(!post.getId().equals(postid) && postid != null){ // postid gets priority over post.getId().
+            System.out.println("[WARN] postid does not match post.getId()! using postid as id");
+            post = new Post.PostBuilder()
+                    .withId(postid)
+                    .withUser(post.getUser())
+                    .withTitle(post.getTitle())
+                    .withContent(post.getContent())
+                    .withCategory(post.getCategory())
+                    .withCreationTime(post.getCreationTime())
+                    .build();
+        }
+        Post editedPost = postService.editPost(post);
+        if(editedPost == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        // no need to send edited post back?
+        return new ResponseEntity<>(HttpStatus.OK);
+
     }
 
 }

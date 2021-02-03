@@ -1,4 +1,4 @@
-package be.vdab.services;
+package src.test.java.be.vdab.services;
 
 
 import be.vdab.BackendApplication;
@@ -9,17 +9,21 @@ import be.vdab.domain.User;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
+import be.vdab.services.PostService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = BackendApplication.class)
+@ActiveProfiles(value = "local")
+
 class PostServiceImplTest {
 
     @Autowired
@@ -453,6 +457,118 @@ class PostServiceImplTest {
         assertTrue(postService.deletePostByID(createdPost.getId()));
         assertTrue(postRepository.findById(createdPost.getId()).isEmpty());
         assertEquals(1, postRepository.findAll().size());
+    }
+    // endregion
+
+    // region test editPost
+    @Test
+    void testEditPostNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post editedPost = postService.editPost(null);
+        assertNull(editedPost);
+
+    }
+    @Test
+    void testEditPostWithUserNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(null) // invalid user
+                .withId(createdPost.getId())
+                .build();
+
+        Post editedPost = postService.editPost(changedPost);
+        assertNull(editedPost);
+    }
+    @Test
+    void testEditPostWithUserInvalid(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        User invalidUser = new User.UserBuilder()
+                .withUsername("invalid")
+                .withPassword("invalid")
+                .withEmail("invalid@gmail.com")
+                .build();
+        // not saved -> does not exist on database -> invalid user
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(invalidUser) // invalid user
+                .withId(createdPost.getId())
+                .build();
+
+        Post editedPost = postService.editPost(changedPost);
+        assertNull(editedPost);
+    }
+    @Test
+    void testEditPostValid(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(createdUser) // valid user
+                .withId(createdPost.getId())
+                .build();
+
+        Post editedPost = postService.editPost(changedPost);
+
+        assertAll(
+                () -> assertNotNull(editedPost),
+                () -> assertEquals("editedTitle",editedPost.getTitle()),
+                () -> assertEquals("editedContent",editedPost.getContent())
+        );
     }
     // endregion
 }

@@ -40,6 +40,7 @@ public class PostServiceImpl implements PostService {
         }
         if(userRepository.findUserByUsernameOrEmail(post.getUser().getUsername(),post.getUser().getEmail()).isEmpty()){
             return false;   // user could not be found in database -> invalid user
+            // TODO: check for invalid users with same name/mail as valid user
         }
 
         if(post.getCategory() != null){ // check if the category needs saving
@@ -48,7 +49,7 @@ public class PostServiceImpl implements PostService {
             }
             else{
                 // link the found category to this post
-                // TODO: find a better way to do this
+                // TODO: find a better way to do this?
                 post = new Post.PostBuilder()
                         .withCategory(categoryRepository.findCategoryByName(post.getCategory().getName()))
                         .withContent(post.getContent())
@@ -105,5 +106,21 @@ public class PostServiceImpl implements PostService {
         commentRepository.deleteAll(comments);
         postRepository.deleteById(postID);
         return true;
+    }
+
+    @Override
+    public Post editPost(Post post) {
+        if(post == null){
+            return null;
+        }
+        if(postRepository.findById(post.getId()).isEmpty()){
+            return null;    // only edit existing posts
+        }
+        // add check for user here if one is needed
+        boolean editResult = createPost(post);
+        if(editResult){
+            return postRepository.findById(post.getId()).orElse(null); //should always return
+        }
+        return null; // something went wrong saving the post -> check createPost(Post)
     }
 }

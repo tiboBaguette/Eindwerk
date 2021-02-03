@@ -1,19 +1,22 @@
-package be.vdab.services;
+package src.test.java.be.vdab.services;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
 import be.vdab.repositories.CategoryRepository;
+import be.vdab.services.CategoryService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest(classes = BackendApplication.class)
+@ActiveProfiles(value = "local")
 class CategoryServiceImplTest {
 
     @Autowired
