@@ -58,19 +58,24 @@ public class PostController {
 
     @PutMapping("edit/{postid}")
     public ResponseEntity<String> putEditPost(@RequestBody PostDTO postDTO, @PathVariable(value = "postid") Long postid){
+        // test data validity and set proper id
         if(postDTO == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-
-        if(!postDTO.getId().equals(postid) && postid != null){ // postid gets priority over post.getId().
-            System.out.println("[WARN] postid does not match post.getId()! using postid as id");
-            postDTO.setId(postid);
+        if(postDTO.getId() == null){
+            if(postid == null){
+                return new ResponseEntity<>(HttpStatus.CONFLICT); // no id present, invalid
+            }
+            postDTO.setId(postid);  // only postid available -> use postid
+        } else if(postid != null){
+            postDTO.setId(postid); // use postid if available
         }
+        // -- else use id from postDTO --
+
         Post editedPost = postService.editPost(postDTO);
         if(editedPost == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        // no need to send edited post back?
         return new ResponseEntity<>(HttpStatus.OK);
 
     }
