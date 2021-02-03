@@ -16,7 +16,7 @@ export class PostService {
 
   editPost(post: Post, id: number | undefined): Observable<Post> {
     console.warn(post, id);
-    return this.http.post<Post>('http://localhost:8080/api/posts/edit/:' + id, post);
+    return this.http.put<Post>('http://localhost:8080/api/posts/edit/:' + id, post);
   }
 
   deletePost(post: Post): Observable<Post> {
