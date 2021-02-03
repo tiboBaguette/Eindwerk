@@ -3,7 +3,7 @@ import {PostService} from '../../service/post.service';
 import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Post} from "../../model/Post";
+import {Post} from '../../model/Post';
 
 @Component({
   selector: 'app-edit-post',
@@ -14,7 +14,8 @@ export class EditPostComponent implements OnInit {
 
   isError: boolean | undefined;
   post: Post | undefined;
-  id: number | undefined;
+  postId: number | undefined;
+
   editPostForm = this.formBuilder.group({
     title: '',
     content: '',
@@ -33,15 +34,19 @@ export class EditPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.route.params.subscribe(params => {
+      this.postService.getPostById(params.id).subscribe(postResponse => this.post = postResponse);
+      this.postId = params.id;
+    });
   }
 
   editPost(): void {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.postService.createPost(this.editPostForm.value).subscribe();
+      this.postService.editPost(this.editPostForm.value).subscribe();
       this.editPostForm.reset();
-      this.router.navigateByUrl('post-details');
+      this.router.navigateByUrl('post-details/' + this.postId);
     }
   }
 }

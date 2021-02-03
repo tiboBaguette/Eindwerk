@@ -17,6 +17,7 @@ export class PostService {
   editPost(post: Post): Observable<Post> {
     return this.http.post<Post>('http://localhost:8080/api/posts/edit', post);
   }
+
   deletePost(post: Post): Observable<Post> {
     return this.http.post<Post>('http://localhost:8080/api/posts/delete', post);
   }
