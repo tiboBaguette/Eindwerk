@@ -106,4 +106,17 @@ public class PostServiceImpl implements PostService {
         postRepository.deleteById(postID);
         return true;
     }
+
+    @Override
+    public Post editPost(Post post) {
+        if(post == null){
+            return null;
+        }
+        if(postRepository.findById(post.getId()).isEmpty()){
+            return null;
+        }
+        // add check for user here if one is needed
+        Post editedPost = postRepository.save(post);
+        return editedPost;
+    }
 }
