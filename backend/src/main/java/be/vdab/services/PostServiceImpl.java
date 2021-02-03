@@ -123,4 +123,19 @@ public class PostServiceImpl implements PostService {
         }
         return null; // something went wrong saving the post -> check createPost(Post)
     }
+
+    @Override
+    public Post editPost(PostDTO postDTO){
+        // cast postDTO to post and call editPost(Post)
+        Category category = categoryRepository.findCategoryByName(postDTO.getCategory());
+        Post post = new Post.PostBuilder()
+                .withId(postDTO.getId())
+                .withTitle(postDTO.getTitle())
+                .withContent(postDTO.getContent())
+                .withUser(postDTO.getUser())
+                .withCategory(category)
+                .withCreationTime(postDTO.getCreationTime())
+                .build();
+        return editPost(post);
+    }
 }

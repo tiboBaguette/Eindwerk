@@ -11,4 +11,5 @@ public interface PostService {
 
     boolean deletePostByID(Long postID);
     Post editPost(Post post);
+    Post editPost(PostDTO post);
 }
