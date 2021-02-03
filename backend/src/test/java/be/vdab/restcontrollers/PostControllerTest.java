@@ -1,4 +1,4 @@
-package be.vdab.restcontrollers;
+package src.test.java.be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
@@ -8,6 +8,7 @@ import be.vdab.domain.User;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
+import be.vdab.restcontrollers.PostController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,7 @@
 package be.vdab.services;
 
 import be.vdab.domain.Category;
+import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.dtos.PostDTO;
 import be.vdab.repositories.CategoryRepository;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Service
 public class PostServiceImpl implements PostService {
@@ -99,7 +101,8 @@ public class PostServiceImpl implements PostService {
         if(postRepository.findById(postID).isEmpty()){ // make sure postID is valid
             return false;
         }
-        commentRepository.deleteAllByPost_Id(postID);
+        List<Comment> comments = (List<Comment>) commentRepository.findCommentsByPost_Id(postID);
+        commentRepository.deleteAll(comments);
         postRepository.deleteById(postID);
         return true;
     }
