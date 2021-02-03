@@ -18,6 +18,7 @@ export class PostDetailsComponent implements OnInit {
   isError: boolean | undefined;
   post: Post = new Post();
   comment: Comment = new Comment();
+  posts: Post[] = [];
   comments: Comment[] = [];
   activeUser: User | undefined;
 
@@ -37,8 +38,8 @@ export class PostDetailsComponent implements OnInit {
     this.activeUser = this.userService.user;
 
     this.route.params.subscribe(params => {
-      this.postService.getPostById(params.id).subscribe(postResponse => this.post = postResponse);
-      this.commentService.getComments(params.id).subscribe(commentResponse => this.comments = commentResponse);
+      this.postService.getPostById(params.id).toPromise().then((postResponse) => this.post = postResponse);
+      this.commentService.getComments(params.id).toPromise().then((commentResponse) => this.comments = commentResponse);
     });
   }
 
@@ -62,8 +63,9 @@ export class PostDetailsComponent implements OnInit {
       this.route.params.subscribe(params => {
         this.comment.content = this.createCommentForm.controls.content.value;
         this.comment.post = this.post;
-
-        this.commentService.createComment(this.comment).subscribe(() => {
+        this.commentService.createComment(this.comment).toPromise().then(() => {
+          this.commentService.getComments(params.id).toPromise().then((commentResponse) => this.comments = commentResponse);
+          this.postService.getPostById(params.id).toPromise().then((postResponse) => this.post = postResponse);
           this.router.navigateByUrl('post-details/' + params.id);
         });
       });
