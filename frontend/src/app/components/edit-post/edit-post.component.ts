@@ -37,6 +37,10 @@ export class EditPostComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.postService.getPostById(params.id).subscribe(postResponse => this.post = postResponse);
       this.postId = params.id;
+
+      // this.editPostForm.controls.title.setValue(this.post?.title);
+      // this.editPostForm.controls.content.setValue(this.post?.content);
+      // this.editPostForm.controls.category.setValue(this.post?.category?.name);
     });
   }
 
@@ -44,10 +48,6 @@ export class EditPostComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.editPostForm.controls.title.setValue(this.post?.title);
-      this.editPostForm.controls.content.setValue(this.post?.content);
-      this.editPostForm.controls.category.setValue(this.post?.category?.name);
-
       this.postService.editPost(this.editPostForm.value, this.postId).subscribe();
       this.editPostForm.reset();
       this.router.navigateByUrl('post-details/' + this.postId);
