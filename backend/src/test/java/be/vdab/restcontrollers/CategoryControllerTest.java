@@ -1,9 +1,10 @@
-/*
-package be.vdab.restcontrollers;
+
+package src.test.java.be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
 import be.vdab.repositories.CategoryRepository;
+import be.vdab.restcontrollers.CategoryController;
 import be.vdab.services.CategoryService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -174,4 +175,4 @@ class CategoryControllerTest {
 
 
 }
-*/
+

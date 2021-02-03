@@ -1,8 +1,9 @@
-package be.vdab.restcontrollers;
+package src.test.java.be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.User;
 import be.vdab.repositories.UserRepository;
+import be.vdab.restcontrollers.UserController;
 import be.vdab.services.UserService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,7 +19,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(classes = BackendApplication.class)
 class UserControllerTest {
 
-    @Autowired UserController userController;
+    @Autowired
+    UserController userController;
 
     @Autowired
     private UserService userService;
@@ -67,6 +69,7 @@ class UserControllerTest {
         ResponseEntity<User> response = userController.postRegister(user1);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
                 () -> assertEquals(user1.getUsername(), response.getBody().getUsername())
         );
 
@@ -90,9 +93,10 @@ class UserControllerTest {
                 .build();
         ResponseEntity<User> response = userController.postRegister(user1);
         assertAll(
-            () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
-            () -> assertEquals(user1.getUsername(), response.getBody().getUsername()),
-            () -> assertEquals(user1.getPassword(), response.getBody().getPassword())
+                () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> assertEquals(user1.getUsername(), response.getBody().getUsername()),
+                () -> assertEquals(user1.getPassword(), response.getBody().getPassword())
         );
     }
 

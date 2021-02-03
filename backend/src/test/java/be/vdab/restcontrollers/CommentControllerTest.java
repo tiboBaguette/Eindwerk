@@ -1,11 +1,13 @@
-package be.vdab.restcontrollers;
+package src.test.java.be.vdab.restcontrollers;
 
+import be.vdab.BackendApplication;
 import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
 import be.vdab.repositories.CommentRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
+import be.vdab.restcontrollers.CommentController;
 import be.vdab.services.CommentService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -19,7 +21,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-@SpringBootTest
+@SpringBootTest(classes = BackendApplication.class)
 class CommentControllerTest {
 
     @Autowired

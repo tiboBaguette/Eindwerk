@@ -1,4 +1,4 @@
-package be.vdab.restcontrollers;
+package src.test.java.be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
@@ -8,6 +8,7 @@ import be.vdab.domain.User;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
+import be.vdab.restcontrollers.PostController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -499,7 +500,7 @@ class PostControllerTest {
         post.setContent("content");
         post.setUser(user);
         assertNotNull(postController.postCreate(post)); // make sure there is a post
-        ResponseEntity<Post> response = postController.getPostDetail("-10L");
+        ResponseEntity<Post> response = postController.getPostDetail(-10L);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -522,7 +523,7 @@ class PostControllerTest {
 
         Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
 
-        ResponseEntity<Post> response = postController.getPostDetail(idFound.toString());
+        ResponseEntity<Post> response = postController.getPostDetail(idFound);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())
