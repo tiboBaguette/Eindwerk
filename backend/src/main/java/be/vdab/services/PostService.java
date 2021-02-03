@@ -10,7 +10,6 @@ public interface PostService {
     Iterable<Post> getPosts();
     Post getPostByID(Long postID);
     Iterable<Post> getPostsByCategory(Category category);
-
     boolean deletePostByID(Long postID);
     Post editPost(Post post);
     Post editPost(PostDTO post);

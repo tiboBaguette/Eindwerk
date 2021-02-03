@@ -4,6 +4,7 @@ import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Post} from '../../model/Post';
+import {CategoryService} from '../../service/category.service';
 
 @Component({
   selector: 'app-edit-post',
@@ -27,6 +28,7 @@ export class EditPostComponent implements OnInit {
     private postService: PostService,
     private formBuilder: FormBuilder,
     private userService: UserService,
+    private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
   ) {
@@ -48,6 +50,7 @@ export class EditPostComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
+      this.categoryService.createCategory(this.editPostForm.value).subscribe();
       this.postService.editPost(this.editPostForm.value, this.postId).subscribe();
       this.editPostForm.reset();
       this.router.navigateByUrl('post-details/' + this.postId);

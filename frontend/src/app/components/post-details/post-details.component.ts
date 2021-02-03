@@ -36,7 +36,6 @@ export class PostDetailsComponent implements OnInit {
 
   ngOnInit(): void {
     this.activeUser = this.userService.user;
-
     this.route.params.subscribe(params => {
       this.postService.getPostById(params.id).toPromise().then((postResponse) => this.post = postResponse);
       this.commentService.getComments(params.id).toPromise().then((commentResponse) => this.comments = commentResponse);
@@ -60,10 +59,13 @@ export class PostDetailsComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
+      // grab the id from the url
       this.route.params.subscribe(params => {
         this.comment.content = this.createCommentForm.controls.content.value;
         this.comment.post = this.post;
+        // create comment
         this.commentService.createComment(this.comment).toPromise().then(() => {
+          // Get the updated list on the post-details page after creating a new comment
           this.commentService.getComments(params.id).toPromise().then((commentResponse) => this.comments = commentResponse);
           this.postService.getPostById(params.id).toPromise().then((postResponse) => this.post = postResponse);
           this.router.navigateByUrl('post-details/' + params.id);

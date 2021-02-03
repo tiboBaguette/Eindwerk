@@ -15,7 +15,7 @@
           <div class="form-row">
             <div class="col">
               <label align="center" >Title</label>
-              <input type="text" class="form-control" value="{{post?.title}}" [formControlName]="'title'">
+              <input type="text" class="form-control" [value]="post?.title" [formControlName]="'title'">
               <br>
               <label align="center" >Post Content</label>
               <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{post?.content}}" [formControlName]="'content'"></textarea>
