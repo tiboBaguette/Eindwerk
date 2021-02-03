@@ -392,6 +392,121 @@ class PostServiceImplTest {
     }
     // endregion
 
+    // region test getByCategory
+    @Test
+    void testGetPostsByCategoryNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        // make post with category1
+        Category category1 = new Category()
+                .setName("Cat1");
+        Category createdCategory1 = categoryRepository.save(category1);
+
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title1")
+                .withContent("content1")
+                .withUser(createdUser)
+                .withCategory(createdCategory1)
+                .build();
+        assertTrue(postService.createPost(post1));
+        // make post with category2
+        Category category2 = new Category()
+                .setName("Dog2");
+        Category createdCategory2 = categoryRepository.save(category2);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title2")
+                .withContent("content2")
+                .withUser(createdUser)
+                .withCategory(createdCategory2)
+                .build();
+        assertTrue(postService.createPost(post2));
+        // get posts from 'null'
+        assertNull( postService.getPostsByCategory(null));
+
+    }
+    @Test
+    void testGetPostsByCategoryNonExist(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        // make post with category1
+        Category category1 = new Category()
+                .setName("Cat1");
+        Category createdCategory1 = categoryRepository.save(category1);
+
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title1")
+                .withContent("content1")
+                .withUser(createdUser)
+                .withCategory(createdCategory1)
+                .build();
+        assertTrue(postService.createPost(post1));
+        // make post with category2
+        Category category2 = new Category()
+                .setName("Dog2");
+        Category createdCategory2 = categoryRepository.save(category2);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title2")
+                .withContent("content2")
+                .withUser(createdUser)
+                .withCategory(createdCategory2)
+                .build();
+        assertTrue(postService.createPost(post2));
+        // get posts from nonexistent category -> should return empty list?
+        Category searchCategory = new Category()
+                .setName("ThisCategoryNameDoesNotExist");
+        List<Post> posts = (List<Post>) postService.getPostsByCategory(searchCategory);
+        assertEquals(0,posts.size());
+    }
+    @Test
+    void testGetPostsByCategoryExists(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        // make post with category1
+        Category category1 = new Category()
+                .setName("Cat1");
+        Category createdCategory1 = categoryRepository.save(category1);
+
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title1")
+                .withContent("content1")
+                .withUser(createdUser)
+                .withCategory(createdCategory1)
+                .build();
+        assertTrue(postService.createPost(post1));
+        // make post with category2
+        Category category2 = new Category()
+                .setName("Dog2");
+        Category createdCategory2 = categoryRepository.save(category2);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title2")
+                .withContent("content2")
+                .withUser(createdUser)
+                .withCategory(createdCategory2)
+                .build();
+        assertTrue(postService.createPost(post2));
+        // get posts from category1
+        Category searchCategory = new Category()
+                .setName("Cat1");
+        List<Post> posts = (List<Post>) postService.getPostsByCategory(searchCategory);
+        assertEquals(1,posts.size());
+    }
+    // endregion
+
     // region test deletePost
     @Test
     void testDeleteNull(){

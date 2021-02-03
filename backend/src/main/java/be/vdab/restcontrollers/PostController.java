@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/posts/")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -79,6 +81,20 @@ public class PostController {
         // no need to send edited post back?
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    @GetMapping("get-by-category/:{categoryName}")
+    public ResponseEntity<Iterable<Post>> getPostByCategory(@PathVariable String categoryName){
+        if(categoryName == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        Category category = new Category()
+                .setName(categoryName);
+        List<Post> foundPosts = (List<Post>) postService.getPostsByCategory(category);
+        if(foundPosts == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(foundPosts,HttpStatus.OK);
     }
 
 }

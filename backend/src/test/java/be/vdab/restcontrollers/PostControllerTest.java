@@ -1,5 +1,5 @@
-/*
-package be.vdab.restcontrollers;
+
+package src.test.java.be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.Category;
@@ -9,6 +9,7 @@ import be.vdab.domain.User;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
+import be.vdab.restcontrollers.PostController;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -398,8 +399,8 @@ class PostControllerTest {
                 }
         );
     }
-*/
-/*    @Test
+
+    @Test
     void testShowPostTwoPostsAvailableSameUser(){
         User user = new User.UserBuilder()
                 .withUsername("Username")
@@ -428,7 +429,7 @@ class PostControllerTest {
                     assertEquals(2,posts.size());
                 }
         );
-    }*//*
+    }
 
     @Test
     void testShowPostTwoPostsAvailableDifferentUser(){
@@ -527,7 +528,7 @@ class PostControllerTest {
 
         Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
 
-        ResponseEntity<Post> response = postController.getPostDetail(idFound.toString(-));
+        ResponseEntity<Post> response = postController.getPostDetail(idFound);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())
@@ -730,5 +731,136 @@ class PostControllerTest {
 
     //  TODO: add tests for when postid != post.getId()
     // endregion
+
+    // region test getByCategory
+    @Test
+    void testGetPostsByCategoryNull(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        // make post with category1
+        Category category1 = new Category()
+                .setName("Cat1");
+        Category createdCategory1 = categoryRepository.save(category1);
+
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title1")
+                .withContent("content1")
+                .withUser(createdUser)
+                .withCategory(createdCategory1)
+                .build();
+        postRepository.save(post1);
+        // make post with category2
+        Category category2 = new Category()
+                .setName("Dog2");
+        Category createdCategory2 = categoryRepository.save(category2);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title2")
+                .withContent("content2")
+                .withUser(createdUser)
+                .withCategory(createdCategory2)
+                .build();
+        postRepository.save(post2);
+        // get posts from 'null'
+        ResponseEntity<Iterable<Post>> response = postController.getPostByCategory(null);
+        assertAll(
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertNull(response.getBody())
+        );
+
+    }
+    @Test
+    void testGetPostsByCategoryNonExist(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        // make post with category1
+        Category category1 = new Category()
+                .setName("Cat1");
+        Category createdCategory1 = categoryRepository.save(category1);
+
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title1")
+                .withContent("content1")
+                .withUser(createdUser)
+                .withCategory(createdCategory1)
+                .build();
+        postRepository.save(post1);
+        // make post with category2
+        Category category2 = new Category()
+                .setName("Dog2");
+        Category createdCategory2 = categoryRepository.save(category2);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title2")
+                .withContent("content2")
+                .withUser(createdUser)
+                .withCategory(createdCategory2)
+                .build();
+        postRepository.save(post2);
+        // get posts from empty string
+        ResponseEntity<Iterable<Post>> response = postController.getPostByCategory("");
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Post> posts = (List<Post>) response.getBody();
+                    assertEquals(0,posts.size());
+                }
+        );
+
+    }
+    @Test
+    void testGetPostsByCategoryExists(){
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        // make post with category1
+        Category category1 = new Category()
+                .setName("Cat1");
+        Category createdCategory1 = categoryRepository.save(category1);
+
+        Post post1 = new Post.PostBuilder()
+                .withTitle("title1")
+                .withContent("content1")
+                .withUser(createdUser)
+                .withCategory(createdCategory1)
+                .build();
+        postRepository.save(post1);
+        // make post with category2
+        Category category2 = new Category()
+                .setName("Dog2");
+        Category createdCategory2 = categoryRepository.save(category2);
+
+        Post post2 = new Post.PostBuilder()
+                .withTitle("title2")
+                .withContent("content2")
+                .withUser(createdUser)
+                .withCategory(createdCategory2)
+                .build();
+        postRepository.save(post2);
+        // get posts from category1
+        ResponseEntity<Iterable<Post>> response = postController.getPostByCategory("Cat1");
+        assertAll(
+                () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
+                () -> assertNotNull(response.getBody()),
+                () -> {
+                    List<Post> posts = (List<Post>) response.getBody();
+                    assertEquals(1,posts.size());
+                }
+        );
+
+    }
+    // endregion
 }
-*/
+
