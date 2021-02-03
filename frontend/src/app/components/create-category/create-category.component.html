@@ -4,6 +4,7 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Create A New Category</h5>
+    <p class="error" *ngIf="isError">You need to log in to create a new category</p>
     <form [formGroup]="createCategoryForm">
       <div class="form-group">
         <div class="form-row">

@@ -1,5 +1,7 @@
 <br><br>
-<a class="btn btn-dark" [routerLink]="['/create-category']">Create New Category Here</a>
+<div *ngIf="activeUser !== undefined">
+  <a class="btn btn-dark" [routerLink]="['/create-category']">Create New Category Here</a>
+</div>
 <br><br>
 <div class="card text-white bg-dark mb-3" *ngFor="let category of categories">
   <div class="card-body">

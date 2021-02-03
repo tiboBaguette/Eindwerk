@@ -3,6 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CategoryService} from '../../service/category.service';
+import {User} from "../../model/User";
 
 @Component({
   selector: 'app-create-category',
