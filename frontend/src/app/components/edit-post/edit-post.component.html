@@ -10,17 +10,17 @@
 
     </div>
     <ng-template #elseBlock>
-      <form [formGroup]="createPostForm" >
+      <form [formGroup]="editPostForm" >
         <div class="form-group">
           <div class="form-row">
             <div class="col">
               <label align="center" >Title</label>
-              <input type="text" class="form-control" placeholder="Title" [formControlName]="'title'">
+              <input type="text" class="form-control" placeholder="{{post?.title}}" [formControlName]="'title'">
               <br>
               <label align="center" >Post Content</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [formControlName]="'content'"></textarea>
+              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="{{post?.content}}" [formControlName]="'content'"></textarea>
               <label align="center" >Category</label>
-              <input type="text" class="form-control" placeholder="Category" [formControlName]="'category'">
+              <input type="text" class="form-control" placeholder="{{post?.category}}" [formControlName]="'category'">
               <br>
             </div>
           </div>
@@ -28,7 +28,7 @@
       </form>
 <!--      For now a new post will be created every time we do an update because the rest controller does not reflect this option.-->
       <p class="card-text">Please edit your forum post here. </p>
-      <button type="submit" class="btn btn-dark" (click)="createPost()">Edit Post</button>
+      <button type="submit" class="btn btn-dark" (click)="editPost()">Edit Post</button>
     </ng-template>
   </div>
 </div>

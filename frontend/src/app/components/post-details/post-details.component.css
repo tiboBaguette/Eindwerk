@@ -17,3 +17,6 @@
 .category-text-color {
   color: #272727 !important;
 }
+.error {
+  color: red;
+}
