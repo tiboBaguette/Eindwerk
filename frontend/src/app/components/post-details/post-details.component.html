@@ -1,15 +1,15 @@
 <br>
 <br>
-<div class="text-center">
-  <h3>Reading Post details for {{ post.title }}</h3>
-</div>
-<br>
-<br>
+<!--<div class="text-center">
+  <h3>Reading Post details for: {{ post.title }}</h3>
+</div>-->
+
+
 <div class="card text-white bg-dark mb-3">
   <div class="card-body">
     <h5 class="card-title" placeholder="post.title">Title: {{ post.title}}</h5>
-    <p class="card-text">{{ post.content}}</p>
-    <p class="card-text">Category: {{post.category?.name}}</p>
+    <p class="card-text post-content-text-color"> {{ post.content}}</p>
+    <p class="card-text category-text-color">Category: {{post.category?.name}}</p>
     <p class="card-text darker"><small class="text">
       Posted on: {{post.creationTime | date: 'full'}} By {{post.user?.username}}
     </small></p>
@@ -17,7 +17,9 @@
       <a class="btn btn-dark m-1 p-1" (click)="deletePost()">Delete Post with ID: {{ post.id }} </a>
       <a class="btn btn-dark m-1 p-1 " routerLink="/edit-post">Edit Your Post with ID: {{ post.id }}</a>
     </div>
+
   </div>
+  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>
 
     <div class="card-body comment-section" *ngFor="let comment of comments">
       <p class="card-text">{{comment.content}}</p>
@@ -25,7 +27,6 @@
         Commented on: {{post.creationTime | date: 'full'}} By {{post.user?.username }}
       </small></p>
     </div>
-    <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>
 </div>
 <!--hackey spacer to give some room on small screen-->
 <br>
