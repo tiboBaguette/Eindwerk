@@ -95,6 +95,18 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
+    public Iterable<Post> getPostsByCategory(Category category) {
+        if(category == null){
+            return null;
+        }
+        String categoryName = category.getName();
+        if(categoryName == null){
+            return null;
+        }
+        return postRepository.findPostsByCategory_Name(categoryName);
+    }
+
+    @Override
     public boolean deletePostByID(Long postID) {
         if(postID == null){
             return false;

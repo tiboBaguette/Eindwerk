@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/posts/")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -35,7 +37,7 @@ public class PostController {
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
 
-    @GetMapping("detail/{postid}")
+    @GetMapping("detail/:{postid}")
     public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
         Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
@@ -56,7 +58,7 @@ public class PostController {
         return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
     }
 
-    @PutMapping("edit/{postid}")
+    @PutMapping("edit/:{postid}")
     public ResponseEntity<String> putEditPost(@RequestBody Post post, @PathVariable(value = "postid") Long postid){
         if(post == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
@@ -79,6 +81,20 @@ public class PostController {
         // no need to send edited post back?
         return new ResponseEntity<>(HttpStatus.OK);
 
+    }
+
+    @GetMapping("get-by-category/:{categoryName}")
+    public ResponseEntity<Iterable<Post>> getPostByCategory(@PathVariable String categoryName){
+        if(categoryName == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        Category category = new Category()
+                .setName(categoryName);
+        List<Post> foundPosts = (List<Post>) postService.getPostsByCategory(category);
+        if(foundPosts == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
+        return new ResponseEntity<>(foundPosts,HttpStatus.OK);
     }
 
 }
