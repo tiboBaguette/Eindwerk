@@ -59,22 +59,16 @@ public class PostController {
     }
 
     @PutMapping("edit/:{postid}")
-    public ResponseEntity<String> putEditPost(@RequestBody Post post, @PathVariable(value = "postid") Long postid){
-        if(post == null){
+    public ResponseEntity<String> putEditPost(@RequestBody PostDTO postDTO, @PathVariable(value = "postid") Long postid){
+        if(postDTO == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        if(!post.getId().equals(postid) && postid != null){ // postid gets priority over post.getId().
+
+        if(!postDTO.getId().equals(postid) && postid != null){ // postid gets priority over post.getId().
             System.out.println("[WARN] postid does not match post.getId()! using postid as id");
-            post = new Post.PostBuilder()
-                    .withId(postid)
-                    .withUser(post.getUser())
-                    .withTitle(post.getTitle())
-                    .withContent(post.getContent())
-                    .withCategory(post.getCategory())
-                    .withCreationTime(post.getCreationTime())
-                    .build();
+            postDTO.setId(postid);
         }
-        Post editedPost = postService.editPost(post);
+        Post editedPost = postService.editPost(postDTO);
         if(editedPost == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }

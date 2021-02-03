@@ -658,12 +658,11 @@ class PostControllerTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Post changedPost = new Post.PostBuilder()
-                .withTitle("editedTitle")
-                .withContent("editedContent")
-                .withUser(null) // invalid user
-                .withId(createdPost.getId())
-                .build();
+        PostDTO changedPost = new PostDTO()
+                .setTitle("editedTitle")
+                .setContent("editedContent")
+                .setUser(null)
+                .setId(createdPost.getId());
 
         ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
         assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
@@ -690,12 +689,11 @@ class PostControllerTest {
                 .withEmail("invalid@gmail.com")
                 .build();
         // not saved -> does not exist on database -> invalid user
-        Post changedPost = new Post.PostBuilder()
-                .withTitle("editedTitle")
-                .withContent("editedContent")
-                .withUser(invalidUser) // invalid user
-                .withId(createdPost.getId())
-                .build();
+        PostDTO changedPost = new PostDTO()
+                .setTitle("editedTitle")
+                .setContent("editedContent")
+                .setUser(invalidUser)
+                .setId(createdPost.getId());
 
 
         ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
@@ -717,12 +715,12 @@ class PostControllerTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Post changedPost = new Post.PostBuilder()
-                .withTitle("editedTitle")
-                .withContent("editedContent")
-                .withUser(createdUser) // valid user
-                .withId(createdPost.getId())
-                .build();
+
+        PostDTO changedPost = new PostDTO()
+                .setTitle("editedTitle")
+                .setContent("editedContent")
+                .setUser(createdUser)
+                .setId(createdPost.getId());
 
 
         ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());

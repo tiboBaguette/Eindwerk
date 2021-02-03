@@ -592,7 +592,7 @@ class PostServiceImplTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Post editedPost = postService.editPost(null);
+        Post editedPost = postService.editPost((PostDTO)null);
         assertNull(editedPost);
 
     }
