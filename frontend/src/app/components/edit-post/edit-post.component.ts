@@ -19,7 +19,7 @@ export class EditPostComponent implements OnInit {
   editPostForm = this.formBuilder.group({
     title: '',
     content: '',
-    user: this.userService.user?.id,
+    user: this.userService.user,
     category: '',
   });
 
@@ -44,7 +44,7 @@ export class EditPostComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.postService.editPost(this.editPostForm.value).subscribe();
+      this.postService.editPost(this.editPostForm.value, this.postId).subscribe();
       this.editPostForm.reset();
       this.router.navigateByUrl('post-details/' + this.postId);
     }

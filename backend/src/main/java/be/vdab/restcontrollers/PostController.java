@@ -35,7 +35,7 @@ public class PostController {
         return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
     }
 
-    @GetMapping("detail/{postid}")
+    @GetMapping("detail/:{postid}")
     public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
         Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
@@ -56,7 +56,7 @@ public class PostController {
         return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
     }
 
-    @PutMapping("edit/{postid}")
+    @PutMapping("edit/:{postid}")
     public ResponseEntity<String> putEditPost(@RequestBody Post post, @PathVariable(value = "postid") Long postid){
         if(post == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
