@@ -46,7 +46,7 @@ export class EditPostComponent implements OnInit {
     } else {
       this.editPostForm.controls.title.setValue(this.post?.title);
       this.editPostForm.controls.content.setValue(this.post?.content);
-      this.editPostForm.controls.category.setValue(this.post?.category);
+      this.editPostForm.controls.category.setValue(this.post?.category?.name);
 
       this.postService.editPost(this.editPostForm.value, this.postId).subscribe();
       this.editPostForm.reset();
