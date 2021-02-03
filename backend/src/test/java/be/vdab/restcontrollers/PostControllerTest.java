@@ -617,4 +617,115 @@ class PostControllerTest {
     }
 
     // endregion
+
+    // region test editPost
+    @Test
+    void testEditPostNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        ResponseEntity<String> response = postController.putEditPost(null,null);
+        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+
+    }
+    @Test
+    void testEditPostWithUserNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(null) // invalid user
+                .withId(createdPost.getId())
+                .build();
+
+        ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
+        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+    }
+    @Test
+    void testEditPostWithUserInvalid(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        User invalidUser = new User.UserBuilder()
+                .withUsername("invalid")
+                .withPassword("invalid")
+                .withEmail("invalid@gmail.com")
+                .build();
+        // not saved -> does not exist on database -> invalid user
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(invalidUser) // invalid user
+                .withId(createdPost.getId())
+                .build();
+
+
+        ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
+        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+    }
+    @Test
+    void testEditPostValid(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(createdUser) // valid user
+                .withId(createdPost.getId())
+                .build();
+
+
+        ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
+        assertEquals(HttpStatus.OK,response.getStatusCode());
+    }
+
+    //  TODO: add tests for when postid != post.getId()
+    // endregion
 }

@@ -459,4 +459,116 @@ class PostServiceImplTest {
         assertEquals(1, postRepository.findAll().size());
     }
     // endregion
+
+    // region test editPost
+    @Test
+    void testEditPostNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post editedPost = postService.editPost(null);
+        assertNull(editedPost);
+
+    }
+    @Test
+    void testEditPostWithUserNull(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(null) // invalid user
+                .withId(createdPost.getId())
+                .build();
+
+        Post editedPost = postService.editPost(changedPost);
+        assertNull(editedPost);
+    }
+    @Test
+    void testEditPostWithUserInvalid(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        User invalidUser = new User.UserBuilder()
+                .withUsername("invalid")
+                .withPassword("invalid")
+                .withEmail("invalid@gmail.com")
+                .build();
+        // not saved -> does not exist on database -> invalid user
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(invalidUser) // invalid user
+                .withId(createdPost.getId())
+                .build();
+
+        Post editedPost = postService.editPost(changedPost);
+        assertNull(editedPost);
+    }
+    @Test
+    void testEditPostValid(){
+        // make post
+        User user = new User.UserBuilder()
+                .withUsername("Username")
+                .withPassword("Password")
+                .withEmail("email@gmail.com")
+                .build();
+        User createdUser = userRepository.save(user);
+        Post post = new Post.PostBuilder()
+                .withTitle("title")
+                .withContent("content")
+                .withUser(createdUser)
+                .build();
+        Post createdPost = postRepository.save(post);
+
+        Post changedPost = new Post.PostBuilder()
+                .withTitle("editedTitle")
+                .withContent("editedContent")
+                .withUser(createdUser) // valid user
+                .withId(createdPost.getId())
+                .build();
+
+        Post editedPost = postService.editPost(changedPost);
+
+        assertAll(
+                () -> assertNotNull(editedPost),
+                () -> assertEquals("editedTitle",editedPost.getTitle()),
+                () -> assertEquals("editedContent",editedPost.getContent())
+        );
+    }
+    // endregion
 }

@@ -57,11 +57,11 @@ public class PostController {
     }
 
     @PutMapping("edit/{postid}")
-    public ResponseEntity putEditPost(@RequestBody Post post, @PathVariable(value = "postid") long postid){
+    public ResponseEntity<String> putEditPost(@RequestBody Post post, @PathVariable(value = "postid") Long postid){
         if(post == null){
-            return new ResponseEntity(HttpStatus.CONFLICT);
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        if(post.getId() != postid){
+        if(!post.getId().equals(postid) && postid != null){ // postid gets priority over post.getId().
             System.out.println("[WARN] postid does not match post.getId()! using postid as id");
             post = new Post.PostBuilder()
                     .withId(postid)
@@ -72,9 +72,12 @@ public class PostController {
                     .withCreationTime(post.getCreationTime())
                     .build();
         }
-        postService.editPost(post);
+        Post editedPost = postService.editPost(post);
+        if(editedPost == null){
+            return new ResponseEntity<>(HttpStatus.CONFLICT);
+        }
         // no need to send edited post back?
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
 
     }
 
