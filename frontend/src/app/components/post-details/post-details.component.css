@@ -8,6 +8,12 @@
 }
 
 .comment-section {
-  background-color: slategrey;
+  background-color: grey;
   border-bottom: 1px solid black;
+}
+.post-content-text-color {
+  color: darkslategrey;
+}
+.category-text-color {
+  color: #272727 !important;
 }

@@ -5,3 +5,10 @@
 .darker {
   color: #787878;
 }
+.post-content-text-color {
+  color: darkslategrey;
+}
+
+.category-text-color {
+  color: #272727 !important;
+}

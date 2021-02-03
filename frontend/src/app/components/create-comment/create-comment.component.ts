@@ -45,7 +45,6 @@ export class CreateCommentComponent implements OnInit {
         this.comment.post = this.post;
 
         this.commentService.createComment(this.comment).subscribe(() => {
-
           this.router.navigateByUrl('post-details/' + params.id);
         });
       });
