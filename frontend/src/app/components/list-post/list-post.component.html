@@ -3,10 +3,11 @@
   <div class = "col">
     <div class="card text-white bg-dark mb-3" *ngFor="let post of posts">
     <div class="card-body">
-      <h5 class="card-title">{{post.title}}</h5>
+      <h5 class="card-title">Title: {{post.title}}</h5>
       <p class="card-text">{{post.content}}</p>
+      <p class="card-text">Category: {{post.category?.name}}</p>
       <p class="card-text darker"><small class="text">
-        {{post.creationTime | date: 'full'}} By {{post.user?.username }}
+        Posted on: {{post.creationTime | date: 'full'}} By {{post.user?.username }}
       </small></p>
       <a class="btn btn-dark" [routerLink]="['/post-details', post.id]">Post Details</a>
     </div>
