@@ -3,9 +3,9 @@ package be.vdab.domain;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@NoArgsConstructor
 public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -13,6 +13,13 @@ public class Comment {
     @ManyToOne
     private Post post;
     private String content;
+    @ManyToOne
+    private User user;
+    private LocalDateTime creationTime;
+
+    public Comment(){
+        this.creationTime = LocalDateTime.now();
+    }
 
     public long getId() {
         return id;
@@ -26,9 +33,19 @@ public class Comment {
         return content;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public LocalDateTime getCreationTime() {
+        return creationTime;
+    }
+
     public static class CommentBuilder{
         private Post post;
         private String content;
+        private User user;
+        private LocalDateTime creationTime;
 
         public CommentBuilder withPost(Post post){
             this.post = post;
@@ -38,10 +55,21 @@ public class Comment {
             this.content = content;
             return this;
         }
+        public CommentBuilder withUser(User user){
+            this.user = user;
+            return this;
+        }
+        public CommentBuilder withCreationTime(LocalDateTime creationTime){
+            this.creationTime = creationTime;
+            return this;
+        }
+
         public Comment build(){
             Comment comment = new Comment();
             comment.content = this.content;
             comment.post = this.post;
+            comment.user = this.user;
+            comment.creationTime = this.creationTime;
             return comment;
         }
 
