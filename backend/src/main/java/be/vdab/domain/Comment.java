@@ -1,5 +1,6 @@
 package be.vdab.domain;
 
+import be.vdab.dtos.CommentDTO;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;

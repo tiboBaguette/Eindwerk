@@ -5,6 +5,7 @@ import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
 import be.vdab.dtos.CommentDTO;
+import be.vdab.dtos.PostDTO;
 import be.vdab.repositories.CommentRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
@@ -60,11 +61,10 @@ class CommentControllerTest {
 
     @Test
     void testAddCommentWithContentEmpty() {
-        Comment comment = new Comment.CommentBuilder()
-                .withContent("")
-                .build();
+        CommentDTO commentDTO = new CommentDTO()
+                .setContent("");
 
-        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(commentDTO);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -72,11 +72,10 @@ class CommentControllerTest {
     }
     @Test
     void testAddCommentWithContent(){
-        Comment comment = new Comment.CommentBuilder()
-                .withContent("commentContent")
-                .build();
+        CommentDTO commentDTO = new CommentDTO()
+                .setContent("content");
 
-        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(commentDTO);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -98,10 +97,10 @@ class CommentControllerTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Comment comment = new Comment.CommentBuilder()
-                .withPost(createdPost)
-                .build();
-        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
+        CommentDTO commentDTO = new CommentDTO()
+                .setPost(new PostDTO(createdPost));
+
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(commentDTO);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -123,11 +122,11 @@ class CommentControllerTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Comment comment = new Comment.CommentBuilder()
-                .withPost(createdPost)
-                .withContent("")
-                .build();
-        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
+        CommentDTO commentDTO = new CommentDTO()
+                .setPost(new PostDTO(createdPost))
+                .setContent("");
+
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(commentDTO);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -149,11 +148,11 @@ class CommentControllerTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Comment comment = new Comment.CommentBuilder()
-                .withPost(createdPost)
-                .withContent("commentContent")
-                .build();
-        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
+        CommentDTO commentDTO = new CommentDTO()
+                .setPost(new PostDTO(createdPost))
+                .setContent("commentContent");
+
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(commentDTO);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())

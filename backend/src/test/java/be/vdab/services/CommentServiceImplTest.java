@@ -4,6 +4,7 @@ import be.vdab.BackendApplication;
 import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
+import be.vdab.dtos.CommentDTO;
 import be.vdab.repositories.CommentRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
@@ -48,7 +49,7 @@ class CommentServiceImplTest {
     // region test createComment
     @Test
     void testCreateCommentNull() {
-        assertFalse(commentService.createComment(null));
+        assertFalse(commentService.createComment((CommentDTO)null));
     }
     @Test
     void testCreateCommentWithEmptyContent() {

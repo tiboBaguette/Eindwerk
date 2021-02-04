@@ -21,10 +21,10 @@ public class CommentController {
     CommentService commentService;
 
     @PostMapping("add")
-    public ResponseEntity<CommentDTO> postAddComment(@RequestBody Comment comment){
+    public ResponseEntity<CommentDTO> postAddComment(@RequestBody CommentDTO comment){
         boolean result = commentService.createComment(comment);
         if(result){
-            return new ResponseEntity<>(new CommentDTO(comment), HttpStatus.CREATED);
+            return new ResponseEntity<>(comment, HttpStatus.CREATED);
         }
         return new ResponseEntity<>(null,new HttpHeaders(),HttpStatus.CONFLICT);
     }
