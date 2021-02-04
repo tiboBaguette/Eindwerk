@@ -4,6 +4,7 @@ import be.vdab.BackendApplication;
 import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
+import be.vdab.dtos.CommentDTO;
 import be.vdab.repositories.CommentRepository;
 import be.vdab.repositories.PostRepository;
 import be.vdab.repositories.UserRepository;
@@ -50,7 +51,7 @@ class CommentControllerTest {
     // region test createComment
     @Test
     void testAddCommentNull(){
-        ResponseEntity<Comment> response = commentController.postAddComment(null);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(null);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -63,7 +64,7 @@ class CommentControllerTest {
                 .withContent("")
                 .build();
 
-        ResponseEntity<Comment> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -75,7 +76,7 @@ class CommentControllerTest {
                 .withContent("commentContent")
                 .build();
 
-        ResponseEntity<Comment> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -100,7 +101,7 @@ class CommentControllerTest {
         Comment comment = new Comment.CommentBuilder()
                 .withPost(createdPost)
                 .build();
-        ResponseEntity<Comment> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -126,7 +127,7 @@ class CommentControllerTest {
                 .withPost(createdPost)
                 .withContent("")
                 .build();
-        ResponseEntity<Comment> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -152,7 +153,7 @@ class CommentControllerTest {
                 .withPost(createdPost)
                 .withContent("commentContent")
                 .build();
-        ResponseEntity<Comment> response = commentController.postAddComment(comment);
+        ResponseEntity<CommentDTO> response = commentController.postAddComment(comment);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())
@@ -187,12 +188,12 @@ class CommentControllerTest {
         commentRepository.save(comment);
         // try to find comment
 
-        ResponseEntity<Iterable<Comment>> response = commentController.getComments(null);
+        ResponseEntity<Iterable<CommentDTO>> response = commentController.getComments(null);
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Comment> comments = (List<Comment>) response.getBody();
+                    List<CommentDTO> comments = (List<CommentDTO>) response.getBody();
                     assertTrue(comments.isEmpty());
                 }
         );
@@ -220,12 +221,12 @@ class CommentControllerTest {
                 .build();
         commentRepository.save(comment);
         // try to find comment
-        ResponseEntity<Iterable<Comment>> response = commentController.getComments(-10L); // -10L should never be a valid index
+        ResponseEntity<Iterable<CommentDTO>> response = commentController.getComments(-10L); // -10L should never be a valid index
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Comment> comments = (List<Comment>) response.getBody();
+                    List<CommentDTO> comments = (List<CommentDTO>) response.getBody();
                     assertTrue(comments.isEmpty());
                 }
         );
@@ -255,12 +256,12 @@ class CommentControllerTest {
         // try to find comment
         long foundPostID = postRepository.findAll().get(0).getId(); // find a valid postID
 
-        ResponseEntity<Iterable<Comment>> response = commentController.getComments(foundPostID);
+        ResponseEntity<Iterable<CommentDTO>> response = commentController.getComments(foundPostID);
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Comment> comments = (List<Comment>) response.getBody();
+                    List<CommentDTO> comments = (List<CommentDTO>) response.getBody();
                     assertEquals(1,comments.size());
                 }
         );
@@ -297,12 +298,12 @@ class CommentControllerTest {
         // try to find comment
         long foundPostID = postRepository.findAll().get(0).getId(); // find a valid postID
 
-        ResponseEntity<Iterable<Comment>> response = commentController.getComments(foundPostID);
+        ResponseEntity<Iterable<CommentDTO>> response = commentController.getComments(foundPostID);
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Comment> comments = (List<Comment>) response.getBody();
+                    List<CommentDTO> comments = (List<CommentDTO>) response.getBody();
                     assertEquals(2,comments.size());
                 }
         );

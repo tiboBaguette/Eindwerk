@@ -24,6 +24,7 @@ public class CommentServiceImpl implements CommentService {
         if(comment.getContent().equals("")){
             return false;
         }
+        //TODO: add a check on user data validity
         commentRepository.save(comment);
         return true;
     }
