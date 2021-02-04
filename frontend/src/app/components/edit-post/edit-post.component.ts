@@ -55,9 +55,11 @@ export class EditPostComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.postService.editPost(this.editPostForm.value, this.postId).subscribe();
-      this.editPostForm.reset();
-      this.router.navigateByUrl('post-details/' + this.postId);
+      this.postService.editPost(this.editPostForm.value, this.postId).subscribe(
+        () => this.editPostForm.reset(),
+        error => this.handleError(error),
+        () => this.router.navigateByUrl('post-details/' + this.postId),
+      );
     }
   }
 
