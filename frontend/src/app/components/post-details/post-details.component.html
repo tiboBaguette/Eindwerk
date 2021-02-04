@@ -4,50 +4,79 @@
   <h3>Reading Post details for: {{ post.title }}</h3>
 </div>-->
 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
 
-<div class="card text-white bg-dark mb-3">
-  <div class="card-body">
-    <h5 class="card-title">Title: {{ post.title}}</h5>
-    <p class="card-text post-content-text-color"> {{ post.content}}</p>
-    <p class="card-text category-text-color">Category: {{post.category?.name}}</p>
-    <p class="card-text darker"><small class="text">
-      Posted on: {{post.creationTime | date: 'full'}} By {{post.user?.username}}
-    </small></p>
-    <div *ngIf="activeUser?.username === post.user?.username">
-      <a class="btn btn-dark m-1 p-1" (click)="deletePost()">Delete Post with ID: {{ post.id }} </a>
-      <a class="btn btn-dark m-1 p-1" [routerLink]="['/edit-post', post.id]">Edit Your Post with ID: {{ post.id }}</a>
-    </div>
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-body">
+          <h5 class="card-title">Title: {{ post.title}}</h5>
+          <p class="card-text post-content-text-color"> {{ post.content}}</p>
+          <p class="card-text category-text-color">Category: {{post.category?.name}}</p>
+          <p class="card-text darker"><small class="text">
+            Posted on: {{post.creationTime | date: 'full'}} By {{post.user?.username}}
+          </small></p>
+          <div *ngIf="activeUser?.username === post.user?.username">
+            <a class="btn btn-dark m-1 p-1" (click)="deletePost()">Delete Post with ID: {{ post.id }} </a>
+            <a class="btn btn-dark m-1 p-1" [routerLink]="['/edit-post', post.id]">Edit Your Post with ID: {{ post.id }}</a>
+          </div>
 
-  </div>
-</div>
-<!--  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>-->
-<div class="card text-white bg-dark mb-3">
-  <div class="card">
-    <div class="card-body">
-<!--      <h5 class="card-title">Create A New Comment on Post ID: {{ post.id }}</h5>-->
-      <p class="error" *ngIf="isError">You need to be logged in to comment</p>
-      <form [formGroup]="createCommentForm">
-        <div class="form-group">
-          <div class="form-row">
-            <div class="col">
-<!--              <label align="center" >Comment</label>-->
-              <input type="text" class="form-control" placeholder="Type your Comment here" [formControlName]="'content'">
-            </div>
+        </div>
+      </div>
+      <!--  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>-->
+      <div class="card text-white bg-dark mb-3">
+        <div class="card">
+          <div class="card-body">
+            <!--      <h5 class="card-title">Create A New Comment on Post ID: {{ post.id }}</h5>-->
+            <p class="error" *ngIf="isError">You need to be logged in to comment</p>
+            <form [formGroup]="createCommentForm">
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col">
+                    <!--              <label align="center" >Comment</label>-->
+                    <input type="text" class="form-control" placeholder="Type your Comment here" [formControlName]="'content'">
+                  </div>
+                </div>
+              </div>
+            </form>
+            <button type="submit" class="btn btn-dark" (click)="createComment()">Post New Comment</button>
           </div>
         </div>
-      </form>
-      <button type="submit" class="btn btn-dark" (click)="createComment()">Post New Comment</button>
+      </div>
+      <h2> Comment Section</h2>
+      <div class="card text-white bg-dark mb-3">
+        <div class="card-body comment-section" *ngFor="let comment of comments">
+          <p class="card-text">{{comment.content}}</p>
+          <p class="card-text text-dark"><small class="text">
+            Commented on: {{post.creationTime | date: 'full'}} By {{post.user?.username }}
+          </small></p>
+        </div>
+      </div>
+
+
+    </div>
+    <div class="col-md-2 offset-md-8">
+  </div>
+</div>
+
+
+
+<!--<div class="container">
+<div class="row">
+  <div class="col-sm">
+    <div class="media border">
+      <img src="img_avatar3.png" alt="UserPicture" class="mr-3 mt-3 rounded-circle" style="width:60px;">
+
+
+    </div>
+    <div class="media-body" *ngFor="let comment of comments">
+      <h4> {{post.user?.username }} <small><i>Posted on: {{post.creationTime | date: 'short'}} </i></small></h4>
+      <p text-dark> {{comment.content}}</p>
     </div>
   </div>
 </div>
-<div class="card text-white bg-dark mb-3">
-  <div class="card-body comment-section" *ngFor="let comment of comments">
-      <p class="card-text">{{comment.content}}</p>
-      <p class="card-text text-dark"><small class="text">
-        Commented on: {{post.creationTime | date: 'full'}} By {{post.user?.username }}
-      </small></p>
-  </div>
-</div>
+</div>-->
+
 
 <!--hackey spacer to give some room on small screen-->
 <br>
