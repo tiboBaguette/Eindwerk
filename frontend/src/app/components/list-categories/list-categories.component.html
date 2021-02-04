@@ -1,12 +1,22 @@
-<br><br>
-<div *ngIf="activeUser !== undefined">
-  <a class="btn btn-dark" [routerLink]="['/create-category']">Create New Category Here</a>
-</div>
-<br><br>
-<div class="card text-white bg-dark mb-3" *ngFor="let category of categories">
-  <div class="card-body">
-    <h5 class="card-title">{{category.name}}</h5>
-    <a class="btn btn-dark" [routerLink]="['/list-posts']">List Posts in this Category(not linked to categories)</a>
+<br>
+<br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+
+      <div *ngIf="activeUser !== undefined">
+        <a class="btn btn-dark" [routerLink]="['/create-category']">Create New Category Here</a>
+      </div>
+      <br>
+      <br>
+      <div class="card text-white bg-dark mb-3" *ngFor="let category of categories">
+        <div class="card-body">
+          <h5 class="card-title">Category Name: {{category.name}}</h5>
+          <a class="btn btn-dark" [routerLink]="['/list-posts']">Show Posts in this Category</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<br><br>
+<br>
+<br>

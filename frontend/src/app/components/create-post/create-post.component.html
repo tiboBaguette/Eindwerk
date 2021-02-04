@@ -1,35 +1,40 @@
 <br>
 <br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
 
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Create Post</h5>
-    <p class="error" align="left" *ngIf="!isError"></p>
-    <div *ngIf="isError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
-      <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Create Post</h5>
+          <p class="error" align="left" *ngIf="!isError"></p>
+          <div *ngIf="isError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
+            <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
 
-    </div>
-    <ng-template #elseBlock>
-    <form [formGroup]="createPostForm">
-      <div class="form-group">
-        <div class="form-row">
-          <div class="col">
-            <label align="center" >Title</label>
-            <input type="text" class="form-control" placeholder="Title" [formControlName]="'title'">
-            <br>
-            <label align="center" >Post Content</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [formControlName]="'content'"></textarea>
-            <label align="center" >Category</label>
-            <input type="text" class="form-control" placeholder="Category" [formControlName]="'category'">
-            <br>
+          </div>
+          <ng-template #elseBlock>
+          <form [formGroup]="createPostForm">
+            <div class="form-group">
+              <div class="form-row">
+                <div class="col">
+                  <label align="center" >Title</label>
+                  <input type="text" class="form-control" placeholder="Title" [formControlName]="'title'">
+                  <br>
+                  <label align="center" >Post Content</label>
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [formControlName]="'content'"></textarea>
+                  <label align="center" >Category</label>
+                  <input type="text" class="form-control" placeholder="Category" [formControlName]="'category'">
+                  <br>
+              </div>
+            </div>
+            </div>
+          </form>
+
+          <p class="card-text">Please enter your forum post here</p>
+          <button type="submit" class="btn btn-dark" (click)="createPost()">Create New Post</button>
+          </ng-template>
         </div>
       </div>
-      </div>
-    </form>
-
-    <p class="card-text">Please enter your forum post here</p>
-    <button type="submit" class="btn btn-dark" (click)="createPost()">Create New Post</button>
-    </ng-template>
+    </div>
   </div>
 </div>
-
