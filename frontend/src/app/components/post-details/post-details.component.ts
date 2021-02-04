@@ -25,6 +25,7 @@ export class PostDetailsComponent implements OnInit {
   createCommentForm = this.formBuilder.group({
     content: '',
   });
+
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,
@@ -38,37 +39,56 @@ export class PostDetailsComponent implements OnInit {
     this.activeUser = this.userService.user;
 
     this.route.params.subscribe(params => {
-      this.postService.getPostById(params.id).toPromise().then((postResponse) => this.post = postResponse);
-      this.commentService.getComments(params.id).toPromise().then((commentResponse) => this.comments = commentResponse);
+      this.loadPost(params.id);
+      this.loadComments(params.id);
     });
+  }
+
+  createComment(): void {
+    if (this.userService.user !== undefined) {
+      this.route.params.subscribe(params => {
+        this.comment.content = this.createCommentForm.controls.content.value;
+        this.comment.post = this.post;
+
+        this.commentService.createComment(this.comment).subscribe(
+          () => this.createCommentForm.reset(),
+          error => this.handleError(error),
+          () => this.loadComments(params.id),
+        );
+      });
+    } else {
+      this.isError = true;
+    }
+  }
+
+  loadPost(id: number): void {
+    this.postService.getPostById(id).subscribe(
+      response => this.post = response,
+      error => this.handleError(error),
+      () => this.router.navigateByUrl('post-details/' + id),
+    );
+  }
+
+  loadComments(id: number): void {
+    this.commentService.getComments(id).subscribe(
+      response => this.comments = response,
+      error => this.handleError(error),
+    () => this.router.navigateByUrl('post-details/' + id),
+    );
   }
 
   deletePost(): void {
     this.postService.deletePost(this.post).subscribe(
       response => this.post = response,
-      error => this.handleError(error),
+      error => {
+        if (error.status === 200) {
+          this.router.navigateByUrl('list-posts');
+        } else {
+          this.handleError(error);
+        }
+      }
     );
   }
 
-  handleError(error: HttpErrorResponse): void {
-    if (error.status === 200) { // ok
-      this.router.navigateByUrl('list-posts');
-    }
-  }
-
-  createComment(): void {
-    if (this.userService.user === undefined) {
-      this.isError = true;
-    } else {
-      this.route.params.subscribe(params => {
-        this.comment.content = this.createCommentForm.controls.content.value;
-        this.comment.post = this.post;
-        this.commentService.createComment(this.comment).toPromise().then(() => {
-          this.commentService.getComments(params.id).toPromise().then((commentResponse) => this.comments = commentResponse);
-          this.postService.getPostById(params.id).toPromise().then((postResponse) => this.post = postResponse);
-          this.router.navigateByUrl('post-details/' + params.id);
-        });
-      });
-    }
-  }
+  handleError(error: HttpErrorResponse): void {}
 }

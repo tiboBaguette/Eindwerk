@@ -3,6 +3,7 @@ import {PostService} from '../../service/post.service';
 import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-post',
@@ -36,9 +37,13 @@ export class CreatePostComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.postService.createPost(this.createPostForm.value).subscribe(() => {
-        this.router.navigateByUrl('list-posts');
-      });
+      this.postService.createPost(this.createPostForm.value).subscribe(
+        () => this.createPostForm.reset(),
+        error => this.handleError(error),
+        () => this.router.navigateByUrl('list-posts'),
+      );
     }
   }
+
+  handleError(error: HttpErrorResponse): void {}
 }

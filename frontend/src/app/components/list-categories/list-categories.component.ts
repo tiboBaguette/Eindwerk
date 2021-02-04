@@ -3,7 +3,7 @@ import {Category} from '../../model/Category';
 import {CategoryService} from '../../service/category.service';
 import {User} from '../../model/User';
 import {UserService} from '../../service/user.service';
-import {HttpErrorResponse} from "@angular/common/http";
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-list-categories',

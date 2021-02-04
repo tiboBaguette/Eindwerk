@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Post} from '../../model/Post';
 import {PostService} from '../../service/post.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-list-post',
@@ -15,7 +16,11 @@ export class ListPostComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.postService.getPosts().toPromise().then((postResponse) => this.posts = postResponse);
+    this.postService.getPosts().subscribe(
+      response => this.posts = response,
+      error => this.handleError(error),
+    );
   }
 
+  handleError(error: HttpErrorResponse): void {}
 }

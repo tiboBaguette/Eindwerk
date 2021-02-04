@@ -38,9 +38,7 @@ export class CreateCommentComponent implements OnInit {
   }
 
   createComment(): void {
-    if (this.userService.user === undefined) {
-      this.isError = true;
-    } else {
+    if (this.userService.user !== undefined) {
       this.route.params.subscribe(params => {
         this.comment.content = this.createCommentForm.controls.content.value;
         this.comment.post = this.post;
@@ -52,6 +50,8 @@ export class CreateCommentComponent implements OnInit {
         );
 
       });
+    } else {
+      this.isError = true;
     }
   }
 
