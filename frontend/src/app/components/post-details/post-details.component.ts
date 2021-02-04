@@ -25,7 +25,6 @@ export class PostDetailsComponent implements OnInit {
   createCommentForm = this.formBuilder.group({
     content: '',
   });
-
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,
@@ -42,9 +41,6 @@ export class PostDetailsComponent implements OnInit {
       this.loadPost(params.id);
       this.loadComments(params.id);
     });
-  }
-  public randomInt = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
   }
   createComment(): void {
     if (this.userService.user !== undefined) {
