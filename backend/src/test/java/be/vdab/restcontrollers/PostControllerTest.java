@@ -582,7 +582,7 @@ class PostControllerTest {
                 .build();
 
 
-        ResponseEntity<String> response = postController.deletePost(invalidPost);
+        ResponseEntity<String> response = postController.deletePost(new PostDTO(invalidPost));
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertEquals("Delete failed",response.getBody())
@@ -611,7 +611,7 @@ class PostControllerTest {
         Post dummyPost = postRepository.save(post2); // dummyPost is valid and should exist after delete
 
 
-        ResponseEntity<String> response = postController.deletePost(createdPost);
+        ResponseEntity<String> response = postController.deletePost(new PostDTO(createdPost));
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertEquals("Delete success",response.getBody()),

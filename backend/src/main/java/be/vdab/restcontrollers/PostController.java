@@ -52,7 +52,7 @@ public class PostController {
     }
 
     @PostMapping("delete")
-    public ResponseEntity<String> deletePost(@RequestBody Post post){
+    public ResponseEntity<String> deletePost(@RequestBody PostDTO post){
         if(post == null){
             return new ResponseEntity<>("Delete failed", new HttpHeaders(), HttpStatus.CONFLICT);
         }
