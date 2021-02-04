@@ -1,35 +1,41 @@
 <br>
 <br>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
 
-<div class="card">
-  <div class="card-body">
-    <h5 class="card-title">Edit Your Post</h5>
-    <p class="error" *ngIf="isFormFilledInError">Please fill in all fields</p>
-    <p align="left" *ngIf="!isLoggedInError"></p>
-    <div *ngIf="isLoggedInError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
-      <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
-    </div>
-
-    <ng-template #elseBlock>
-      <form [formGroup]="editPostForm" >
-        <div class="form-group">
-          <div class="form-row">
-            <div class="col">
-              <label align="center" >Title</label>
-              <input type="text" class="form-control" [value]="post?.title" [formControlName]="'title'">
-              <br>
-              <label align="center" >Post Content</label>
-              <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{post?.content}}" [formControlName]="'content'"></textarea>
-              <label align="center" >Category</label>
-              <input type="text" class="form-control" value="{{post?.category}}" [formControlName]="'category'">
-              <br>
-            </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Edit Your Post</h5>
+          <p class="error" *ngIf="isFormFilledInError">Please fill in all fields</p>
+          <p align="left" *ngIf="!isLoggedInError"></p>
+          <div *ngIf="isLoggedInError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
+            <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
           </div>
+
+          <ng-template #elseBlock>
+            <form [formGroup]="editPostForm" >
+              <div class="form-group">
+                <div class="form-row">
+                  <div class="col">
+                    <label align="center" >Title</label>
+                    <input type="text" class="form-control" [value]="post?.title" [formControlName]="'title'">
+                    <br>
+                    <label align="center" >Post Content</label>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" value="{{post?.content}}" [formControlName]="'content'"></textarea>
+                    <label align="center" >Category</label>
+                    <input type="text" class="form-control" value="{{post?.category}}" [formControlName]="'category'">
+                    <br>
+                  </div>
+                </div>
+              </div>
+            </form>
+      <!--      For now a new post will be created every time we do an update because the rest controller does not reflect this option.-->
+            <p class="card-text">Please edit your forum post here. </p>
+            <button type="submit" class="btn btn-dark" (click)="editPost()">Edit Post</button>
+          </ng-template>
         </div>
-      </form>
-<!--      For now a new post will be created every time we do an update because the rest controller does not reflect this option.-->
-      <p class="card-text">Please edit your forum post here. </p>
-      <button type="submit" class="btn btn-dark" (click)="editPost()">Edit Post</button>
-    </ng-template>
+      </div>
+    </div>
   </div>
 </div>
