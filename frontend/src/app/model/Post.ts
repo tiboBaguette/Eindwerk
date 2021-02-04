@@ -1,3 +1,4 @@
+import {Category} from './Category';
 
 export class Post {
   id: number | undefined;
@@ -5,6 +6,6 @@ export class Post {
   content: string | undefined;
   creationTime: any | undefined;
   user: string | undefined;
-  category: string | undefined;
+  category: Category | undefined;
   comment: Comment | undefined;
 }
