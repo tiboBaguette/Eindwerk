@@ -18,13 +18,16 @@ export class ListPostComponent implements OnInit, AfterContentChecked {
     private postService: PostService,
     private userService: UserService
   ) {}
-
+  public randomInt = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
   ngOnInit(): void {
 
     this.postService.getPosts().subscribe(
       response => this.posts = response,
       error => this.handleError(error),
     );
+
   }
 
   ngAfterContentChecked(): void {
@@ -32,4 +35,6 @@ export class ListPostComponent implements OnInit, AfterContentChecked {
     this.isLoggedIn = this.user !== undefined;
   }
   handleError(error: HttpErrorResponse): void {}
+
+
 }
