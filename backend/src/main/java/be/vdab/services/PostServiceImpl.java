@@ -3,6 +3,7 @@ package be.vdab.services;
 import be.vdab.domain.Category;
 import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
+import be.vdab.domain.User;
 import be.vdab.dtos.PostDTO;
 import be.vdab.repositories.CategoryRepository;
 import be.vdab.repositories.CommentRepository;
@@ -73,8 +74,10 @@ public class PostServiceImpl implements PostService {
         }
         Category category = new Category().setName(postDTO.getCategory());
 
+        User user = userRepository.findUserByUsername(postDTO.getUser());
+
         Post post = new Post.PostBuilder()
-                .withUser(postDTO.getUser())
+                .withUser(user)
                 .withTitle(postDTO.getTitle())
                 .withContent(postDTO.getContent())
                 .withCategory(category)
@@ -84,7 +87,7 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<Post> getPosts() {
+    public List<Post> getPosts() {
         return postRepository.findAll();
     }
 
@@ -152,11 +155,15 @@ public class PostServiceImpl implements PostService {
             category = new Category().setName(postDTO.getCategory());
             categoryService.addCategory(category);
         }
+
+            User user = userRepository.findUserByUsername(postDTO.getUser());
+
+
         Post post = new Post.PostBuilder()
                 .withId(postDTO.getId())
                 .withTitle(postDTO.getTitle())
                 .withContent(postDTO.getContent())
-                .withUser(postDTO.getUser())
+                .withUser(user)
                 .withCategory(category)
                 .withCreationTime(postDTO.getCreationTime())
                 .build();

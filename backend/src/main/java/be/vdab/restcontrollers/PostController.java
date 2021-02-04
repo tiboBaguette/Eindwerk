@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -33,17 +34,21 @@ public class PostController {
     }
 
     @GetMapping("show")
-    public ResponseEntity<Iterable<Post>> getShowPosts(){
-        return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
+    public ResponseEntity<Iterable<PostDTO>> getShowPosts(){
+        List<Post> foundPosts = postService.getPosts();
+        // cast foundPosts to PostDTOs
+        List<PostDTO> foundPostDTOs = new ArrayList<>();
+        foundPosts.forEach(post -> foundPostDTOs.add(new PostDTO(post)));
+        return new ResponseEntity<>(foundPostDTOs,HttpStatus.OK);
     }
 
     @GetMapping("detail/:{postid}")
-    public ResponseEntity<Post> getPostDetail(@PathVariable(value = "postid") Long postid){
+    public ResponseEntity<PostDTO> getPostDetail(@PathVariable(value = "postid") Long postid){
         Post foundPost = postService.getPostByID(postid);
         if(foundPost == null){
             return  new ResponseEntity<>(new HttpHeaders(), HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(foundPost,HttpStatus.CREATED);
+        return new ResponseEntity<>(new PostDTO(foundPost),HttpStatus.CREATED);
     }
 
     @PostMapping("delete")
@@ -83,7 +88,7 @@ public class PostController {
     }
 
     @GetMapping("get-by-category/:{categoryName}")
-    public ResponseEntity<Iterable<Post>> getPostByCategory(@PathVariable String categoryName){
+    public ResponseEntity<Iterable<PostDTO>> getPostByCategory(@PathVariable String categoryName){
         if(categoryName == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
@@ -93,7 +98,12 @@ public class PostController {
         if(foundPosts == null){
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>(foundPosts,HttpStatus.OK);
+        // cast foundPosts to PostDTOs
+        List<PostDTO> foundPostDTOs = new ArrayList<>();
+        foundPosts.forEach(post -> foundPostDTOs.add(new PostDTO(post)));
+
+
+        return new ResponseEntity<>(foundPostDTOs,HttpStatus.OK);
     }
 
 }

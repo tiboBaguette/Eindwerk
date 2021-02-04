@@ -2,6 +2,7 @@ package src.test.java.be.vdab.restcontrollers;
 
 import be.vdab.BackendApplication;
 import be.vdab.domain.User;
+import be.vdab.dtos.UserDTO;
 import be.vdab.repositories.UserRepository;
 import be.vdab.restcontrollers.UserController;
 import be.vdab.services.UserService;
@@ -56,7 +57,7 @@ class UserControllerTest {
     void testRegisterEmpty() {
         User user1 = new User.UserBuilder().build();
 
-        ResponseEntity<User> response = userController.postRegister(user1);
+        ResponseEntity<UserDTO> response = userController.postRegister(user1);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -68,7 +69,7 @@ class UserControllerTest {
         User user1 = new User.UserBuilder()
                 .withUsername("Bert")
                 .build();
-        ResponseEntity<User> response = userController.postRegister(user1);
+        ResponseEntity<UserDTO> response = userController.postRegister(user1);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
@@ -81,7 +82,7 @@ class UserControllerTest {
         User user1 = new User.UserBuilder()
                 .withUsername("Jan")
                 .build();
-        ResponseEntity<User> response = userController.postRegister(user1);
+        ResponseEntity<UserDTO> response = userController.postRegister(user1);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -93,12 +94,11 @@ class UserControllerTest {
                 .withUsername("Bert")
                 .withPassword("this is my pass")
                 .build();
-        ResponseEntity<User> response = userController.postRegister(user1);
+        ResponseEntity<UserDTO> response = userController.postRegister(user1);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
-                () -> assertEquals(user1.getUsername(), response.getBody().getUsername()),
-                () -> assertEquals(user1.getPassword(), response.getBody().getPassword())
+                () -> assertEquals(user1.getUsername(), response.getBody().getUsername())
         );
     }
 
@@ -110,7 +110,7 @@ class UserControllerTest {
     void testLoginEmpty() {
         User user1 = new User.UserBuilder()
                 .build();
-        ResponseEntity<User> response = userController.postLogin(user1);
+        ResponseEntity<UserDTO> response = userController.postLogin(user1);
 
         assertAll(
                 () -> assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode()),
@@ -123,7 +123,7 @@ class UserControllerTest {
         User user1 = new User.UserBuilder()
                 .withUsername("ThisUserDoesNotExist")
                 .build();
-        ResponseEntity<User> response = userController.postLogin(user1);
+        ResponseEntity<UserDTO> response = userController.postLogin(user1);
 
         assertAll(
                 () -> assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode()),
@@ -136,7 +136,7 @@ class UserControllerTest {
         User user1 = new User.UserBuilder()
                 .withUsername("Jan")
                 .build();
-        ResponseEntity<User> response = userController.postLogin(user1);
+        ResponseEntity<UserDTO> response = userController.postLogin(user1);
 
         assertAll(
                 () -> assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode()),
@@ -150,7 +150,7 @@ class UserControllerTest {
                 .withUsername("Jan")
                 .withUsername("ThisIsNotThePassword")
                 .build();
-        ResponseEntity<User> response = userController.postLogin(user1);
+        ResponseEntity<UserDTO> response = userController.postLogin(user1);
 
         assertAll(
                 () -> assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode()),
@@ -164,7 +164,7 @@ class UserControllerTest {
                 .withUsername("Jan")
                 .withPassword("thisIsMyPass")
                 .build();
-        ResponseEntity<User> response = userController.postLogin(user1);
+        ResponseEntity<UserDTO> response = userController.postLogin(user1);
 
         assertAll(
                 () -> assertEquals(HttpStatus.OK, response.getStatusCode()),
