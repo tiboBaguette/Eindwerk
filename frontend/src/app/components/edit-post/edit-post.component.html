@@ -4,11 +4,12 @@
 <div class="card">
   <div class="card-body">
     <h5 class="card-title">Edit Your Post</h5>
-    <p class="error" align="left" *ngIf="!isError"></p>
-    <div *ngIf="isError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
+    <p class="error" *ngIf="isFormFilledInError">Please fill in all fields</p>
+    <p align="left" *ngIf="!isLoggedInError"></p>
+    <div *ngIf="isLoggedInError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
       <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
-
     </div>
+
     <ng-template #elseBlock>
       <form [formGroup]="editPostForm" >
         <div class="form-group">

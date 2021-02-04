@@ -13,7 +13,8 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class EditPostComponent implements OnInit {
 
-  isError: boolean | undefined;
+  isLoggedInError: boolean | undefined;
+  isFormFilledInError: boolean | undefined;
   post: Post = new Post();
   postId: number | undefined;
 
@@ -53,7 +54,7 @@ export class EditPostComponent implements OnInit {
 
   editPost(): void {
     if (this.userService.user === undefined) {
-      this.isError = true;
+      this.isLoggedInError = true;
     } else {
       this.postService.editPost(this.editPostForm.value, this.postId).subscribe(
         () => this.editPostForm.reset(),
@@ -63,5 +64,9 @@ export class EditPostComponent implements OnInit {
     }
   }
 
-  handleError(error: HttpErrorResponse): void {}
+  handleError(error: HttpErrorResponse): void {
+    if (error.status === 409) {
+      this.isFormFilledInError = true;
+    }
+  }
 }
