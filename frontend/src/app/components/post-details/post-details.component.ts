@@ -17,13 +17,14 @@ import {FormBuilder} from '@angular/forms';
 export class PostDetailsComponent implements OnInit {
   isError: boolean | undefined;
   post: Post = new Post();
-  comment: Comment = new Comment();
   posts: Post[] = [];
   comments: Comment[] = [];
   activeUser: User | undefined;
 
   createCommentForm = this.formBuilder.group({
     content: '',
+    user: this.userService.user?.username,
+    post: new Post(),
   });
 
   constructor(
@@ -43,13 +44,13 @@ export class PostDetailsComponent implements OnInit {
       this.loadComments(params.id);
     });
   }
+
   createComment(): void {
     if (this.userService.user !== undefined) {
       this.route.params.subscribe(params => {
-        this.comment.content = this.createCommentForm.controls.content.value;
-        this.comment.post = this.post;
+        this.createCommentForm.controls.post.setValue(this.post);
 
-        this.commentService.createComment(this.comment).subscribe(
+        this.commentService.createComment(this.createCommentForm.value).subscribe(
           () => this.createCommentForm.reset(),
           error => this.handleError(error),
           () => this.loadComments(params.id),

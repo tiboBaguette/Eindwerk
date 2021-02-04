@@ -10,6 +10,7 @@ import be.vdab.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 @Service
@@ -52,7 +53,7 @@ public class CommentServiceImpl implements CommentService {
         Comment comment = new Comment.CommentBuilder()
                 .withPost(post)
                 .withContent(commentDTO.getContent())
-                .withCreationTime(commentDTO.getCreationTime())
+                .withCreationTime(LocalDateTime.now())
                 .withUser(user)
                 .build();
 
