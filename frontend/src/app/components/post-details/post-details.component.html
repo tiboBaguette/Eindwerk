@@ -8,21 +8,31 @@
   <div class="row">
     <div class="col-md-8 offset-md-2">
 
-      <div class="card text-white bg-dark mb-3">
+      <div class="card bg-dark mb-3">
         <div class="card-body">
           <h5 class="card-title">Title: {{ post.title}}</h5>
-          <p class="card-text post-content-text-color"> {{ post.content}}</p>
-          <p class="card-text category-text-color">Category: {{post.category}}</p>
-          <p class="card-text darker"><small class="text">
-            Posted on: {{post.creationTime | date: 'full'}} By {{post.user}}
-          </small></p>
 
+          <div class="card">
+            <div class="card-body">
+              <p class="card-text post-content-text-color">{{post.content}}</p>
+            </div>
+          </div>
+          <br>
+          <p class="card-text category-text-color">Category: {{post.category}}</p>
 
           <div class="row">
-            <div class="col-1">
+            <div class="col-sm-4">
+              <p class="card-text text-dark"><small class="text">
+                Posted on: {{post.creationTime | date: 'medium'}} by {{post.user}}
+              </small>
+              </p>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-2">
               <i class="fa fa-eye darker"></i> <span class="ms-1 views"> 3</span>
             </div>
-            <div class="col-1">
+            <div class="col-2">
               <i class="fa fa-thumbs-up darker"></i> <span class="ms-1 likes"> 2</span>
             </div>
           </div>
@@ -58,7 +68,7 @@
         </div>
       </div>
 
-      <div class="card text-white bg-dark mb-3">
+      <div class="card bg-dark mb-3">
         <div class="card-body comment-section" *ngFor="let comment of comments">
           <p class="card-text">{{comment.content}}</p>
           <p class="card-text text-dark"><small class="text">

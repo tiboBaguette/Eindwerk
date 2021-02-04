@@ -1,5 +1,13 @@
 .card-body {
-  background-color: #C0C0C0;
+  background-color: whitesmoke;
+}
+
+.post-content-text-color {
+  color: darkslategrey;
+}
+
+.category-text-color {
+  color: #272727 !important;
 }
 
 .darker {
@@ -8,15 +16,18 @@
 }
 
 .comment-section {
-  background-color: #ccd2dd;
+  background-color: #e2e2e2;
   border-bottom: 1px solid black;
 }
-.post-content-text-color {
-  color: darkslategrey;
-}
+
 .category-text-color {
   color: #272727 !important;
 }
+
 .error {
   color: red;
+}
+
+.h5 {
+  color: black !important;
 }
