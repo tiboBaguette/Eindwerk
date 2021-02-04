@@ -244,7 +244,7 @@ class PostServiceImplTest {
 
     @Test
     void testShowNoPostsAvailable(){
-        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
+        List<Post> posts = postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertTrue(posts.isEmpty())
@@ -264,7 +264,7 @@ class PostServiceImplTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post);
-        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
+        List<Post> posts = postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertEquals(1,posts.size())
@@ -291,7 +291,7 @@ class PostServiceImplTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post2);
-        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
+        List<Post> posts = postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertEquals(2,posts.size())
@@ -324,7 +324,7 @@ class PostServiceImplTest {
                 .withUser(createdUser2)
                 .build();
         postRepository.save(post2);
-        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
+        List<Post> posts = postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertEquals(2,posts.size())

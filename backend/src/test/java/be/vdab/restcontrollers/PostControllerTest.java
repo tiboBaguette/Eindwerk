@@ -485,7 +485,7 @@ class PostControllerTest {
         post.setContent("content");
         post.setUser(user.getUsername());
         assertNotNull(postController.postCreate(post)); // make sure there is a post
-        ResponseEntity<Post> response = postController.getPostDetail(null);
+        ResponseEntity<PostDTO> response = postController.getPostDetail(null);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -505,7 +505,7 @@ class PostControllerTest {
         post.setContent("content");
         post.setUser(user.getUsername());
         assertNotNull(postController.postCreate(post)); // make sure there is a post
-        ResponseEntity<Post> response = postController.getPostDetail(-10L);
+        ResponseEntity<PostDTO> response = postController.getPostDetail(-10L);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -528,7 +528,7 @@ class PostControllerTest {
 
         Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
 
-        ResponseEntity<Post> response = postController.getPostDetail(idFound);
+        ResponseEntity<PostDTO> response = postController.getPostDetail(idFound);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
                 () -> assertNotNull(response.getBody())
@@ -766,7 +766,7 @@ class PostControllerTest {
                 .build();
         postRepository.save(post2);
         // get posts from 'null'
-        ResponseEntity<Iterable<Post>> response = postController.getPostByCategory(null);
+        ResponseEntity<Iterable<PostDTO>> response = postController.getPostByCategory(null);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
                 () -> assertNull(response.getBody())
@@ -806,12 +806,12 @@ class PostControllerTest {
                 .build();
         postRepository.save(post2);
         // get posts from empty string
-        ResponseEntity<Iterable<Post>> response = postController.getPostByCategory("");
+        ResponseEntity<Iterable<PostDTO>> response = postController.getPostByCategory("");
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts = (List<Post>) response.getBody();
+                    List<PostDTO> posts = (List<PostDTO>) response.getBody();
                     assertEquals(0,posts.size());
                 }
         );
@@ -850,12 +850,12 @@ class PostControllerTest {
                 .build();
         postRepository.save(post2);
         // get posts from category1
-        ResponseEntity<Iterable<Post>> response = postController.getPostByCategory("Cat1");
+        ResponseEntity<Iterable<PostDTO>> response = postController.getPostByCategory("Cat1");
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts = (List<Post>) response.getBody();
+                    List<PostDTO> posts = (List<PostDTO>) response.getBody();
                     assertEquals(1,posts.size());
                 }
         );

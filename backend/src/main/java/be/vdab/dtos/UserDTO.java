@@ -1,8 +1,16 @@
 package be.vdab.dtos;
 
+import be.vdab.domain.User;
+
 public class UserDTO {
     private Long id;
     private String username;
+
+    public UserDTO(){}
+    public UserDTO(User user){
+        id = user.getId();
+        username = user.getUsername();
+    }
 
     public Long getId() {
         return id;

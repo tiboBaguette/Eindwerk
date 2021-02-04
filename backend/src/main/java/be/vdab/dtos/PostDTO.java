@@ -1,5 +1,7 @@
 package be.vdab.dtos;
 
+import be.vdab.domain.Post;
+
 import java.time.LocalDateTime;
 
 public class PostDTO {
@@ -9,6 +11,18 @@ public class PostDTO {
     private LocalDateTime creationTime;
     private String user;
     private String category;
+
+    public PostDTO(){}
+    public PostDTO(Post post){
+        setId(post.getId());
+        setTitle(post.getTitle());
+        setContent(post.getContent());
+        setCreationTime(post.getCreationTime());
+
+        if(post.getCategory() != null){
+            setCategory(post.getCategory().getName());
+        }
+    }
 
     public Long getId() {
         return id;

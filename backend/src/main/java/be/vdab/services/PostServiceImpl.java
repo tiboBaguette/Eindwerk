@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -88,22 +87,8 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Iterable<PostDTO> getPosts() {
-        List<Post> posts = postRepository.findAll();
-        List<PostDTO> postDTOs = new ArrayList<>();
-        posts.forEach(post -> {
-            PostDTO postDTO = new PostDTO()
-                    .setId(post.getId())
-                    .setContent(post.getContent())
-                    .setTitle(post.getTitle())
-                    .setCreationTime(post.getCreationTime())
-                    .setUser(post.getUser().getUsername());
-            if(post.getCategory() != null){
-                postDTO.setCategory(post.getCategory().getName());
-            }
-            postDTOs.add(postDTO);
-        });
-        return postDTOs;
+    public List<Post> getPosts() {
+        return postRepository.findAll();
     }
 
     @Override

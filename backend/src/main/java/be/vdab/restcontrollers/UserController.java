@@ -1,6 +1,7 @@
 package be.vdab.restcontrollers;
 
 import be.vdab.domain.User;
+import be.vdab.dtos.UserDTO;
 import be.vdab.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -18,19 +19,19 @@ public class UserController {
 
 
     @PostMapping("register")
-    public ResponseEntity<User> postRegister(@RequestBody User user){
+    public ResponseEntity<UserDTO> postRegister(@RequestBody User user){
         boolean result = userService.registerUser(user);
         if(result){
-            return new ResponseEntity<>(user, HttpStatus.CREATED);
+            return new ResponseEntity<>(new UserDTO(user), HttpStatus.CREATED);
         }
         return new ResponseEntity<>(null,new HttpHeaders() ,HttpStatus.CONFLICT);
     }
 
     @PostMapping("login")
-    public ResponseEntity<User> postLogin(@RequestBody User user){
+    public ResponseEntity<UserDTO> postLogin(@RequestBody User user){
         User loggedUser = userService.login(user);
         if(loggedUser != null){
-            return new ResponseEntity<>(loggedUser, HttpStatus.OK);
+            return new ResponseEntity<>(new UserDTO(loggedUser), HttpStatus.OK);
         }
         return new ResponseEntity<>(null, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
     }
