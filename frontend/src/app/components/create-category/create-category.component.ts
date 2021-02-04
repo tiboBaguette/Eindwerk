@@ -12,6 +12,7 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class CreateCategoryComponent implements OnInit {
   isError: boolean | undefined;
+
   createCategoryForm = this.formBuilder.group({
     name: '',
   });

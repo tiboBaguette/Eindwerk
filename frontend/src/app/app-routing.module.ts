@@ -18,6 +18,7 @@ const routes: Routes = [
   {path: 'create-post', component: CreatePostComponent},
   {path: 'create-category', component: CreateCategoryComponent},
   {path: 'list-posts', component: ListPostComponent},
+  {path: 'list-posts/:category', component: ListPostComponent},
   {path: 'about-page', component: AboutPageComponent},
   {path: 'list-categories', component: ListCategoriesComponent},
   {path: 'post-details/:id', component: PostDetailsComponent},

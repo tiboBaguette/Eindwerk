@@ -12,7 +12,6 @@ import {HttpErrorResponse} from '@angular/common/http';
   styleUrls: ['./edit-post.component.css']
 })
 export class EditPostComponent implements OnInit {
-
   isLoggedInError: boolean | undefined;
   isFormFilledInError: boolean | undefined;
   post: Post = new Post();

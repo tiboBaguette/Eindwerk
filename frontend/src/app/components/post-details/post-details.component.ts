@@ -25,6 +25,7 @@ export class PostDetailsComponent implements OnInit {
   createCommentForm = this.formBuilder.group({
     content: '',
   });
+
   constructor(
     private formBuilder: FormBuilder,
     private postService: PostService,

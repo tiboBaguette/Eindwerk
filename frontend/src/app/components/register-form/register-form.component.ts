@@ -12,13 +12,13 @@ import {HttpErrorResponse} from '@angular/common/http';
 })
 export class RegisterFormComponent implements OnInit {
   user: User;
+  isError: boolean | undefined;
 
   registerForm = this.formBuilder.group({
     username: '',
     email: '',
     password: '',
   });
-  isError: boolean | undefined;
 
   constructor(
     private formBuilder: FormBuilder,

@@ -12,7 +12,7 @@
       <div class="card text-white bg-dark mb-3" *ngFor="let category of categories">
         <div class="card-body">
           <h5 class="card-title">Category Name: {{category.name}}</h5>
-          <a class="btn btn-dark" [routerLink]="['/list-posts']">Show Posts in this Category</a>
+          <a class="btn btn-dark" [routerLink]="['/list-posts', category.name]">Show Posts in this Category</a>
         </div>
       </div>
     </div>
