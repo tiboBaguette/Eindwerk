@@ -19,6 +19,10 @@ public class PostDTO {
         setContent(post.getContent());
         setCreationTime(post.getCreationTime());
 
+        if(post.getUser() != null){
+            setUser(post.getUser().getUsername());
+        }
+
         if(post.getCategory() != null){
             setCategory(post.getCategory().getName());
         }
