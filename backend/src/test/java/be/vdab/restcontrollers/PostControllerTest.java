@@ -102,7 +102,7 @@ class PostControllerTest {
 //                .build();
 //
         PostDTO post = new PostDTO();
-        post.setUser(user);
+        post.setUser(user.getUsername());
 
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
@@ -124,7 +124,7 @@ class PostControllerTest {
 //                .withUser(user)
 //                .build();
         PostDTO post = new PostDTO();
-        post.setUser(user);
+        post.setUser(user.getUsername());
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
@@ -165,7 +165,7 @@ class PostControllerTest {
 //                .build();
         PostDTO post = new PostDTO();
         post.setTitle("title");
-        post.setUser(user);
+        post.setUser(user.getUsername());
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
@@ -189,7 +189,7 @@ class PostControllerTest {
 //                .build();
         PostDTO post = new PostDTO();
         post.setContent("content");
-        post.setUser(user);
+        post.setUser(user.getUsername());
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
@@ -210,7 +210,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(user);
+        post.setUser(user.getUsername());
         ResponseEntity<PostDTO> response = postController.postCreate(post);
         assertAll(
                 () -> assertEquals(HttpStatus.CREATED,response.getStatusCode()),
@@ -235,7 +235,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(createdUser);
+        post.setUser(createdUser.getUsername());
         post.setCategory(null);
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
@@ -273,7 +273,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(createdUser);
+        post.setUser(createdUser.getUsername());
         post.setCategory("");
 
         ResponseEntity<PostDTO> response = postController.postCreate(post);
@@ -309,7 +309,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(createdUser);
+        post.setUser(createdUser.getUsername());
         post.setCategory("myCategory");
 
 
@@ -337,14 +337,14 @@ class PostControllerTest {
         PostDTO post1 = new PostDTO();
         post1.setTitle("title1");
         post1.setContent("content1");
-        post1.setUser(createdUser);
+        post1.setUser(createdUser.getUsername());
         post1.setCategory("Cat1");
         ResponseEntity<PostDTO> response1 = postController.postCreate(post1);
 
         PostDTO post2 = new PostDTO();
         post2.setTitle("title2");
         post2.setContent("content2");
-        post2.setUser(createdUser);
+        post2.setUser(createdUser.getUsername());
         post2.setCategory("Cat1");
         ResponseEntity<PostDTO> response2 = postController.postCreate(post2);
 
@@ -365,12 +365,12 @@ class PostControllerTest {
 
     @Test
     void testShowPostNoPostsAvailable(){
-        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
+        ResponseEntity<Iterable<PostDTO>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts = (List<Post>) (response.getBody());
+                    List<PostDTO> posts = (List<PostDTO>) (response.getBody());
                     assertEquals(0,posts.size());
                 }
         );
@@ -389,12 +389,12 @@ class PostControllerTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post);
-        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
+        ResponseEntity<Iterable<PostDTO>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) (response.getBody());
+                    List<PostDTO> posts= (List<PostDTO>) (response.getBody());
                     assertEquals(1,posts.size());
                 }
         );
@@ -420,12 +420,12 @@ class PostControllerTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post2);
-        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
+        ResponseEntity<Iterable<PostDTO>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) (response.getBody());
+                    List<PostDTO> posts= (List<PostDTO>) (response.getBody());
                     assertEquals(2,posts.size());
                 }
         );
@@ -457,12 +457,12 @@ class PostControllerTest {
                 .withUser(createdUser2)
                 .build();
         postRepository.save(post2);
-        ResponseEntity<Iterable<Post>> response = postController.getShowPosts();
+        ResponseEntity<Iterable<PostDTO>> response = postController.getShowPosts();
         assertAll(
                 () -> assertEquals(HttpStatus.OK,response.getStatusCode()),
                 () -> assertNotNull(response.getBody()),
                 () -> {
-                    List<Post> posts= (List<Post>) (response.getBody());
+                    List<PostDTO> posts= (List<PostDTO>) (response.getBody());
                     assertEquals(2,posts.size());
                 }
         );
@@ -483,7 +483,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(user);
+        post.setUser(user.getUsername());
         assertNotNull(postController.postCreate(post)); // make sure there is a post
         ResponseEntity<Post> response = postController.getPostDetail(null);
         assertAll(
@@ -503,7 +503,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(user);
+        post.setUser(user.getUsername());
         assertNotNull(postController.postCreate(post)); // make sure there is a post
         ResponseEntity<Post> response = postController.getPostDetail(-10L);
         assertAll(
@@ -523,7 +523,7 @@ class PostControllerTest {
         PostDTO post = new PostDTO();
         post.setTitle("title");
         post.setContent("content");
-        post.setUser(user);
+        post.setUser(user.getUsername());
         assertNotNull(postController.postCreate(post)); // make sure there is a post
 
         Long idFound = postRepository.findAll().get(0).getId(); // get the id from the first existing post
@@ -693,7 +693,7 @@ class PostControllerTest {
         PostDTO changedPost = new PostDTO()
                 .setTitle("editedTitle")
                 .setContent("editedContent")
-                .setUser(invalidUser)
+                .setUser(invalidUser.getUsername())
                 .setId(createdPost.getId());
 
 
@@ -721,7 +721,7 @@ class PostControllerTest {
         PostDTO changedPost = new PostDTO()
                 .setTitle("editedTitle")
                 .setContent("editedContent")
-                .setUser(createdUser)
+                .setUser(createdUser.getUsername())
                 .setId(createdPost.getId());
 
 

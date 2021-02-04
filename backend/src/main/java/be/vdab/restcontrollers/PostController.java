@@ -33,8 +33,9 @@ public class PostController {
     }
 
     @GetMapping("show")
-    public ResponseEntity<Iterable<Post>> getShowPosts(){
-        return new ResponseEntity<>(postService.getPosts(),HttpStatus.OK);
+    public ResponseEntity<Iterable<PostDTO>> getShowPosts(){
+        Iterable<PostDTO> posts = postService.getPosts();
+        return new ResponseEntity<>(posts,HttpStatus.OK);
     }
 
     @GetMapping("detail/:{postid}")

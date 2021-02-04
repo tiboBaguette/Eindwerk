@@ -244,7 +244,7 @@ class PostServiceImplTest {
 
     @Test
     void testShowNoPostsAvailable(){
-        List<Post> posts = (List<Post>) postService.getPosts();
+        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertTrue(posts.isEmpty())
@@ -264,7 +264,7 @@ class PostServiceImplTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post);
-        List<Post> posts = (List<Post>) postService.getPosts();
+        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertEquals(1,posts.size())
@@ -291,7 +291,7 @@ class PostServiceImplTest {
                 .withUser(createdUser)
                 .build();
         postRepository.save(post2);
-        List<Post> posts = (List<Post>) postService.getPosts();
+        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertEquals(2,posts.size())
@@ -324,7 +324,7 @@ class PostServiceImplTest {
                 .withUser(createdUser2)
                 .build();
         postRepository.save(post2);
-        List<Post> posts = (List<Post>) postService.getPosts();
+        List<PostDTO> posts = (List<PostDTO>) postService.getPosts();
         assertAll(
                 () -> assertNotNull(posts),
                 () -> assertEquals(2,posts.size())
@@ -613,7 +613,7 @@ class PostServiceImplTest {
         PostDTO changedPost = new PostDTO()
                 .setTitle("")
                 .setContent("editedContent")
-                .setUser(createdUser) // valid user
+                .setUser(createdUser.getUsername()) // valid user
                 .setId(createdPost.getId());
 
         Post editedPost = postService.editPost(changedPost);
@@ -638,7 +638,7 @@ class PostServiceImplTest {
         PostDTO changedPost = new PostDTO()
                 .setTitle("editedTitle")
                 .setContent("")
-                .setUser(createdUser) // valid user
+                .setUser(createdUser.getUsername()) // valid user
                 .setId(createdPost.getId());
 
         Post editedPost = postService.editPost(changedPost);

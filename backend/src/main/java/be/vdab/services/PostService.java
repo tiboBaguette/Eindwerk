@@ -7,7 +7,7 @@ import be.vdab.dtos.PostDTO;
 public interface PostService {
     boolean createPost(Post post);
     boolean createPost(PostDTO postDTO);
-    Iterable<Post> getPosts();
+    Iterable<PostDTO> getPosts();
     Post getPostByID(Long postID);
     Iterable<Post> getPostsByCategory(Category category);
     boolean deletePostByID(Long postID);
