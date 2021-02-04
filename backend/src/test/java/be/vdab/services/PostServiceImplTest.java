@@ -591,13 +591,11 @@ class PostServiceImplTest {
                 .withUser(createdUser)
                 .build();
         Post createdPost = postRepository.save(post);
-
         Post editedPost = postService.editPost((PostDTO)null);
         assertNull(editedPost);
-
     }
     @Test
-    void testEditPostWithUserNull(){
+    void testEditPostEmptyTitle(){
         // make post
         User user = new User.UserBuilder()
                 .withUsername("Username")
@@ -612,18 +610,17 @@ class PostServiceImplTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        Post changedPost = new Post.PostBuilder()
-                .withTitle("editedTitle")
-                .withContent("editedContent")
-                .withUser(null) // invalid user
-                .withId(createdPost.getId())
-                .build();
+        PostDTO changedPost = new PostDTO()
+                .setTitle("")
+                .setContent("editedContent")
+                .setUser(createdUser) // valid user
+                .setId(createdPost.getId());
 
         Post editedPost = postService.editPost(changedPost);
         assertNull(editedPost);
     }
     @Test
-    void testEditPostWithUserInvalid(){
+    void testEditPostEmptyContent(){
         // make post
         User user = new User.UserBuilder()
                 .withUsername("Username")
@@ -638,18 +635,11 @@ class PostServiceImplTest {
                 .build();
         Post createdPost = postRepository.save(post);
 
-        User invalidUser = new User.UserBuilder()
-                .withUsername("invalid")
-                .withPassword("invalid")
-                .withEmail("invalid@gmail.com")
-                .build();
-        // not saved -> does not exist on database -> invalid user
-        Post changedPost = new Post.PostBuilder()
-                .withTitle("editedTitle")
-                .withContent("editedContent")
-                .withUser(invalidUser) // invalid user
-                .withId(createdPost.getId())
-                .build();
+        PostDTO changedPost = new PostDTO()
+                .setTitle("editedTitle")
+                .setContent("")
+                .setUser(createdUser) // valid user
+                .setId(createdPost.getId());
 
         Post editedPost = postService.editPost(changedPost);
         assertNull(editedPost);
@@ -669,14 +659,13 @@ class PostServiceImplTest {
                 .withUser(createdUser)
                 .build();
         Post createdPost = postRepository.save(post);
-
+        // make changed post
         Post changedPost = new Post.PostBuilder()
                 .withTitle("editedTitle")
                 .withContent("editedContent")
                 .withUser(createdUser) // valid user
                 .withId(createdPost.getId())
                 .build();
-
         Post editedPost = postService.editPost(changedPost);
 
         assertAll(

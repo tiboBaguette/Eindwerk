@@ -665,7 +665,8 @@ class PostControllerTest {
                 .setId(createdPost.getId());
 
         ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
-        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+        // even though user is invalid, it is not updated and thus not checked
+        assertEquals(HttpStatus.OK,response.getStatusCode());
     }
     @Test
     void testEditPostWithUserInvalid(){
@@ -697,7 +698,8 @@ class PostControllerTest {
 
 
         ResponseEntity<String> response = postController.putEditPost(changedPost, changedPost.getId());
-        assertEquals(HttpStatus.CONFLICT,response.getStatusCode());
+        // even though user is invalid, it is not updated and thus not checked
+        assertEquals(HttpStatus.OK,response.getStatusCode());
     }
     @Test
     void testEditPostValid(){

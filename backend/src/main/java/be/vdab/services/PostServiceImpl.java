@@ -123,21 +123,27 @@ public class PostServiceImpl implements PostService {
     @Override
     public Post editPost(Post post) {
         if(post == null){
-            return null;
+            return null;    // data validity check
         }
         if(postRepository.findById(post.getId()).isEmpty()){
             return null;    // only edit existing posts
         }
-        // add check for user here if one is needed
-        boolean editResult = createPost(post);
-        if(editResult){
-            return postRepository.findById(post.getId()).orElse(null); //should always return
+        if(post.getTitle() == null || post.getContent() == null){
+            return null;    // data validity check
         }
-        return null; // something went wrong saving the post -> check createPost(Post)
+        if(post.getTitle().equals("") || post.getContent().equals("")){
+            return null;    // data validity check
+        }
+        postRepository.updatePost(post.getId(), post.getTitle(),post.getContent(),post.getCategory());
+        return postRepository.findById(post.getId()).orElse(null); //should always return a post
+
     }
 
     @Override
     public Post editPost(PostDTO postDTO){
+        if(postDTO == null){
+            return null;
+        }
         // cast postDTO to post and call editPost(Post)
         Category category = categoryRepository.findCategoryByName(postDTO.getCategory());
         Post post = new Post.PostBuilder()
