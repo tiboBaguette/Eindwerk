@@ -43,7 +43,9 @@ export class PostDetailsComponent implements OnInit {
       this.loadComments(params.id);
     });
   }
-
+  public randomInt = (min: number, max: number): number => {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+  }
   createComment(): void {
     if (this.userService.user !== undefined) {
       this.route.params.subscribe(params => {
