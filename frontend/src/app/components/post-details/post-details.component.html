@@ -16,13 +16,25 @@
           <p class="card-text darker"><small class="text">
             Posted on: {{post.creationTime | date: 'full'}} By {{post.user?.username}}
           </small></p>
+
+
+          <div class="row">
+            <div class="col-1">
+              <i class="fa fa-eye darker"></i> <span class="ms-1 views"> 3</span>
+            </div>
+            <div class="col-1">
+              <i class="fa fa-thumbs-up darker"></i> <span class="ms-1 likes"> 6</span>
+            </div>
+          </div>
+
           <div *ngIf="activeUser?.username === post.user?.username">
             <a class="btn btn-dark m-1 p-1" (click)="deletePost()">Delete Your Post </a>
             <a class="btn btn-dark m-1 p-1" [routerLink]="['/edit-post', post.id]">Edit Your Post </a>
           </div>
-
         </div>
       </div>
+
+
       <h2> Comment Section</h2>
       <!--  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>-->
       <div class="card text-white bg-dark mb-3">
