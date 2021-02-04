@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PostService} from '../../service/post.service';
 import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Post} from '../../model/Post';
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-edit-post',
@@ -13,7 +14,7 @@ import {Post} from '../../model/Post';
 export class EditPostComponent implements OnInit {
 
   isError: boolean | undefined;
-  post: Post | undefined;
+  post: Post = new Post();
   postId: number | undefined;
 
   editPostForm = this.formBuilder.group({
@@ -35,13 +36,19 @@ export class EditPostComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
-      this.postService.getPostById(params.id).subscribe(postResponse => this.post = postResponse);
+      this.postService.getPostById(params.id).subscribe(
+        response => this.post = response,
+        error => this.handleError(error),
+        () => this.updateFormValues()
+      );
       this.postId = params.id;
-
-      // this.editPostForm.controls.title.setValue(this.post?.title);
-      // this.editPostForm.controls.content.setValue(this.post?.content);
-      // this.editPostForm.controls.category.setValue(this.post?.category?.name);
     });
+  }
+
+  updateFormValues(): void {
+    this.editPostForm.controls.title.setValue(this.post?.title);
+    this.editPostForm.controls.content.setValue(this.post?.content);
+    this.editPostForm.controls.category.setValue(this.post?.category?.name);
   }
 
   editPost(): void {
@@ -53,4 +60,6 @@ export class EditPostComponent implements OnInit {
       this.router.navigateByUrl('post-details/' + this.postId);
     }
   }
+
+  handleError(error: HttpErrorResponse): void {}
 }

@@ -3,7 +3,7 @@ import {FormBuilder} from '@angular/forms';
 import {UserService} from '../../service/user.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CategoryService} from '../../service/category.service';
-import {User} from "../../model/User";
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-category',
@@ -33,9 +33,13 @@ export class CreateCategoryComponent implements OnInit {
     if (this.userService.user === undefined) {
       this.isError = true;
     } else {
-      this.categoryService.createCategory(this.createCategoryForm.value).subscribe();
-      this.createCategoryForm.reset();
-      this.router.navigateByUrl('list-categories');
+      this.categoryService.createCategory(this.createCategoryForm.value).subscribe(
+        () => this.createCategoryForm.reset(),
+        error => this.handleError(error),
+        () => this.router.navigateByUrl('list-categories'),
+      );
     }
   }
+
+  handleError(error: HttpErrorResponse): void {}
 }

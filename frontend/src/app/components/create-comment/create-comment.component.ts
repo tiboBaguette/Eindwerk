@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PostService} from '../../service/post.service';
 import {Post} from '../../model/Post';
 import {Comment} from '../../model/Comment';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-create-comment',
@@ -44,10 +45,15 @@ export class CreateCommentComponent implements OnInit {
         this.comment.content = this.createCommentForm.controls.content.value;
         this.comment.post = this.post;
 
-        this.commentService.createComment(this.comment).subscribe(() => {
-          this.router.navigateByUrl('post-details/' + params.id);
-        });
+        this.commentService.createComment(this.comment).subscribe(
+          () => this.createCommentForm.reset(),
+          error => this.handleError(error),
+          () => this.router.navigateByUrl('post-details/' + params.id),
+        );
+
       });
     }
   }
+
+  handleError(error: HttpErrorResponse): void {}
 }
