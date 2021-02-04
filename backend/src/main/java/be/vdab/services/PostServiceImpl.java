@@ -25,6 +25,8 @@ public class PostServiceImpl implements PostService {
     private CategoryRepository categoryRepository;
     @Autowired
     private CommentRepository commentRepository;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public boolean createPost(Post post) {
@@ -146,6 +148,10 @@ public class PostServiceImpl implements PostService {
         }
         // cast postDTO to post and call editPost(Post)
         Category category = categoryRepository.findCategoryByName(postDTO.getCategory());
+        if(category == null && postDTO.getCategory() != null){
+            category = new Category().setName(postDTO.getCategory());
+            categoryService.addCategory(category);
+        }
         Post post = new Post.PostBuilder()
                 .withId(postDTO.getId())
                 .withTitle(postDTO.getTitle())
