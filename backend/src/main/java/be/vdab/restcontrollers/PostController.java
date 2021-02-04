@@ -75,7 +75,7 @@ public class PostController {
         // -- else use id from postDTO --
 
         Post editedPost = postService.editPost(postDTO);
-        if(editedPost == null){
+        if(editedPost == null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
         return new ResponseEntity<>(HttpStatus.OK);
