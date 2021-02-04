@@ -1,4 +1,12 @@
-import {AfterContentChecked, Component, OnInit} from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit, AfterViewChecked,
+  AfterViewInit,
+  Component,
+  DoCheck,
+  OnChanges,
+  OnInit
+} from '@angular/core';
 import {Post} from '../../model/Post';
 import {PostService} from '../../service/post.service';
 import {HttpErrorResponse} from '@angular/common/http';
@@ -10,7 +18,7 @@ import {User} from '../../model/User';
   templateUrl: './list-post.component.html',
   styleUrls: ['./list-post.component.css']
 })
-export class ListPostComponent implements OnInit, AfterContentChecked {
+export class ListPostComponent implements OnInit, AfterViewInit{
   posts: Post[] = [];
   isLoggedIn: boolean | undefined;
   user: User | undefined;
@@ -19,22 +27,15 @@ export class ListPostComponent implements OnInit, AfterContentChecked {
     private postService: PostService,
     private userService: UserService
   ) {}
-
-  public randomInt = (min: number, max: number): number => {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
-
   ngOnInit(): void {
-
     this.postService.getPosts().subscribe(
       response => this.posts = response,
       error => this.handleError(error),
-      () => console.warn(this.posts),
+      // () => console.warn(this.posts),
     );
-
   }
 
-  ngAfterContentChecked(): void {
+  ngAfterViewInit(): void {
     this.user = this.userService.user;
     this.isLoggedIn = this.user !== undefined;
   }
