@@ -16,7 +16,7 @@ export class CreatePostComponent implements OnInit {
   createPostForm = this.formBuilder.group({
     title: '',
     content: '',
-    user: this.userService.user,
+    user: this.userService.user?.username,
     category: '',
   });
 

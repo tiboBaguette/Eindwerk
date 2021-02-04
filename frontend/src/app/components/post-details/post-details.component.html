@@ -12,9 +12,9 @@
         <div class="card-body">
           <h5 class="card-title">Title: {{ post.title}}</h5>
           <p class="card-text post-content-text-color"> {{ post.content}}</p>
-          <p class="card-text category-text-color">Category: {{post.category?.name}}</p>
+          <p class="card-text category-text-color">Category: {{post.category}}</p>
           <p class="card-text darker"><small class="text">
-            Posted on: {{post.creationTime | date: 'full'}} By {{post.user?.username}}
+            Posted on: {{post.creationTime | date: 'full'}} By {{post.user}}
           </small></p>
 
 
@@ -27,7 +27,7 @@
             </div>
           </div>
 
-          <div *ngIf="activeUser?.username === post.user?.username">
+          <div *ngIf="activeUser?.username === post.user">
             <a class="btn btn-dark m-1 p-1" (click)="deletePost()">Delete Your Post </a>
             <a class="btn btn-dark m-1 p-1" [routerLink]="['/edit-post', post.id]">Edit Your Post </a>
           </div>
@@ -62,7 +62,7 @@
         <div class="card-body comment-section" *ngFor="let comment of comments">
           <p class="card-text">{{comment.content}}</p>
           <p class="card-text text-dark"><small class="text">
-            Commented on: {{post.creationTime | date: 'medium'}} by {{post.user?.username }}
+            Commented on: {{post.creationTime | date: 'medium'}} by {{post.user}}
           </small></p>
         </div>
       </div>

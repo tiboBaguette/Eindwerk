@@ -8,12 +8,12 @@
         <div class="card-body">
           <h5 class="card-title">Title: {{post.title}}</h5>
           <p class="card-text post-content-text-color">{{post.content}}</p>
-          <p class="card-text category-text-color">Category: {{post.category?.name}}</p>
+          <p class="card-text category-text-color">Category: {{post.category}}</p>
 
           <div class="row">
             <div class="col-sm-4">
               <p class="card-text text-dark"><small class="text">
-                Posted on: {{post.creationTime | date: 'medium'}} by {{post.user?.username }}
+                Posted on: {{post.creationTime | date: 'medium'}} by {{post.user}}
               </small>
               </p>
             </div>

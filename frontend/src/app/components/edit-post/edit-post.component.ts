@@ -21,7 +21,7 @@ export class EditPostComponent implements OnInit {
   editPostForm = this.formBuilder.group({
     title: '',
     content: '',
-    user: this.userService.user,
+    user: this.userService.user?.username,
     category: '',
   });
 
@@ -49,7 +49,7 @@ export class EditPostComponent implements OnInit {
   updateFormValues(): void {
     this.editPostForm.controls.title.setValue(this.post?.title);
     this.editPostForm.controls.content.setValue(this.post?.content);
-    this.editPostForm.controls.category.setValue(this.post?.category?.name);
+    this.editPostForm.controls.category.setValue(this.post?.category);
   }
 
   editPost(): void {
