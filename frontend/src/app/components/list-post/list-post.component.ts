@@ -14,6 +14,7 @@ import {ActivatedRoute} from '@angular/router';
 export class ListPostComponent implements OnInit {
   posts: Post[] = [];
   isLoggedIn: boolean | undefined;
+  showCategoryName: boolean | undefined;
   user: User | undefined;
 
   constructor(
@@ -33,6 +34,7 @@ export class ListPostComponent implements OnInit {
           error => this.handleError(error),
         );
       } else {
+        this.showCategoryName = true;
         this.postService.getPostByCategory(params.category).subscribe(
           response => this.posts = response,
           error => this.handleError(error),
