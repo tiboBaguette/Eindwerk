@@ -115,7 +115,6 @@ export class PostDetailsComponent implements OnInit {
     this.postService.getLikes(postId).subscribe(
       response => this.likes = response,
       error => this.handleError(error),
-      () => this.router.navigateByUrl('post-details/' + postId),
     );
   }
 
