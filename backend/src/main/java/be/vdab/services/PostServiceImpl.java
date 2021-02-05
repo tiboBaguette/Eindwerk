@@ -5,10 +5,7 @@ import be.vdab.domain.Comment;
 import be.vdab.domain.Post;
 import be.vdab.domain.User;
 import be.vdab.dtos.PostDTO;
-import be.vdab.repositories.CategoryRepository;
-import be.vdab.repositories.CommentRepository;
-import be.vdab.repositories.PostRepository;
-import be.vdab.repositories.UserRepository;
+import be.vdab.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +25,9 @@ public class PostServiceImpl implements PostService {
     private CommentRepository commentRepository;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private LikeRepository likeRepository;
+
 
     @Override
     public boolean createPost(Post post) {
@@ -121,6 +121,7 @@ public class PostServiceImpl implements PostService {
         }
         List<Comment> comments = (List<Comment>) commentRepository.findCommentsByPost_Id(postID);
         commentRepository.deleteAll(comments);
+        likeRepository.deleteAllByPost_Id(postID);
         postRepository.deleteById(postID);
         return true;
     }
