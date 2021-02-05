@@ -6,7 +6,7 @@
     <div class="col-md-8 offset-md-2">
 
       <div class="card bg-dark mb-3">
-        <div class="card-body">
+        <div class="card-body shadow">
           <h5 class="card-title">Title: {{ post.title}}</h5>
 
           <div class="card">
@@ -54,7 +54,7 @@
       <h2> Comment Section</h2>
       <!--  <a class="btn btn-dark" [routerLink]="['/create-comment', post.id]">Create New Comment</a>-->
       <div class="card text-white bg-dark mb-3">
-        <div class="card">
+        <div class="card shadow">
           <div class="card-body">
             <!--      <h5 class="card-title">Create A New Comment on Post ID: {{ post.id }}</h5>-->
             <p class="error" *ngIf="isError">You need to be logged in to comment</p>
@@ -75,7 +75,7 @@
       </div>
 
       <div class="card bg-dark mb-3">
-        <div class="card-body comment-section" *ngFor="let comment of comments">
+        <div class="card-body shadow comment-section" *ngFor="let comment of comments">
           <p class="card-text">{{comment.content}}</p>
           <p class="card-text text-dark"><small class="text">
             Commented on: {{comment.creationTime | date: 'medium'}} by {{comment.user}}
