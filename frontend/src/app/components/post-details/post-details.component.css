@@ -1,5 +1,5 @@
 .card-body {
-  background-color: whitesmoke;
+  background-color: white;
 }
 
 .post-content-text-color {
@@ -16,7 +16,7 @@
 }
 
 .comment-section {
-  background-color: #e2e2e2;
+  background-color: ghostwhite;
   border-bottom: 1px solid black;
 }
 
