@@ -38,6 +38,10 @@ export class PostService {
     return this.http.post<Post>('http://localhost:8080/api/likes/like/:' + postId, username);
   }
 
+  unLikePost(postId: number, username: string | undefined): Observable<Post> {
+    return this.http.post<Post>('http://localhost:8080/api/likes/unlike/:' + postId, username);
+  }
+
   getLikes(postId: number | undefined): Observable<number> {
     return this.http.get<number>('http://localhost:8080/api/likes/getLikes/:' + postId);
   }

@@ -63,9 +63,15 @@ export class PostDetailsComponent implements OnInit {
     }
   }
 
-  upVote(): void {
+  like(): void {
     this.route.params.subscribe(params => {
       this.likePost(params.id);
+    });
+  }
+
+  unLike(): void {
+    this.route.params.subscribe(params => {
+      this.unLikePost(params.id);
     });
   }
 
@@ -89,7 +95,7 @@ export class PostDetailsComponent implements OnInit {
     this.postService.deletePost(this.post).subscribe(
       response => this.post = response,
       error => {
-        if (error.status === 200) {
+        if (error.status === 200) { // ok
           this.router.navigateByUrl('list-posts');
         } else {
           this.handleError(error);
@@ -102,7 +108,20 @@ export class PostDetailsComponent implements OnInit {
     this.postService.likePost(postId, this.activeUser?.username).subscribe(
       response => console.warn(response),
       error => {
-        if (error.status === 201) {
+        if (error.status === 201) { // created
+          this.getLikes(postId);
+        } else {
+          this.handleError(error);
+        }
+      }
+    );
+  }
+
+  unLikePost(postId: number): void {
+    this.postService.unLikePost(postId, this.activeUser?.username).subscribe(
+      response => console.warn(response),
+      error => {
+        if (error.status === 200) { // ok
           this.getLikes(postId);
         } else {
           this.handleError(error);
@@ -118,5 +137,7 @@ export class PostDetailsComponent implements OnInit {
     );
   }
 
-  handleError(error: HttpErrorResponse): void {}
+  handleError(error: HttpErrorResponse): void {
+    console.warn(error);
+  }
 }
