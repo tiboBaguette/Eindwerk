@@ -89,6 +89,11 @@ export class PostDetailsComponent implements OnInit {
       }
     );
   }
-
+  upVote(id: number): void {
+    this.postService.getPostById(id).subscribe(
+    response => this.post = response,
+      error => this.handleError(error),
+      () => this.router.navigateByUrl('post-details/' + id));
+  }
   handleError(error: HttpErrorResponse): void {}
 }
