@@ -15,7 +15,6 @@ export class PostService {
   }
 
   editPost(post: Post, id: number | undefined): Observable<Post> {
-    // console.warn(post, id);
     return this.http.put<Post>('http://localhost:8080/api/posts/edit/:' + id, post);
   }
 
@@ -33,5 +32,13 @@ export class PostService {
 
   getPostByCategory(category: string): Observable<Post[]> {
     return this.http.get<Post[]>('http://localhost:8080/api/posts/get-by-category/:' + category);
+  }
+
+  likePost(postId: number, username: string | undefined): Observable<Post> {
+    return this.http.post<Post>('http://localhost:8080/api/likes/like/:' + postId, username);
+  }
+
+  getLikes(postId: number): Observable<number> {
+    return this.http.get<number>('http://localhost:8080/api/likes/getLikes/:' + postId);
   }
 }

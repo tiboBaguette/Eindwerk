@@ -30,13 +30,13 @@
               <i class="fa fa-eye darker"></i> <span class="ms-1 views"> 3</span>
             </div>
             <div class="col-2">
-              <i class="fa fa-thumbs-up darker"></i> <span class="ms-1 likes"> 2</span>
+              <i class="fa fa-thumbs-up darker"></i> <span class="ms-1 likes">{{likes}}</span>
             </div>
           </div>
           <br>
           <div class="row">
             <div class="col-2">
-              <button type="submit" class="btn btn-secondary m-1 p-1" >Like This Post</button>
+              <button *ngIf="!isError" type="submit" class="btn btn-secondary m-1 p-1" (click)="upVote()">Like This Post</button>
             </div>
           </div>
           <div class="row">
