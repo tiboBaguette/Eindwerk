@@ -49,6 +49,7 @@ export class ListPostComponent implements OnInit {
     this.postService.getPostByCategory(category).subscribe(
       response => this.posts = response,
       error => this.handleError(error),
+      () => this.getLikes(),
     );
   }
 
