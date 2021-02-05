@@ -1,9 +1,6 @@
 package be.vdab.services;
 
-import be.vdab.domain.Category;
-import be.vdab.domain.Comment;
-import be.vdab.domain.Post;
-import be.vdab.domain.User;
+import be.vdab.domain.*;
 import be.vdab.dtos.PostDTO;
 import be.vdab.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,7 +118,8 @@ public class PostServiceImpl implements PostService {
         }
         List<Comment> comments = (List<Comment>) commentRepository.findCommentsByPost_Id(postID);
         commentRepository.deleteAll(comments);
-        likeRepository.deleteAllByPost_Id(postID);
+        List<Like> likes = (List<Like>) likeRepository.findAllByPost_Id(postID);
+        likeRepository.deleteAll(likes);
         postRepository.deleteById(postID);
         return true;
     }
