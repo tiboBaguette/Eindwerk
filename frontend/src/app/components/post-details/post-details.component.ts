@@ -19,6 +19,7 @@ export class PostDetailsComponent implements OnInit {
   post: Post = new Post();
   posts: Post[] = [];
   comments: Comment[] = [];
+  likes: number | undefined;
   activeUser: User | undefined;
 
   createCommentForm = this.formBuilder.group({
@@ -42,6 +43,7 @@ export class PostDetailsComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.loadPost(params.id);
       this.loadComments(params.id);
+      this.getLikes(params.id);
     });
   }
 
@@ -59,6 +61,12 @@ export class PostDetailsComponent implements OnInit {
     } else {
       this.isError = true;
     }
+  }
+
+  upVote(): void {
+    this.route.params.subscribe(params => {
+      this.likePost(params.id);
+    });
   }
 
   loadPost(id: number): void {
@@ -89,11 +97,26 @@ export class PostDetailsComponent implements OnInit {
       }
     );
   }
-  upVote(id: number): void {
-    this.postService.getPostById(id).subscribe(
-    response => this.post = response,
-      error => this.handleError(error),
-      () => this.router.navigateByUrl('post-details/' + id));
+
+  likePost(postId: number): void {
+    this.postService.likePost(postId, this.activeUser?.username).subscribe(
+      response => console.warn(response),
+      error => {
+        if (error.status === 201) {
+          this.getLikes(postId);
+        } else {
+          this.handleError(error);
+        }
+      }
+    );
   }
+
+  getLikes(postId: number): void {
+    this.postService.getLikes(postId).subscribe(
+      response => this.likes = response,
+      error => this.handleError(error),
+    );
+  }
+
   handleError(error: HttpErrorResponse): void {}
 }
