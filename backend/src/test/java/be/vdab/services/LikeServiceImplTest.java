@@ -105,6 +105,15 @@ class LikeServiceImplTest {
         );
     }
 
+    @Test
+    void testAddSecondTime(){
+        User user = userRepository.findAll().get(0); // get createdUser from setup
+        Post post = postRepository.findAll().get(0); // get createdPost from setup
+        likeService.addLike(post.getId(),user.getUsername());
+        // try to add a second like on the same post with the same user; -> should fail
+        Like createdLike = likeService.addLike(post.getId(),user.getUsername());
+        assertNull(createdLike);
+    }
     // endregion
 
     // region test removeLike

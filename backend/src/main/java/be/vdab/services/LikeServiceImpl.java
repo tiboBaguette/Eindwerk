@@ -29,6 +29,9 @@ public class LikeServiceImpl implements LikeService {
         if(newLike.getPost() == null || newLike.getUser() == null){
             return null;
         }
+        if(likeRepository.findLikeByPost_IdAndUser_Username(postID,username) != null){
+            return null;
+        }
         return likeRepository.save(newLike);
     }
 

@@ -125,6 +125,21 @@ class LikeControllerTest {
                 () -> assertNotNull(response.getBody())
         );
     }
+    @Test
+    void testAddLikeSecond(){
+        User user = userRepository.findAll().get(0); // get createdUser from setup
+        Post post = postRepository.findAll().get(0); // get createdPost from setup
+        likeRepository.save(new Like(post,user));
+
+        ResponseEntity<String> response = likeController.postAddLike(post.getId(),user.getUsername());
+        assertAll(
+                () -> assertNotNull(response),
+                () -> assertEquals(HttpStatus.CONFLICT,response.getStatusCode()),
+                () -> assertNotNull(response.getBody())
+        );
+    }
+
+
 
     // endregion
 
