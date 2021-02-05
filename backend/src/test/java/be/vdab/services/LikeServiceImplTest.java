@@ -138,15 +138,14 @@ class LikeServiceImplTest {
         assertFalse(likeService.removeLike(post.getId(),"thisUsernameDoesNotExist"));
     }
 
-//    @Test
-//    void testRemoveValid(){
-//        // TODO: this test fails -- cannot remove -> see LikeRepository
-//        User user = userRepository.findAll().get(0); // get createdUser from setup
-//        Post post = postRepository.findAll().get(0); // get createdPost from setup
-//        likeRepository.save(new Like(post,user));
-//        boolean result =likeService.removeLike(post.getId(),user.getUsername());
-//        assertTrue(result);
-//    }
+    @Test
+    void testRemoveValid(){
+        User user = userRepository.findAll().get(0); // get createdUser from setup
+        Post post = postRepository.findAll().get(0); // get createdPost from setup
+        likeRepository.save(new Like(post,user));
+        boolean result =likeService.removeLike(post.getId(),user.getUsername());
+        assertTrue(result);
+    }
     // endregion
 
     // region test getLikes

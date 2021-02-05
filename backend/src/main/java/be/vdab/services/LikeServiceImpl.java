@@ -38,10 +38,11 @@ public class LikeServiceImpl implements LikeService {
         if(postID == null || username == null){
             return false;
         }
-        if(likeRepository.findLikeByPost_IdAndUser_Username(postID,username) == null){
+        Like foundLike = likeRepository.findLikeByPost_IdAndUser_Username(postID,username);
+        if( foundLike == null){
             return false;
         }
-        likeRepository.deleteLikeByPost_IdAndUser_Username(postID,username);
+        likeRepository.delete(foundLike);
         return true;
     }
 
