@@ -29,18 +29,35 @@ export class ListPostComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       if (params.category === undefined) {
-        this.postService.getPosts().subscribe(
-          response => this.posts = response,
-          error => this.handleError(error),
-        );
+        this.getAllPosts();
       } else {
-        this.showCategoryName = true;
-        this.postService.getPostByCategory(params.category).subscribe(
-          response => this.posts = response,
-          error => this.handleError(error),
-        );
+        this.getPostsByCategory(params.category);
       }
     });
+  }
+
+  getAllPosts(): void {
+    this.postService.getPosts().subscribe(
+      response => this.posts = response,
+      error => this.handleError(error),
+      () => this.getLikes(),
+    );
+  }
+
+  getPostsByCategory(category: string): void {
+    this.showCategoryName = true;
+    this.postService.getPostByCategory(category).subscribe(
+      response => this.posts = response,
+      error => this.handleError(error),
+    );
+  }
+
+  getLikes(): void {
+    this.posts.forEach(element =>
+      this.postService.getLikes(element.id).subscribe(
+        response => element.likes = response,
+          error => this.handleError(error),
+    ));
   }
 
   handleError(error: HttpErrorResponse): void {}

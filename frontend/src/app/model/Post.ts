@@ -8,4 +8,5 @@ export class Post {
   user: string | undefined;
   category: Category | undefined;
   comment: Comment | undefined;
+  likes: number | undefined;
 }
