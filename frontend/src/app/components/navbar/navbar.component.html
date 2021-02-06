@@ -1,5 +1,4 @@
 <!--navbar section-->
-
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
   <a class="navbar-brand"routerLink="">MessageBoard Home</a>
   <!--mobile menu dropdown -->
@@ -30,12 +29,10 @@
     <!-- logged out -->
     <div *ngIf="!isLoggedIn">
       <ul class="nav navbar-nav navbar-right justify-content-left">
-
         <li class="nav-item">
           <a routerLink="/register-form" class="nav-link" data-toggle="modal"><span
             class="glyphicon glyphicon-user"></span> Register</a>
         </li>
-
         <li class="nav-item">
           <a routerLink="/login-form" class="nav-link" data-toggle="modal"><span
             class="glyphicon glyphicon-log-in"></span> Login</a>

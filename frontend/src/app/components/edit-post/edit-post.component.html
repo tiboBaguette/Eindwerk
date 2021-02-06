@@ -3,7 +3,6 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-
       <div class="card shadow">
         <div class="card-body">
           <h5 class="card-title">Edit Your Post</h5>
@@ -12,7 +11,6 @@
           <div *ngIf="isLoggedInError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
             <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
           </div>
-
           <ng-template #elseBlock>
             <form [formGroup]="editPostForm" >
               <div class="form-group">
@@ -30,7 +28,6 @@
                 </div>
               </div>
             </form>
-      <!--      For now a new post will be created every time we do an update because the rest controller does not reflect this option.-->
             <p class="card-text">Please edit your forum post here. </p>
             <button type="submit" class="btn btn-dark" (click)="editPost()">Edit Post</button>
           </ng-template>
