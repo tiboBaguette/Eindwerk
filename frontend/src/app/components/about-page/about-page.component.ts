@@ -11,5 +11,4 @@ export class AboutPageComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }
