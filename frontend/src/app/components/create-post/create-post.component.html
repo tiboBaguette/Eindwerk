@@ -3,14 +3,12 @@
 <div class="container-fluid">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-
       <div class="card shadow">
         <div class="card-body">
           <h5 class="card-title">Create Post</h5>
           <p class="error" align="left" *ngIf="!isError"></p>
           <div *ngIf="isError; else elseBlock">Ah! Ah! Ah! You didn't say the magic word.. Please log in
             <a routerLink="/login-form"><span class="glyphicon glyphicon-log-in"></span> Here</a>
-
           </div>
           <ng-template #elseBlock>
           <form [formGroup]="createPostForm">
@@ -29,7 +27,6 @@
             </div>
             </div>
           </form>
-
           <p class="card-text">Please enter your forum post here</p>
           <button type="submit" class="btn btn-secondary" (click)="createPost()">Create New Post</button>
           </ng-template>

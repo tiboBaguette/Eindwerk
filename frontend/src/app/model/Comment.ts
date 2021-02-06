@@ -1,4 +1,3 @@
-
 export class Comment {
   id: number | undefined;
   content: string | undefined;
